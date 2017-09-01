@@ -47,7 +47,7 @@ class ArticlesController extends Controller
         if ($request->input('trashed')) {
             $query->withTrashed();
         }
-        
+
         $query->orderBy('id', 'DESC');
         $articles = $query->paginate($paginate);
 
@@ -92,24 +92,9 @@ class ArticlesController extends Controller
         $user = Auth::user();
         $user->articles()->create($data);
         
-        // Do this when edit() is implemented
-        // return redirect()
-        //     ->action('Dashboard\ArticlesController@edit', ['id' => $article->id])
-        //     ->with('message', 'Article updated correctly!');
-
         return redirect()
-            ->action('Dashboard\ArticlesController@index');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Article  $article
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Article $article)
-    {
-        //
+            ->action('Dashboard\ArticlesController@edit', ['id' => $article->id])
+            ->with('message', 'Article created correctly!');
     }
 
     /**
@@ -120,7 +105,12 @@ class ArticlesController extends Controller
      */
     public function edit(Article $article)
     {
-        //
+        $categories = Category::all();
+
+        return view('dashboard.articles.edit', [
+            'article' => $article,
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -132,7 +122,22 @@ class ArticlesController extends Controller
      */
     public function update(Request $request, Article $article)
     {
-        //
+        $data = $this->validate($request, [
+            'title' => 'required|string|min:12|max:255',
+            'slug' => 'nullable|string|min:12|max:255',
+            'content' => 'nullable|string',
+            'category_id'=> 'required|integer|exists:categories,id',
+            'tags'=> 'nullable|string',
+            'status'=> 'required|string',
+            'show_image'=> 'required|boolean',
+            'image' => 'nullable|image'
+        ]);
+
+        $article->update($data);
+
+        return redirect()
+            ->action('Dashboard\ArticlesController@edit', ['id' => $article->id])
+            ->with('message', 'Article updated correctly!');
     }
 
     /**

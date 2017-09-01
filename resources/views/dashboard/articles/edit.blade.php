@@ -50,7 +50,7 @@
 
                             @if ($article->user_id != Auth::id())
                                 <div class="bg-primary">
-                                    This article was written by <strong>{{ $article->user->name }}</strong>. Be careful when editing articles that don't belong to you!
+                                    This article was written by <strong>{{ $article->user->profile->name }}</strong>. Be careful when editing articles that don't belong to you!
                                 </div>
                             @endif
 
@@ -162,7 +162,7 @@
 	            </div>
 	        </div>
 
-            @if (Auth::user()->isEditor())
+            @if (Auth::user()->isEditor() or Auth::user()->isAdmin())
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="card">
