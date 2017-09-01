@@ -20,6 +20,16 @@
                             <i class="fa fa-align-justify"></i> <strong>Search options</strong>
                         </div>
                         <div class="card-block">
+                            @if (count($errors) > 0)
+                                <div class="bg-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                            
                             <form method="GET" action="{{ route("dashboard.articles.index") }}">
                                 <div class="row">
                                     <div class="col-sm-3">
@@ -48,14 +58,14 @@
                                     <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="">Title</label>
-                                            <input type="text" value="{{ Request::input('title-search') }}" name="title-search" class="form-control" placeholder="Keywords">
+                                            <input type="text" value="{{ Request::input('title') }}" name="title" class="form-control" placeholder="Title keywords">
                                         </div>
                                     </div>
 
                                     <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="">ID</label>
-                                            <input type="number" value="{{ Request::input('article-id') }}" name="article-id" class="form-control" placeholder="ID">
+                                            <input type="text" value="{{ Request::input('id') }}" name="id" class="form-control" placeholder="Article id">
                                         </div>
                                     </div>
                                 </div>
@@ -65,7 +75,7 @@
                                 <div class="row">
                                     <div class="col-sm-3">
                                         <div class="form-group">
-                                            <input type="checkbox" name="trashed" value="1" {{ Request::input('trashed') == 1 ? 'checked' : '' }}> Show deleted
+                                            <input type="checkbox" name="trashed" value="1" {{ Request::input('trashed') == 1 ? 'checked' : '' }}> Show deleted articles
                                         </div>
                                     </div>
                                 </div>

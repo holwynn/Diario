@@ -5,30 +5,48 @@ namespace App\Http\Controllers\Dashboard;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Article;
+use App\Category;
 
 class ArticlesController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {   
+    public function index(Request $request, $paginate = 10)
+    {
         $this->validate($request, [
             'status' => 'nullable|string',
-            'title-search' => 'nullable|string',
-            'trashed' => 'nullable|bool',
-            'paginate' => 'nullable|numeric'
+            'title' => 'nullable|string',
+            'id' => 'nullable|numeric',
+            'paginate' => 'nullable|numeric',
+            'trashed' => 'nullable|bool'
         ]);
 
         $query = Article::with('user.profile');
 
-        if ($request->has('status')) {
+        if ($request->filled('status')) {
             $query->where('status', $request->input('status'));
         }
 
-        $paginate = $request->input('paginate') | 10;
+        if ($request->filled('title')) {
+            $query->where('title', 'LIKE', '%'.$request->input('title').'%');
+        }
+
+        if ($request->filled('id')) {
+            $query->where('id', $request->input('id'));
+        }
+
+        if ($request->filled('paginate')) {
+            $paginate = $request->input('paginate');
+        }
+
+        if ($request->input('trashed')) {
+            $query->withTrashed();
+        }
+
         $articles = $query->paginate($paginate);
 
         return view('dashboard.articles.list', [
@@ -43,7 +61,11 @@ class ArticlesController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+
+        return view('dashboard.articles.create', [
+            'categories' => $categories
+        ]);
     }
 
     /**

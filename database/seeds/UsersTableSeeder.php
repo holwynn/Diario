@@ -29,7 +29,7 @@ class UsersTableSeeder extends Seeder
         $adminUser->articles()->saveMany(factory(App\Article::class, 10)->make());
 
         /**
-         * Now let's fire up an editor without
+         * Now let's fire up an editor without articles (the editor relationship is done in EditorsTableSeeder.php)
          */
         $editorUser = App\User::create([
             'name' => 'bstgalactica666',

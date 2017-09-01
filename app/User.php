@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Profile;
 use App\Article;
+use App\Editor;
 
 class User extends Authenticatable
 {
@@ -39,6 +40,11 @@ class User extends Authenticatable
         return $this->hasMany(Article::class);
     }
 
+    public function editors()
+    {
+        return $this->hasMany(Editor::class);
+    }
+
     public function getRolesAttribute($value)
     {
         return explode(',', $value);
@@ -47,6 +53,35 @@ class User extends Authenticatable
     public function setRolesAttribute($value)
     {
         $this->attributes['roles'] = implode(',', $value);
+    }
+
+    /**
+     * Get an array of category IDs of which this user is an editor of,
+     * or false in case the user is not an editor
+     */
+    public function getEditorOfAttribute()
+    {
+        if (!$this->isEditor()) {
+            return false;
+        }
+
+        $editors = $this->editors;
+
+        foreach ($editors as $category) {
+            $categories[] = $category->category_id;
+        }
+
+        return $categories;
+    }
+
+    public function isWriter()
+    {
+        return in_array('ROLE_WRITER', $this->roles);   
+    }
+
+    public function isEditor()
+    {
+        return in_array('ROLE_EDITOR', $this->roles);
     }
 
     public function isAdmin()

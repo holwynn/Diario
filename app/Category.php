@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Article;
+use App\Editor;
 
 class Category extends Model
 {
@@ -12,6 +13,11 @@ class Category extends Model
     public function articles()
     {
         return $this->hasMany(Article::class);
+    }
+
+    public function editors()
+    {
+        return $this->hasMany(Editor::class);
     }
 
     public function getNameAttribute($value)
