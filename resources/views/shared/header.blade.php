@@ -9,7 +9,7 @@
         @if (Auth::guest())
             <i class="fa fa-user"></i> <a class="text-uppercase header-link" href="{{ route('login') }}">{{ __('newspaper.login') }}</a>
         @else
-            <i class="glyphicon glyphicon-user"></i> <a class="text-uppercase header-link" href="{{ route('dashboard') }}">{{ __('newspaper.dashboard') }}</a>
+            <i class="glyphicon glyphicon-user"></i> <a class="text-uppercase header-link" href="{{ route('dashboard.index') }}">{{ __('newspaper.dashboard') }}</a>
         @endif
         <span class="separator"> | </span>
         <i class="fa fa-envelope"></i> <a href="#" class="text-uppercase header-link">{{ __('newspaper.newsletter') }}</a>

@@ -17,18 +17,21 @@ Route::get('/categories/{categoryName}', 'CategoriesController@show')->name('cat
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
 
+Route::group([
+    'as' => 'dashboard.',
+    'prefix' => 'dashboard',
+    'middleware' => 'auth',
+    'namespace' => 'Dashboard'
+], function() {
+    Route::get('/', 'IndexController@index')->name('index');
 
-
-
-
-
-
-
-
-
-
+    Route::resource('/articles', 'ArticlesController');
+    Route::resource('/categories', 'CategoriesController');
+    Route::resource('/users', 'CategoriesController');
+    Route::resource('/frontblocks', 'FrontblocksController');
+});
 
 
 // Route::get('/users', function() {

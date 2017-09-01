@@ -41,7 +41,7 @@
 
 </div>
 
-<div class="col-sm-9 col-xs-12 right-border left-border">
+<div class="col-sm-9 col-xs-12">
 
     <div class="middle-1">
         @if ($frontblock->articlesArray[3]->show_image)

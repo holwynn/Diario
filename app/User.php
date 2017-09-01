@@ -48,4 +48,9 @@ class User extends Authenticatable
     {
         $this->attributes['roles'] = implode(',', $value);
     }
+
+    public function isAdmin()
+    {
+        return in_array('ROLE_ADMIN', $this->roles);
+    }
 }

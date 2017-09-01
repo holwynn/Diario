@@ -3,11 +3,14 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\User;
 use App\Category;
 
 class Article extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'title',
         'slug',
@@ -17,6 +20,8 @@ class Article extends Model
         'image',
         'show_image'
     ];
+
+    protected $dates = ['deleted_at'];
 
     public function user()
     {
