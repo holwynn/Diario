@@ -171,31 +171,30 @@
                             </div>
                             <div class="card-block">
                                 @if ($article->trashed())
-                                    @can('restore', $article)
-                                        <form method="POST" action="{{ route('dashboard.articles.restore', ['id' => $article->id]) }}">
-                                            {{ csrf_field() }}
-                                            <button class="btn btn-sm btn-primary"><i class="fa fa-ban"></i> Restore article</button>
-                                        </form>
-                                    @endcan
+                                    <form method="POST" action="{{ route('dashboard.articles.restore', ['id' => $article->id]) }}">
+                                        {{ csrf_field() }}
+                                        <button class="btn btn-sm btn-primary"><i class="fa fa-ban"></i> Restore article</button>
+                                    </form>
                                 @else
-                                    @can('delete', $article)
-                                        <form method="POST" action="{{ route('dashboard.articles.delete', ['id' => $article->id]) }}">
-                                            {{ csrf_field() }}
-                                            <input type="hidden" name="_method" value="DELETE">
-                                            <button class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Delete article</button>
-                                        </form>
-                                    @endcan
+                                    <form method="POST" action="{{ route('dashboard.articles.delete', ['id' => $article->id]) }}">
+                                        {{ csrf_field() }}
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <button class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Delete article</button>
+                                    </form>
 
-                                    <br>
-
-                                    @can('hardDelete', $article)
-                                        <form method="POST" action="{{ route('dashboard.articles.delete.hard', ['id' => $article->id]) }}">
-                                            {{ csrf_field() }}
-                                            <input type="hidden" name="_method" value="DELETE">
-                                            <button class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Hard delete</button>
-                                        </form>
-                                    @endcan
+                                    
                                 @endif
+                
+                                <hr>
+
+                                @can('destroy', $article)
+                                    <form method="POST" action="{{ route('dashboard.articles.destroy', ['id' => $article->id]) }}">
+                                        {{ csrf_field() }}
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <button class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Destroy article</button>
+                                    </form>
+                                @endcan
+                                
                             </div>
                         </div>
                     </div>

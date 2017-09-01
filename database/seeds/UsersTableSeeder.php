@@ -34,7 +34,7 @@ class UsersTableSeeder extends Seeder
         $editorUser = App\User::create([
             'name' => 'bstgalactica666',
             'email' => 'dwight@news.com',
-            'password' => bcrypt(''),
+            'password' => bcrypt('secret'),
             'roles' => ['ROLE_USER', 'ROLE_WRITER', 'ROLE_EDITOR']
         ]);
 

@@ -25,6 +25,8 @@ class RouteServiceProvider extends ServiceProvider
     {
         parent::boot();
 
+        // Allow Eloquent to find trashed articles from route model binding
+        // because it can't be done after the model is fetched
         Route::bind('article', function ($value) {
             return \App\Article::withTrashed()->find($value);
         });

@@ -94,7 +94,7 @@ class ArticlesController extends Controller
         
         return redirect()
             ->action('Dashboard\ArticlesController@edit', ['id' => $article->id])
-            ->with('message', 'Article created correctly!');
+            ->with('message', 'Article created sucessfully!');
     }
 
     /**
@@ -137,18 +137,39 @@ class ArticlesController extends Controller
 
         return redirect()
             ->action('Dashboard\ArticlesController@edit', ['id' => $article->id])
-            ->with('message', 'Article restored correctly!');
+            ->with('message', 'Article restored sucessfully!');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete (soft) the specified resource from storage.
+     *
+     * @param  \App\Article  $article
+     * @return \Illuminate\Http\Response
+     */
+    public function delete(Article $article)
+    {
+        $this->authorize('delete', $article);
+        $article->delete();
+
+        return redirect()
+            ->action('Dashboard\ArticlesController@edit', ['id' => $article->id])
+            ->with('message', 'Article deleted sucessfully!');
+    }
+
+    /**
+     * Remove (hard) the specified resource from storage.
      *
      * @param  \App\Article  $article
      * @return \Illuminate\Http\Response
      */
     public function destroy(Article $article)
     {
-        //
+        $this->authorize('destroy', $article);
+        $article->forceDelete();
+
+        return redirect()
+            ->action('Dashboard\ArticlesController@index')
+            ->with('message', 'Article destroyed sucessfully!');
     }
 
     /**
@@ -159,15 +180,11 @@ class ArticlesController extends Controller
      */
     public function restore(Article $article)
     {
-        if (!$article->trashed()) {
-            $message = 'The article is not deleted!';
-        } else {
-            $article->restore();
-            $message = 'Article restored correctly!';
-        }
+        $this->authorize('restore', $article);
+        $article->restore();
 
         return redirect()
             ->action('Dashboard\ArticlesController@edit', ['id' => $article->id])
-            ->with('message', $message);
+            ->with('message', 'Article restored sucessfully!');
     }
 }

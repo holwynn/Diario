@@ -29,6 +29,7 @@ Route::group([
      * Article routes
      */
     Route::post('/articles/{article}/restore', 'ArticlesController@restore')->name('articles.restore');
+    Route::delete('/articles/{article}/delete', 'ArticlesController@delete')->name('articles.delete');
     Route::resource('/articles', 'ArticlesController');
 
     /**

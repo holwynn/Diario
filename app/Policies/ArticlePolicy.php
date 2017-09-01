@@ -10,6 +10,11 @@ class ArticlePolicy
 {
     use HandlesAuthorization;
 
+    public function before(User $user)
+    {
+        return $user->isAdmin();
+    }
+
     /**
      * Determine whether the user can view the article.
      *
@@ -46,7 +51,7 @@ class ArticlePolicy
     }
 
     /**
-     * Determine whether the user can delete the article.
+     * Determine whether the user can delete (soft) the article.
      *
      * @param  \App\User  $user
      * @param  \App\Article  $article
@@ -54,7 +59,21 @@ class ArticlePolicy
      */
     public function delete(User $user, Article $article)
     {
-        //
+        if ($user->isEditor()) {
+            return in_array($article->category->id, $user->editorOf);
+        }
+    }
+
+    /**
+     * Determine whether the user can destroy (hard) the article.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Article  $article
+     * @return mixed
+     */
+    public function destroy(User $user, Article $article)
+    {
+        return $user->isAdmin();
     }
 
     /**
@@ -66,6 +85,8 @@ class ArticlePolicy
      */
     public function restore(User $user, Article $article)
     {
-        return true;
+        if ($user->isEditor()) {
+            return in_array($article->category->id, $user->editorOf);
+        }
     }
 }

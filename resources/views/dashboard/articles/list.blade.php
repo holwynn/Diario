@@ -20,6 +20,13 @@
                             <i class="fa fa-align-justify"></i> <strong>Search options</strong>
                         </div>
                         <div class="card-block">
+
+                            @if (session('message'))
+                                <div class="bg-success">
+                                    {{ session('message') }}
+                                </div>
+                            @endif
+                            
                             @if (count($errors) > 0)
                                 <div class="bg-danger">
                                     <ul>
