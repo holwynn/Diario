@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Article;
@@ -46,7 +47,8 @@ class ArticlesController extends Controller
         if ($request->input('trashed')) {
             $query->withTrashed();
         }
-
+        
+        $query->orderBy('id', 'DESC');
         $articles = $query->paginate($paginate);
 
         return view('dashboard.articles.list', [
@@ -76,7 +78,27 @@ class ArticlesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $this->validate($request, [
+            'title' => 'required|string|min:12|max:255',
+            'slug' => 'nullable|string|min:12|max:255',
+            'content' => 'nullable|string',
+            'category_id'=> 'required|integer|exists:categories,id',
+            'tags'=> 'nullable|string',
+            'status'=> 'required|string',
+            'show_image'=> 'required|boolean',
+            'image' => 'nullable|image'
+        ]);
+
+        $user = Auth::user();
+        $user->articles()->create($data);
+        
+        // Do this when edit() is implemented
+        // return redirect()
+        //     ->action('Dashboard\ArticlesController@edit', ['id' => $article->id])
+        //     ->with('message', 'Article updated correctly!');
+
+        return redirect()
+            ->action('Dashboard\ArticlesController@index');
     }
 
     /**
