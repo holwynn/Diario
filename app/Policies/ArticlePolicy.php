@@ -12,19 +12,24 @@ class ArticlePolicy
 
     public function before(User $user)
     {
-        return $user->isAdmin();
+        if ($user->isAdmin()) {
+            return true;
+        } else {
+            return null;
+        }
     }
 
     /**
-     * Determine whether the user can view the article.
+     * Determine whether the user can edit the article.
      *
      * @param  \App\User  $user
      * @param  \App\Article  $article
      * @return mixed
      */
-    public function view(User $user, Article $article)
+    public function edit(User $user, Article $article)
     {
-        //
+        return $user->id === $article->user->id ||
+            in_array($article->category->id, $user->editorOf);
     }
 
     /**
@@ -35,7 +40,7 @@ class ArticlePolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->isWriter() || $user->isEditor();
     }
 
     /**
@@ -47,7 +52,8 @@ class ArticlePolicy
      */
     public function update(User $user, Article $article)
     {
-        //
+        return $user->id === $article->user->id ||
+            in_array($article->category->id, $user->editorOf);
     }
 
     /**

@@ -18,9 +18,11 @@
             <div class="article-author-date">
                 <p>{{ $article->category->name }}, {{ $article->user->profile->name }}, {{ $article->created_at->formatLocalized(__('newspaper.date')) }}</p>
             </div>
-           {{--  @can('edit', $article)
+
+            @can('edit', $article)
                 <a href="{{ route('dashboard.articles.edit', ['id' => $article->id]) }}">Edit this article</a>
-            @endcan --}}
+            @endcan
+            
             <h1 class="article-title">{{ $article->title }}</h1>
             <h3 class="article-slug">{{ $article->slug }}</h3>
             <img src="{{ asset('/storage/' . $article->image) }}" class="img-responsive article-image image-shadow" alt="">

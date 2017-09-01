@@ -63,6 +63,8 @@ class ArticlesController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Article::class);
+
         $categories = Category::all();
 
         return view('dashboard.articles.create', [
@@ -78,6 +80,8 @@ class ArticlesController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Article::class);
+
         $data = $this->validate($request, [
             'title' => 'required|string|min:12|max:255',
             'slug' => 'nullable|string|min:12|max:255',
@@ -122,6 +126,8 @@ class ArticlesController extends Controller
      */
     public function update(Request $request, Article $article)
     {
+        $this->authorize('update', $article);
+
         $data = $this->validate($request, [
             'title' => 'required|string|min:12|max:255',
             'slug' => 'nullable|string|min:12|max:255',
