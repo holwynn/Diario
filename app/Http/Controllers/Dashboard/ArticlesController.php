@@ -137,7 +137,7 @@ class ArticlesController extends Controller
 
         return redirect()
             ->action('Dashboard\ArticlesController@edit', ['id' => $article->id])
-            ->with('message', 'Article updated correctly!');
+            ->with('message', 'Article restored correctly!');
     }
 
     /**
@@ -149,5 +149,25 @@ class ArticlesController extends Controller
     public function destroy(Article $article)
     {
         //
+    }
+
+    /**
+     * Restore the specified resource from storage.
+     *
+     * @param  \App\Article  $article
+     * @return \Illuminate\Http\Response
+     */
+    public function restore(Article $article)
+    {
+        if (!$article->trashed()) {
+            $message = 'The article is not deleted!';
+        } else {
+            $article->restore();
+            $message = 'Article restored correctly!';
+        }
+
+        return redirect()
+            ->action('Dashboard\ArticlesController@edit', ['id' => $article->id])
+            ->with('message', $message);
     }
 }

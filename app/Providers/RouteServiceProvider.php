@@ -23,9 +23,11 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-
         parent::boot();
+
+        Route::bind('article', function ($value) {
+            return \App\Article::withTrashed()->find($value);
+        });
     }
 
     /**

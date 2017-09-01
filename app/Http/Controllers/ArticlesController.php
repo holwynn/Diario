@@ -10,6 +10,10 @@ class ArticlesController extends Controller
 {
     public function show($title = '', Article $article)
     {
+        if ($article->trashed()) {
+            abort(404);
+        }
+
         $categories = Category::all();
         $article = $article->load('user');
 

@@ -17,8 +17,6 @@ Route::get('/categories/{categoryName}', 'CategoriesController@show')->name('cat
 
 Auth::routes();
 
-//Route::get('/home', 'HomeController@index')->name('home');
-
 Route::group([
     'as' => 'dashboard.',
     'prefix' => 'dashboard',
@@ -27,21 +25,24 @@ Route::group([
 ], function() {
     Route::get('/', 'IndexController@index')->name('index');
 
+    /**
+     * Article routes
+     */
+    Route::post('/articles/{article}/restore', 'ArticlesController@restore')->name('articles.restore');
     Route::resource('/articles', 'ArticlesController');
+
+    /**
+     * Category routes
+     */
     Route::resource('/categories', 'CategoriesController');
+
+    /**
+     * User routes
+     */
     Route::resource('/users', 'CategoriesController');
+
+    /**
+     * Frontblock routes
+     */
     Route::resource('/frontblocks', 'FrontblocksController');
 });
-
-
-// Route::get('/users', function() {
-//     return App\User::with('profile')->get();
-// });
-
-// Route::get('/categories', function() {
-//     return App\Category::all();
-// });
-
-// Route::get('/frontblocks', function() {
-//     return App\Frontblock::all();
-// });
