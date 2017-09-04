@@ -16,7 +16,7 @@
     <div class="row article-page">
         <div class="col-sm-8 col-xs-12">
             <div class="article-author-date">
-                <p>{{ $article->category->name }}, {{ $article->user->profile->name }}, {{ $article->created_at->formatLocalized(__('newspaper.date')) }}</p>
+                <p>{{ $article->created_at->formatLocalized(__('newspaper.date')) }}</p>
             </div>
 
             @can('edit', $article)
@@ -25,10 +25,13 @@
             
             <h1 class="article-title">{{ $article->title }}</h1>
             <h3 class="article-slug">{{ $article->slug }}</h3>
+
             <img src="{{ asset('/storage/' . $article->image) }}" class="img-responsive article-image image-shadow" alt="">
-
+        
             <hr>
-
+            <div class="article-author-date">
+                <p>{{ $article->category->name }} - {{ $article->user->profile->name }}</p>
+            </div>
             <div class="row article-content">
                 <div class="col-xs-12">
                     {!! $article->content !!}

@@ -32,12 +32,6 @@
         @yield('footer')
     </div>
 
-    <div class="container-fluid">
-        <div class="row footer-bottom">
-            {!! __('newspaper.footermessage') !!}
-        </div>
-    </div>
-
     @yield('javascripts')
 </body>
 </html>

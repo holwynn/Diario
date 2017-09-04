@@ -143,7 +143,7 @@ class ArticlesController extends Controller
 
         return redirect()
             ->action('Dashboard\ArticlesController@edit', ['id' => $article->id])
-            ->with('message', 'Article restored sucessfully!');
+            ->with('message', 'Article updated sucessfully!');
     }
 
     /**
