@@ -61,7 +61,7 @@
 	                            <div class="row">
 	                                <div class="col-sm-12">
 	                                    <div class="form-group">
-	                                        <label for="name">Title</label>
+	                                        <label for="name"><h4>Title</h4></label>
 	                                        <input type="text" class="form-control" name="title" id="name" value="{{ $article->title }}" placeholder="Article title">
 	                                    </div>
 	                                </div>
@@ -70,7 +70,7 @@
 	                            <div class="row">
 	                                <div class="col-sm-12">
 	                                    <div class="form-group">
-	                                        <label for="slug">Slug</label>
+	                                        <label for="slug"><h4>Slug</h4></label>
 	                                        <input type="text" class="form-control" name="slug" value="{{ $article->slug }}" placeholder="Article slug (optional)">
 	                                    </div>
 	                                </div>
@@ -79,7 +79,7 @@
 	                            <div class="row">
 	                                <div class="col-sm-12">
 	                                    <div class="form-group">
-	                                        <label for="">Content</label>
+	                                        <label for=""><h4>Content</h4></label>
 	                                        <textarea name="content" id="" cols="30" rows="10" placeholder="Article content" class="form-control">{{ $article->content }}</textarea>
 	                                    </div>
 	                                </div>
@@ -88,7 +88,7 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group">
-                                            <label for="category">Category</label>
+                                            <label for="category"><h4>Category</h4></label>
 	                                        <select name="category_id" id="category" class="form-control">
                                                 @foreach ($categories as $category)
                                                     <option value="{{ $category->id }}"
@@ -104,7 +104,7 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group">
-                                            <label for="tags">Tags</label>
+                                            <label for="tags"><h4>Tags</h4></label>
                                             <input type="text" class="form-control" name="tags" value="{{ $article->tags }}" placeholder="Article tags (optional)">
                                         </div>
                                     </div>
@@ -113,7 +113,7 @@
 	                            <div class="row">
 	                                <div class="col-sm-4">
 	                                    <div class="form-group">
-	                                        <label for="">Set status</label>
+	                                        <label for=""><h4>Status</h4></label>
 	                                        <select name="status" id="status" class="form-control">
                                                 @if (Auth::user()->isEditor() or Auth::user()->isAdmin())
                                                     <option value="">Don't change</option>
@@ -128,7 +128,7 @@
                                 <div class="row">
                                     <div class="col-sm-4">
                                         <div class="form-group">
-                                            <label for="">Show image?</label>
+                                            <label for=""><h4>Show image?</h4></label>
                                             <select name="show_image" id="" class="form-control">
                                                 <option value="0" {{ $article->show_image == false ? 'selected="select"' : '' }}>No</option>
                                                 <option value="1" {{ $article->show_image == true ? 'selected="select"' : ''}}>Yes</option>
@@ -138,7 +138,7 @@
 
                                     <div class="col-sm-4">
                                         <div class="form-group">
-                                            <label for="">Image</label>
+                                            <label for=""><h4>Image file</h4></label>
                                             <div class="col-md-9">
                                                 <input type="file" id="image_file" name="image_file">
                                             </div>
@@ -181,8 +181,6 @@
                                         <input type="hidden" name="_method" value="DELETE">
                                         <button class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Delete article</button>
                                     </form>
-
-                                    
                                 @endif
                 
                                 <hr>

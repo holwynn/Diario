@@ -41,7 +41,7 @@
 	                            <div class="row">
 	                                <div class="col-sm-12">
 	                                    <div class="form-group">
-	                                        <label for="name">Title</label>
+	                                        <label for="name"><h4>Title</h4></label>
 	                                        <input type="text" class="form-control" value="{{ old('title') }}" name="title" placeholder="Article title">
 	                                    </div>
 	                                </div>
@@ -50,7 +50,7 @@
 	                            <div class="row">
 	                                <div class="col-sm-12">
 	                                    <div class="form-group">
-	                                        <label for="ccnumber">Slug</label>
+	                                        <label for="ccnumber"><h4>Slug</h4></label>
 	                                        <input type="text" class="form-control" value="{{ old('slug') }}" name="slug" placeholder="Article slug (optional)">
 	                                    </div>
 	                                </div>
@@ -59,7 +59,7 @@
 	                            <div class="row">
 	                                <div class="col-sm-12">
 	                                    <div class="form-group">
-	                                        <label for="">Content</label>
+	                                        <label for=""><h4>Content</h4></label>
 	                                        <textarea name="content" id="" cols="30" rows="10" placeholder="Article content" class="form-control">{{ old('content') }}</textarea>
 	                                    </div>
 	                                </div>
@@ -68,7 +68,7 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group">
-                                            <label for="category">Category</label>
+                                            <label for="category"><h4>Category</h4></label>
 	                                        <select name="category_id" id="category" class="form-control">
                                                 @foreach ($categories as $category)
                                                     <option value="{{ $category->id }}">{{ ucfirst($category->name) }}</option>
@@ -81,7 +81,7 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group">
-                                            <label for="tags">Tags</label>
+                                            <label for="tags"><h4>Tags</h4></label>
                                             <input type="text" class="form-control" name="tags" placeholder="Article tags (optional)">
                                         </div>
                                     </div>
@@ -90,7 +90,7 @@
 	                            <div class="row">
 	                                <div class="col-sm-4">
 	                                    <div class="form-group">
-	                                        <label for="">Publish as</label>
+	                                        <label for=""><h4>Publish as</h4></label>
 	                                        <select name="status" id="" class="form-control">
 	                                            <option value="draft">Draft</option>
 	                                            @if (Auth::user()->isEditor() or Auth::user()->isAdmin())
@@ -104,7 +104,7 @@
                                 <div class="row">
                                     <div class="col-sm-4">
 	                                    <div class="form-group">
-	                                        <label for="">Show image?</label>
+	                                        <label for=""><h4>Show image?</h4></label>
                                             <select name="show_image" id="" class="form-control">
 	                                            <option value="0">No</option>
 	                                            <option value="1">Yes</option>
@@ -114,7 +114,7 @@
 
                                     <div class="col-sm-4">
                                         <div class="form-group">
-                                            <label for="">Image</label>
+                                            <label for=""><h4>Image file</h4></label>
                                             <div class="col-md-9">
                                                 <input type="file" id="image_file" name="image_file">
                                             </div>
