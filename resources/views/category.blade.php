@@ -18,7 +18,7 @@
             <div class="col-md-4 col-sm-6 middle-news-box">
                 <a href="{{ route('article', ['id' => $article->id, 'title' => $article->seoUrl()])}}" class="title">
                     @if ($article->image)
-                        <img src="{{ asset('storage/thumb_'.$article->image) }}" class="img-responsive image-shadow" alt="">
+                        <img src="{{ asset('storage/'.$article->image) }}" class="img-responsive image-shadow frontpage-article-image" alt="">
                     @endif
                     
                     <h4 class="title">{{ $article->title }}</h4>

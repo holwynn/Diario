@@ -27,5 +27,4 @@ return [
     /**
      * Footer strings
      */
-    'footermessage' => 'Stormwind Herald 2017 | Este sitio es parodia. Mas que nada para mostrar una demo de <a href="#">ElwynnCMS</a>.'
 ];
