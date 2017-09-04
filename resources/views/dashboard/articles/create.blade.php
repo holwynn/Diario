@@ -116,7 +116,7 @@
                                         <div class="form-group">
                                             <label for=""><h4>Image file</h4></label>
                                             <div class="col-md-9">
-                                                <input type="file" id="image_file" name="image_file">
+                                                <input type="file" id="image" name="image">
                                             </div>
                                         </div>
                                     </div>

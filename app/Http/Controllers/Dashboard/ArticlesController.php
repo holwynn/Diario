@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use Auth;
+use Storage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Article;
@@ -81,6 +82,7 @@ class ArticlesController extends Controller
     public function store(Request $request)
     {
         $this->authorize('create', Article::class);
+        $user = Auth::user();
 
         $data = $this->validate($request, [
             'title' => 'required|string|min:12|max:255',
@@ -93,8 +95,13 @@ class ArticlesController extends Controller
             'image' => 'nullable|image'
         ]);
 
-        $user = Auth::user();
-        $user->articles()->create($data);
+        $article = $user->articles()->create($data);
+
+        if ($request->file('image')) {
+            $path = Storage::putFile('images', $request->file('image'));
+            $article->image = $path;
+            $article->save();
+        }
         
         return redirect()
             ->action('Dashboard\ArticlesController@edit', ['id' => $article->id])
@@ -140,6 +147,12 @@ class ArticlesController extends Controller
         ]);
 
         $article->update($data);
+
+        if ($request->file('image')) {
+            $path = Storage::putFile('images', $request->file('image'));
+            $article->image = $path;
+            $article->save();
+        }
 
         return redirect()
             ->action('Dashboard\ArticlesController@edit', ['id' => $article->id])
