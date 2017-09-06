@@ -17,12 +17,7 @@ Route::get('/categories/{categoryName}', 'CategoriesController@show')->name('cat
 
 Auth::routes();
 
-Route::group([
-    'as' => 'dashboard.',
-    'prefix' => 'dashboard',
-    'middleware' => 'auth',
-    'namespace' => 'Dashboard'
-], function() {
+Route::group(config('routes.dashboard'), function() {
     Route::get('/', 'IndexController@index')->name('index');
 
     /**
