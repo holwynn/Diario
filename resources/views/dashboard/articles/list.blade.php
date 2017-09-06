@@ -75,6 +75,18 @@
                                             <input type="text" value="{{ Request::input('id') }}" name="id" class="form-control" placeholder="Article id">
                                         </div>
                                     </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label for="">Category</label>
+                                            <select class="form-control" name="category_id">
+                                                <option value="">All</option>
+                                                @foreach($categories as $category)
+                                                    <option value="{{ $category->id }}" {{ Request::input('category_id') == $category->id ? 'selected' : '' }}>{{ ucfirst($category->name) }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <hr>

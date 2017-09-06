@@ -17,6 +17,7 @@ class IndexController extends Controller
             ->first();
 
         $latestArticles = Article::with('user')
+            ->where('status', 'published')
             ->whereNotIn('id', explode(',', $frontblock->articles))
             ->orderBy('id', 'DESC')
             ->take(9)

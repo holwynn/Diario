@@ -4,13 +4,14 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Profile;
 use App\Article;
 use App\Editor;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -56,8 +57,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Get an array of category IDs of which this user is an editor of,
-     * or false in case the user is not an editor
+     * Get an array of category IDs of which this user is an editor of
      */
     public function getEditorOfAttribute()
     {

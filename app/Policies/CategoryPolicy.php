@@ -65,4 +65,16 @@ class CategoryPolicy
     {
         //
     }
+
+    /**
+     * Determine whether the user can destroy the category.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Category  $category
+     * @return mixed
+     */
+    public function destroy(User $user, Category $category)
+    {
+        //
+    }
 }

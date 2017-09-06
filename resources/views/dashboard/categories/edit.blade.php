@@ -52,15 +52,16 @@
 	                                <button type="submit" class="btn btn-sm btn-primary">Submit</button>
 	                            </div>
 	                        </form>
-
-                            <form action="{{ route('dashboard.categories.delete', ['category' => $category]) }}" method="post">
+                            
+                            {{-- There's not much point to deleting a category, but we could if we wanted --}}
+                            {{-- <form action="{{ route('dashboard.categories.delete', ['category' => $category]) }}" method="post">
                                 {{ csrf_field() }}
                                 <input type="hidden" name="_method" value="DELETE">
 
                                 <div class="form-group form-actions">
                                     <button type="submit" class="btn btn-sm btn-danger">Delete category</button>
                                 </div>
-                            </form>
+                            </form> --}}
 	                    </div>
 	                </div>
 	            </div>

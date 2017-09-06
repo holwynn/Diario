@@ -115,10 +115,9 @@
 	                                    <div class="form-group">
 	                                        <label for=""><h4>Status</h4></label>
 	                                        <select name="status" id="status" class="form-control">
-                                                @if (Auth::user()->isEditor() or Auth::user()->isAdmin())
-                                                    <option value="">Don't change</option>
+                                                @can('publish', $article)
                                                     <option value="published" {{ $article->status == 'published' ? 'selected="select"' : '' }}>Published</option>
-	                                            @endif
+	                                            @endcan
 	                                            <option value="draft" {{ $article->status == 'draft' ? 'selected="select"' : '' }}>Draft</option>
 	                                        </select>
 	                                    </div>

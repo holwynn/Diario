@@ -90,8 +90,31 @@ class CategoriesController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
+    public function delete(Category $category)
+    {
+        $this->authorize('delete', Category::class);
+
+        $category->delete();
+
+        return redirect()
+            ->action('Dashboard\CategoriesController@edit', ['category' => $category->id])
+            ->with('message', 'Category deleted sucessfully!');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Category  $category
+     * @return \Illuminate\Http\Response
+     */
     public function destroy(Category $category)
     {
         $this->authorize('destroy', Category::class);
+
+        $category->forceDelete();
+
+        return redirect()
+            ->action('Dashboard\CategoriesController@index')
+            ->with('message', 'Category destroyed sucessfully!');
     }
 }

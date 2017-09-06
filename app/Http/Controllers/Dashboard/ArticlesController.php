@@ -19,18 +19,25 @@ class ArticlesController extends Controller
      */
     public function index(Request $request, $paginate = 10)
     {
+        $categories = Category::all();
+
         $this->validate($request, [
             'status' => 'nullable|string',
             'title' => 'nullable|string',
             'id' => 'nullable|numeric',
             'paginate' => 'nullable|numeric',
-            'trashed' => 'nullable|bool'
+            'trashed' => 'nullable|bool',
+            'category_id' => 'nullable|integer|exists:categories,id'
         ]);
 
         $query = Article::with('user.profile');
 
         if ($request->filled('status')) {
             $query->where('status', $request->input('status'));
+        }
+
+        if ($request->filled('paginate')) {
+            $paginate = $request->input('paginate');
         }
 
         if ($request->filled('title')) {
@@ -41,8 +48,8 @@ class ArticlesController extends Controller
             $query->where('id', $request->input('id'));
         }
 
-        if ($request->filled('paginate')) {
-            $paginate = $request->input('paginate');
+        if ($request->filled('category_id')) {
+            $query->where('category_id', $request->input('category_id'));
         }
 
         if ($request->input('trashed')) {
@@ -53,6 +60,7 @@ class ArticlesController extends Controller
         $articles = $query->paginate($paginate);
 
         return view('dashboard.articles.list', [
+            'categories' => $categories,
             'articles' => $articles
         ]);
     }

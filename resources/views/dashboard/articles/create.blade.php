@@ -93,9 +93,6 @@
 	                                        <label for=""><h4>Publish as</h4></label>
 	                                        <select name="status" id="" class="form-control">
 	                                            <option value="draft">Draft</option>
-	                                            @if (Auth::user()->isEditor() or Auth::user()->isAdmin())
-                                                    <option value="published">Published</option>
-	                                            @endif
 	                                        </select>
 	                                    </div>
 	                                </div>
@@ -105,7 +102,7 @@
                                     <div class="col-sm-4">
 	                                    <div class="form-group">
 	                                        <label for=""><h4>Show image?</h4></label>
-                                            <select name="show_image" id="" class="form-control">
+                                            <select name="show_image" class="form-control">
 	                                            <option value="0">No</option>
 	                                            <option value="1">Yes</option>
 	                                        </select>
