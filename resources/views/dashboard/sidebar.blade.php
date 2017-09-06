@@ -24,6 +24,12 @@
                 </ul>
             </li>
 
+            @can('view', \App\Category::class)
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('dashboard.categories.index') }}"><i class="icon-puzzle"></i> Categories</a>
+                </li>
+            @endcan
+
             @if (Auth::user()->isAdmin())
                 <li class="divider"></li>
                 <li class="nav-title">
@@ -32,10 +38,6 @@
 
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('dashboard.users.index') }}" target="_top"><i class="icon-star"></i> Users</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('dashboard.categories.index') }}"><i class="icon-puzzle"></i> Categories</a>
                 </li>
 
                 <li class="nav-item">

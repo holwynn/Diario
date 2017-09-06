@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Category;
+use App\User;
 
 class CategoriesController extends Controller
 {
@@ -15,17 +16,11 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $categories = Category::all();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return view('dashboard.categories.list', [
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -36,18 +31,17 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $this->authorize('create', Category::class);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Category $category)
-    {
-        //
+        $data = $this->validate($request, [
+            'name' => 'required|string|unique:categories,name'
+        ]);
+
+        $category = Category::create($data);
+
+        return redirect()
+            ->action('Dashboard\CategoriesController@edit', ['category' => $category->id])
+            ->with('message', 'Category created sucessfully!');
     }
 
     /**
@@ -58,7 +52,13 @@ class CategoriesController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        $editors = User::where('roles', 'LIKE', '%ROLE_EDITOR%')
+            ->get();
+
+        return view('dashboard.categories.edit', [
+            'category' => $category,
+            'editors' => $editors
+        ]);
     }
 
     /**
@@ -70,7 +70,18 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $this->authorize('update', Category::class);
+
+        $data = $this->validate($request, [
+            'name' => 'required|string|unique:categories,name'
+        ]);
+
+        $category->update($data);
+        $category->save();
+
+        return redirect()
+            ->action('Dashboard\CategoriesController@edit', ['category' => $category->id])
+            ->with('message', 'Category updated sucessfully!');
     }
 
     /**
@@ -81,6 +92,6 @@ class CategoriesController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $this->authorize('destroy', Category::class);
     }
 }

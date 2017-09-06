@@ -52,6 +52,15 @@
 	                                <button type="submit" class="btn btn-sm btn-primary">Submit</button>
 	                            </div>
 	                        </form>
+
+                            <form action="{{ route('dashboard.categories.delete', ['category' => $category]) }}" method="post">
+                                {{ csrf_field() }}
+                                <input type="hidden" name="_method" value="DELETE">
+
+                                <div class="form-group form-actions">
+                                    <button type="submit" class="btn btn-sm btn-danger">Delete category</button>
+                                </div>
+                            </form>
 	                    </div>
 	                </div>
 	            </div>
@@ -64,25 +73,26 @@
 	                        <strong>Editors</strong>
 	                    </div>
 	                    <div class="card-block">
-                            @if (count($category->editor) > 0)
+                            @if (count($category->editors) > 0)
                                 <table class="table table-condensed">
     	                            <thead>
     	                                <tr>
     	                                    <th>Name</th>
+                                            <th>Username</th>
                                             <th>Email</th>
                                             <th>Options</th>
     	                                </tr>
     	                            </thead>
     	                            <tbody>
-                                        @foreach($category->editor as $editor)
+                                        @foreach($category->editors as $editor)
                                             <tr>
-                                                <td>{{ $editor->user->name}}</td>
+                                                <td>{{ $editor->user->profile->name}}</td>
+                                                <td>{{ $editor->user->name }}</td>
                                                 <td>{{ $editor->user->email }}</td>
                                                 <td>
-                                                    <form action="{{ route('dashboard.editors.delete') }}" method="post">
+                                                    <form action="{{ route('dashboard.editors.destroy', ['editor' => $editor]) }}" method="post">
                                                         {{ csrf_field() }}
                                                         <input type="hidden" name="_method" value="DELETE">
-                                                        <input type="hidden" name="id" value="{{ $editor->id }}">
 
                                                         <div class="form-group form-actions">
                         	                                <button type="submit" class="btn btn-sm btn-danger">Remove editor</button>
@@ -105,7 +115,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <strong>Add editor</strong>
+                            <strong>Add editor to this category</strong>
                         </div>
                         <div class="card-block">
                             <form action="{{ route('dashboard.editors.store') }}" method="post">
@@ -116,8 +126,8 @@
                                     <div class="col-md-6">
                                         <select id="user" name="user_id" class="form-control" size="1" required>
                                             <option value="">Select a qualified Editor</option>
-                                            @foreach ($qualifiedEditors as $editor)
-                                                <option value="{{ $editor->id }}">{{ $editor->name }}</option>
+                                            @foreach ($editors as $editor)
+                                                <option value="{{ $editor->id }}">{{ $editor->profile->name }} ({{ $editor->name }})</option>
                                             @endforeach
                                         </select>
                                     </div>

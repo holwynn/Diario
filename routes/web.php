@@ -30,15 +30,23 @@ Route::group(config('routes.dashboard'), function() {
     /**
      * Category routes
      */
+    Route::post('/categories/{category}/restore', 'CategoriesController@restore')->name('categories.restore');
+    Route::delete('/categories/{category}/delete', 'CategoriesController@delete')->name('categories.delete');
     Route::resource('/categories', 'CategoriesController');
 
     /**
      * User routes
      */
-    Route::resource('/users', 'CategoriesController');
+    Route::resource('/users', 'UsersController');
 
     /**
      * Frontblock routes
      */
     Route::resource('/frontblocks', 'FrontblocksController');
+
+    /**
+     * Editor routes
+     */
+    Route::post('/editors', 'EditorsController@store')->name('editors.store');
+    Route::delete('/editors/{editor}/destroy', 'EditorsController@destroy')->name('editors.destroy');
 });

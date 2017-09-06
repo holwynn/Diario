@@ -50,40 +50,37 @@
                                     @endforeach
 	                            </tbody>
 	                        </table>
-
-                            {{ $categories->links() }}
-
 	                    </div>
 	                </div>
 	            </div>
 	        </div>
 
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="card">
-	                    <div class="card-header">
-	                        <i class="fa fa-align-justify"></i> <strong>Create new category</strong>
-	                    </div>
-
-                        <div class="card-block">
-                            <form action="{{ route('dashboard.categories.store') }}" method="post">
-                                {{ csrf_field() }}
-
-	                            <div class="form-group">
-	                                <div class="input-group">
-	                                    <span class="input-group-addon input-group-addon-min">Name</span>
-	                                    <input type="text" id="name" name="name" class="form-control">
-	                                </div>
-	                            </div>
-
-	                            <div class="form-group form-actions">
-	                                <button type="submit" class="btn btn-sm btn-primary">Submit</button>
-	                            </div>
-	                        </form>
-                        </div>
+          <div class="row">
+              <div class="col-lg-12">
+                  <div class="card">
+                    <div class="card-header">
+                        <i class="fa fa-align-justify"></i> <strong>Create new category</strong>
                     </div>
-                </div>
-            </div>
+
+                      <div class="card-block">
+                          <form action="{{ route('dashboard.categories.store') }}" method="post">
+                              {{ csrf_field() }}
+
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon input-group-addon-min">Name</span>
+                                    <input type="text" id="name" name="name" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group form-actions">
+                                <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+                            </div>
+                        </form>
+                      </div>
+                  </div>
+              </div>
+          </div>
 	    </div>
 	</div>
 @endsection

@@ -62,10 +62,11 @@ class User extends Authenticatable
     public function getEditorOfAttribute()
     {
         if (!$this->isEditor()) {
-            return false;
+            return [];
         }
 
         $editors = $this->editors;
+        $categories = [];
 
         foreach ($editors as $category) {
             $categories[] = $category->category_id;
