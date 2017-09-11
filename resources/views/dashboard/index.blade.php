@@ -37,12 +37,12 @@
 									</div>
 								</div>
 							</div>
-							<div class="footer">
+							{{-- <div class="footer">
 								<hr />
 								<div class="stats">
 									<i class="ti-reload"></i> All time
 								</div>
-							</div>
+							</div> --}}
 						</div>
 					</div>
 				</div>
@@ -60,12 +60,6 @@
 										<p>Comments</p>
 										{{ $commentsCount }}
 									</div>
-								</div>
-							</div>
-							<div class="footer">
-								<hr />
-								<div class="stats">
-									<i class="ti-calendar"></i> Last day
 								</div>
 							</div>
 						</div>
@@ -87,12 +81,6 @@
 									</div>
 								</div>
 							</div>
-							<div class="footer">
-								<hr />
-								<div class="stats">
-									<i class="ti-calendar"></i> Last day
-								</div>
-							</div>
 						</div>
 					</div>
 				</div>
@@ -110,12 +98,6 @@
 										<p>Followers</p>
 										{{ $followersCount }}
 									</div>
-								</div>
-							</div>
-							<div class="footer">
-								<hr />
-								<div class="stats">
-									<i class="ti-timer"></i> Last day
 								</div>
 							</div>
 						</div>
