@@ -32,15 +32,15 @@
 								</div>
 								<div class="col-xs-7">
 									<div class="numbers">
-										<p>Capacity</p>
-										105GB
+										<p>Articles</p>
+										{{ $articlesCount }}
 									</div>
 								</div>
 							</div>
 							<div class="footer">
 								<hr />
 								<div class="stats">
-									<i class="ti-reload"></i> Updated now
+									<i class="ti-reload"></i> All time
 								</div>
 							</div>
 						</div>
@@ -57,8 +57,8 @@
 								</div>
 								<div class="col-xs-7">
 									<div class="numbers">
-										<p>Revenue</p>
-										$1,345
+										<p>Comments</p>
+										{{ $commentsCount }}
 									</div>
 								</div>
 							</div>
@@ -82,15 +82,15 @@
 								</div>
 								<div class="col-xs-7">
 									<div class="numbers">
-										<p>Errors</p>
-										23
+										<p>Total users</p>
+										{{ $usersCount }}
 									</div>
 								</div>
 							</div>
 							<div class="footer">
 								<hr />
 								<div class="stats">
-									<i class="ti-timer"></i> In the last hour
+									<i class="ti-calendar"></i> Last day
 								</div>
 							</div>
 						</div>
@@ -108,14 +108,14 @@
 								<div class="col-xs-7">
 									<div class="numbers">
 										<p>Followers</p>
-										+45
+										{{ $followersCount }}
 									</div>
 								</div>
 							</div>
 							<div class="footer">
 								<hr />
 								<div class="stats">
-									<i class="ti-reload"></i> Updated now
+									<i class="ti-timer"></i> Last day
 								</div>
 							</div>
 						</div>
