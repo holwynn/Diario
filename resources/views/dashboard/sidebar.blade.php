@@ -19,7 +19,7 @@
           <p>Articles</p>
         </a>
       </li>
-      @can('view', \App\Category::class)
+      @can ('list', \App\Category::class)
       <li class="{{ starts_with(Request::route()->getName(), 'dashboard.categories') ? 'active' : '' }}">
         <a href="{{ route('dashboard.categories.index') }}">
           <i class="ti-view-list-alt"></i>
@@ -27,16 +27,24 @@
         </a>
       </li>
       @endcan
+      @can ('list', \App\User::class)
+      <li class="{{ starts_with(Request::route()->getName(), 'dashboard.users') ? 'active' : '' }}">
+        <a href="{{ route('dashboard.users.index') }}">
+          <i class="ti-user"></i>
+          <p>Users</p>
+        </a>
+      </li>
+      @endcan
       <li class="{{ starts_with(Request::route()->getName(), 'dashboard.profiles') ? 'active' : '' }}">
         <a href="{{ route('dashboard.profiles.edit', ['id' => Auth::user()->id]) }}">
-          <i class="ti-user"></i>
+          <i class="ti-file"></i>
           <p>My profile</p>
         </a>
       </li>
       <li class="{{ starts_with(Request::route()->getName(), 'dashboard.account') ? 'active' : '' }}">
-        <a href="account.html">
+        <a href="{{ route('dashboard.users.edit', ['id' => Auth::user()->id]) }}">
           <i class="ti-lock"></i>
-          <p>Account settings</p>
+          <p>My account</p>
         </a>
       </li>
       <li class="active-pro">

@@ -1,116 +1,101 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Admin Dashboard - Editing profile')
-
-@section('breadcrumb')
-	<ol class="breadcrumb">
-	    <li class="breadcrumb-item">Home</li>
-	    <li class="breadcrumb-item">Settings</li>
-	    <li class="breadcrumb-item active">My profile</li>
-	</ol>
-@endsection
+@section('title', 'Admin Dashboard - Editing user')
 
 @section('content')
-	<div class="container-fluid">
-	    <div class="animated fadeIn">
-	        <div class="row">
-	            <div class="col-lg-6 col-md-12">
-	                <div class="card">
-	                    <div class="card-header">
-	                        <strong>Profile settings</strong>
-	                    </div>
-	                    <div class="card-block">
+<div class="main-panel">
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Users</a>
+      </div>
+    </div>
+  </nav>
 
-                            @if (session('message'))
-	                    	    <div class="bg-success">
-                                    {{ session('message') }}
-	                    	    </div>
-                            @endif
+  <div class="content">
+    <div class="container-fluid">
+      <div class="row">
+        @if (session('message'))
+        <div class="alert alert-info">
+          <span>{{ session('message') }}</span>
+        </div>
+        @endif
 
-                            @if (count($errors) > 0)
-                                <div class="">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
+        @if (count($errors) > 0)
+        <div class="alert alert-danger">
+          @foreach ($errors->all() as $error)
+          <span>{{ $error }}</span>
+          @endforeach
+        </div>
+        @endif
 
-	                        <form action="{{ route('dashboard.users.update', ['id' => $user->id]) }}" method="post">
-                                {{ csrf_field() }}
-                                <input type="hidden" name="_method" value="PUT">
+        @if ($user->id != Auth::id())
+        <div class="alert alert-info">
+          <span>This is not your user settings! Be careful!</span>
+        </div>
+        @endif
+      </div>
 
-	                            <div class="form-group">
-	                                <div class="input-group">
-	                                    <span class="input-group-addon input-group-addon-min">Name</span>
-	                                    <input type="text" id="name" value="{{ $user->name }}" name="name" class="form-control">
-	                                    <span class="input-group-addon"><i class="fa fa-user"></i>
-	                                    </span>
-	                                </div>
-	                            </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="header">
+              <h4 class="title">Edit settings</h4>
+            </div>
+            <div class="content">
+              <form action="{{ route('dashboard.users.update', ['id' => $user->id]) }}" method="post">
+                {{ csrf_field() }}
+                <input type="hidden" name="_method" value="PUT">
 
-	                            <div class="form-group">
-	                                <div class="input-group">
-	                                    <span class="input-group-addon input-group-addon-min">Email</span>
-	                                    <input type="email" id="email" value="{{ $user->email }}" name="email" class="form-control">
-	                                    <span class="input-group-addon"><i class="fa fa-envelope"></i>
-	                                    </span>
-	                                </div>
-	                            </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Username</label>
+                      <input type="text" class="form-control border-input" value="{{ $user->name }}" disabled>
+                    </div>
+                  </div>
+                </div>
 
-	                            <div class="form-group">
-	                                <div class="input-group">
-	                                    <span class="input-group-addon input-group-addon-min">Password</span>
-	                                    <input type="password" id="password" name="password" class="form-control">
-	                                    <span class="input-group-addon"><i class="fa fa-asterisk"></i>
-	                                    </span>
-	                                </div>
-	                            </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Email</label>
+                      <input type="email" class="form-control border-input" name="email" value="{{ $user->email }}" placeholder="Email">
+                    </div>
+                  </div>
+                </div>
 
-	                            <div class="row">
-	                                <div class="col-sm-12">
-	                                    <div class="form-group">
-	                                        <label for="">Comment</label>
-	                                        <textarea name="comment" id="" cols="30" rows="10" placeholder="Comment" class="form-control">{{ $user->comment }}</textarea>
-	                                    </div>
-	                                </div>
-	                            </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Current password</label>
+                      <input type="password" class="form-control border-input" name="current_password" value="password" placeholder="Password">
+                    </div>
+                  </div>
+                </div>
 
-                                @if (Auth::user()->isAdmin())
-                                    <div class="row">
-                                        <label for="" class="col-md-3 form-control-label">Roles</label>
-                                        <div class="col-md-9">
-                                            <div class="checkbox">
-                                                <label for="">
-                                                    <input type="checkbox" name="roles[]" value="ROLE_ADMIN" {{ ($user->isAdmin()) ? 'checked' : '' }}> Administrator
-                                                </label>
-                                            </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>New password</label>
+                      <input type="password" class="form-control border-input" name="password" placeholder="Password">
+                    </div>
+                  </div>
+                </div>
 
-                                            <div class="checkbox">
-                                                <label for="">
-                                                    <input type="checkbox" name="roles[]" value="ROLE_EDITOR" {{ ($user->isEditor()) ? 'checked' : '' }}> Editor
-                                                </label>
-                                            </div>
-
-                                            <div class="checkbox">
-                                                <label for="">
-                                                    <input type="checkbox" name="roles[]" value="ROLE_WRITER" {{ ($user->isWriter()) ? 'checked' : '' }}> Writer
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
-
-
-	                            <div class="form-group form-actions">
-	                                <button type="submit" class="btn btn-sm btn-primary">Submit</button>
-	                            </div>
-	                        </form>
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
-	    </div>
-	</div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary btn-fill">Update settings</button>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  @include('dashboard.footer')
+</div>
 @endsection

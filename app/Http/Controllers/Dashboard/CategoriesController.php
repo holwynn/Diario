@@ -16,6 +16,8 @@ class CategoriesController extends Controller
      */
     public function index()
     {
+        $this->authorize('list', Category::class);
+
         $categories = Category::all();
 
         return view('dashboard.categories.list', [
@@ -52,6 +54,8 @@ class CategoriesController extends Controller
      */
     public function edit(Category $category)
     {
+        $this->authorize('update', Category::class);
+
         $editors = User::where('roles', 'LIKE', '%ROLE_EDITOR%')
             ->get();
 
