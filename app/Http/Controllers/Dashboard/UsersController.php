@@ -17,6 +17,7 @@ class UsersController extends Controller
     public function index()
     {
         $this->authorize('list', User::class);
+        
         $users = User::with('profile')->paginate(10);
 
         return view('dashboard.users.list', [
@@ -32,7 +33,7 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
-        $this->authorize('view', User::class);
+        $this->authorize('view', $user);
 
         return view('dashboard.users.edit', [
             'user' => $user
@@ -48,7 +49,7 @@ class UsersController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $this->authorize('update', User::class);
+        $this->authorize('update', $user);
 
         $data = $this->validate($request, [
             'current_password' => 'required|string',
