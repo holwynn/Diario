@@ -2,25 +2,25 @@
   <div class="sidebar-wrapper">
     <div class="logo">
       <a href="{{ route('dashboard.index') }}" class="simple-text">
-        Elwynn
+        {{ config('app.name') }}
       </a>
     </div>
 
     <ul class="nav">
-      <li class="{{ starts_with(Request::route()->getName(), 'dashboard.index') ? 'active' : '' }}">
+      <li class="{{ Request::is('dashboard') ? 'active' : '' }}">
         <a href="{{ route('dashboard.index') }}">
           <i class="ti-panel"></i>
           <p>Dashboard</p>
         </a>
       </li>
-      <li class="{{ starts_with(Request::route()->getName(), 'dashboard.articles') ? 'active' : '' }}">
+      <li class="{{ Request::segment(2) == 'articles' ? 'active' : '' }}">
         <a href="{{ route('dashboard.articles.index') }}">
           <i class="ti-notepad"></i>
           <p>Articles</p>
         </a>
       </li>
       @can ('list', \App\Category::class)
-      <li class="{{ starts_with(Request::route()->getName(), 'dashboard.categories') ? 'active' : '' }}">
+      <li class="{{ Request::segment(2) == 'categories' ? 'active' : '' }}">
         <a href="{{ route('dashboard.categories.index') }}">
           <i class="ti-view-list-alt"></i>
           <p>Categories</p>
@@ -28,20 +28,29 @@
       </li>
       @endcan
       @can ('list', \App\User::class)
-      <li class="{{ starts_with(Request::route()->getName(), 'dashboard.users') ? 'active' : '' }}">
+      {{-- 
+        We want the Users sidebar link to be active if we are editing any user
+        profile or user account EXCEPT the currently logged in user, for
+        which case we have 2 special links below (MY profile and MY account)
+       --}}
+      <li class="{{ ((Request::segment(2) == 'users' 
+                  || Request::segment(2) == 'profiles')
+                  && !Request::is('dashboard/profiles/'.Auth::user()->id.'/edit') 
+                  && !Request::is('dashboard/users/'.Auth::user()->id.'/edit')) 
+                  ? 'active' : '' }}">
         <a href="{{ route('dashboard.users.index') }}">
           <i class="ti-user"></i>
           <p>Users</p>
         </a>
       </li>
       @endcan
-      <li class="{{ starts_with(Request::route()->getName(), 'dashboard.profiles') ? 'active' : '' }}">
+      <li class="{{ Request::is('dashboard/profiles/'.Auth::user()->id.'/edit') ? 'active' : '' }}">
         <a href="{{ route('dashboard.profiles.edit', ['id' => Auth::user()->id]) }}">
           <i class="ti-file"></i>
           <p>My profile</p>
         </a>
       </li>
-      <li class="{{ starts_with(Request::route()->getName(), 'dashboard.account') ? 'active' : '' }}">
+      <li class="{{ Request::is('dashboard/users/'.Auth::user()->id.'/edit') ? 'active' : '' }}">
         <a href="{{ route('dashboard.users.edit', ['id' => Auth::user()->id]) }}">
           <i class="ti-lock"></i>
           <p>My account</p>
