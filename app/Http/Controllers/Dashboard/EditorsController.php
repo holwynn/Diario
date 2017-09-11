@@ -23,7 +23,9 @@ class EditorsController extends Controller
 
         Editor::create($data);
 
-        return back();
+        return redirect()
+            ->action('Dashboard\CategoriesController@edit', ['category' => $data['category_id']])
+            ->with('message', 'Editor added successfully!');
     }
 
     /**
@@ -34,8 +36,11 @@ class EditorsController extends Controller
      */
     public function destroy(Editor $editor)
     {
+        $category_id = $editor->category_id;
         Editor::destroy($editor->id);
 
-        return back();
+        return redirect()
+            ->action('Dashboard\CategoriesController@edit', ['category' => $category_id])
+            ->with('message', 'Editor removed successfully!');
     }
 }
