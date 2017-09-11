@@ -3,200 +3,199 @@
 @section('title', 'Admin Dashboard - Editing Article')
 
 @section('javascripts')
-    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
-    <script>tinymce.init({ selector:'textarea' });</script>
-@endsection
-
-@section('breadcrumb')
-	<ol class="breadcrumb">
-	    <li class="breadcrumb-item">Home</li>
-	    <li class="breadcrumb-item">Articles</li>
-	    <li class="breadcrumb-item active">Edit</li>
-	</ol>
+<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+<script>tinymce.init({ selector:'textarea' });</script>
 @endsection
 
 @section('content')
-	<div class="container-fluid">
-	    <div class="animated fadeIn">
-	        <div class="row">
-	            <div class="col-sm-12">
-	                <div class="card">
-	                    <div class="card-header">
-	                        <strong>Edit article</strong>
-	                    </div>
-	                    <div class="card-block">
+<div class="main-panel">
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Articles</a>
+      </div>
+    </div>
+  </nav>
 
-                            @if (session('message'))
-                                <div class="bg-success">
-                                    {{ session('message') }}
-                                </div>
-                            @endif
+  <div class="content">
+    <div class="container-fluid">
+      <div class="row">
+        @if (session('message'))
+        <div class="alert alert-success">
+          <span>{{ session('message') }}</span>
+        </div>
+        @endif
 
-                            @if (count($errors) > 0)
-                                <div class="bg-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
+        @if (count($errors) > 0)
+        <div class="alert alert-danger">
+          @foreach ($errors->all() as $error)
+          <span>{{ $error }}</span>
+          @endforeach
+        </div>
+        @endif
 
-                            @if ($article->trashed())
-                                <div class="bg-danger">
-                                    You are viewing a deleted article. To edit this article, it must be restored by an Editor first.
-                                </div>
-                            @endif
+        @if ($article->trashed())
+        <div class="alert alert-danger">
+          <span>You are viewing a deleted article. To edit this article, it must be restored by an Editor first.</span>
+        </div>
+        @endif
 
-                            @if ($article->user_id != Auth::id())
-                                <div class="bg-primary">
-                                    This article was written by <strong>{{ $article->user->profile->name }}</strong>. Be careful when editing articles that don't belong to you!
-                                </div>
-                            @endif
+        @if ($article->user_id != Auth::id())
+        <div class="alert alert-info">
+          <span>This article was written by <strong>{{ $article->user->profile->name }}</strong>. Be careful when editing articles that don't belong to you!</span>
+        </div>
+        @endif
+      </div>
+      
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="header">
+              <h4 class="title">Edit article</h4>
+            </div>
+            <div class="content">
+              <form method="POST" action="{{ route('dashboard.articles.update', ['id' => $article->id]) }}" enctype="multipart/form-data">
+                {{ csrf_field() }}
+                <input type="hidden" name="_method" value="PUT">
 
-	                        <form method="POST" action="{{ route('dashboard.articles.update', ['id' => $article->id]) }}" enctype="multipart/form-data">
-                                {{ csrf_field() }}
-	                        	<input type="hidden" name="_method" value="PUT">
-
-	                            <div class="row">
-	                                <div class="col-sm-12">
-	                                    <div class="form-group">
-	                                        <label for="name"><h4>Title</h4></label>
-	                                        <input type="text" class="form-control" name="title" id="name" value="{{ $article->title }}" placeholder="Article title">
-	                                    </div>
-	                                </div>
-	                            </div>
-
-	                            <div class="row">
-	                                <div class="col-sm-12">
-	                                    <div class="form-group">
-	                                        <label for="slug"><h4>Slug</h4></label>
-	                                        <input type="text" class="form-control" name="slug" value="{{ $article->slug }}" placeholder="Article slug (optional)">
-	                                    </div>
-	                                </div>
-	                            </div>
-
-	                            <div class="row">
-	                                <div class="col-sm-12">
-	                                    <div class="form-group">
-	                                        <label for=""><h4>Content</h4></label>
-	                                        <textarea name="content" id="" cols="30" rows="10" placeholder="Article content" class="form-control">{{ $article->content }}</textarea>
-	                                    </div>
-	                                </div>
-	                            </div>
-
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label for="category"><h4>Category</h4></label>
-	                                        <select name="category_id" id="category" class="form-control">
-                                                @foreach ($categories as $category)
-                                                    <option value="{{ $category->id }}"
-                                                      {{ $article->category->id == $category->id ? 'selected=select' : '' }}>
-                                                        {{ ucfirst($category->name) }}
-                                                    </option>
-                                                @endforeach
-	                                        </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label for="tags"><h4>Tags</h4></label>
-                                            <input type="text" class="form-control" name="tags" value="{{ $article->tags }}" placeholder="Article tags (optional)">
-                                        </div>
-                                    </div>
-                                </div>
-
-	                            <div class="row">
-	                                <div class="col-sm-4">
-	                                    <div class="form-group">
-	                                        <label for=""><h4>Status</h4></label>
-	                                        <select name="status" id="status" class="form-control">
-                                                @can('publish', $article)
-                                                    <option value="published" {{ $article->status == 'published' ? 'selected="select"' : '' }}>Published</option>
-	                                            @endcan
-	                                            <option value="draft" {{ $article->status == 'draft' ? 'selected="select"' : '' }}>Draft</option>
-	                                        </select>
-	                                    </div>
-	                                </div>
-	                            </div>
-
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label for=""><h4>Show image?</h4></label>
-                                            <select name="show_image" id="" class="form-control">
-                                                <option value="0" {{ $article->show_image == false ? 'selected="select"' : '' }}>No</option>
-                                                <option value="1" {{ $article->show_image == true ? 'selected="select"' : ''}}>Yes</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label for=""><h4>Image file</h4></label>
-                                            <div class="col-md-9">
-                                                <input type="file" id="image" name="image">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-	                            @if (!$article->trashed())
-                                    <div class="row">
-    	                                <div class="col-sm-12">
-    	                                    <div class="form-group">
-                                                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Apply changes</button>
-    	                                    </div>
-    	                                </div>
-    	                            </div>
-                                @endif
-
-	                        </form>
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
-
-            @if (Auth::user()->isEditor() or Auth::user()->isAdmin())
                 <div class="row">
-                    <div class="col-sm-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <strong>Danger zone</strong>
-                            </div>
-                            <div class="card-block">
-                                @if ($article->trashed())
-                                    <form method="POST" action="{{ route('dashboard.articles.restore', ['id' => $article->id]) }}">
-                                        {{ csrf_field() }}
-                                        <button class="btn btn-sm btn-primary"><i class="fa fa-ban"></i> Restore article</button>
-                                    </form>
-                                @else
-                                    <form method="POST" action="{{ route('dashboard.articles.delete', ['id' => $article->id]) }}">
-                                        {{ csrf_field() }}
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <button class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Delete article</button>
-                                    </form>
-                                @endif
-                
-                                <hr>
-
-                                @can('destroy', $article)
-                                    <form method="POST" action="{{ route('dashboard.articles.destroy', ['id' => $article->id]) }}">
-                                        {{ csrf_field() }}
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <button class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Destroy article</button>
-                                    </form>
-                                @endcan
-                                
-                            </div>
-                        </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Title</label>
+                      <input type="text" class="form-control border-input" name="title" id="name" value="{{ $article->title }}" placeholder="Title">
                     </div>
+                  </div>
                 </div>
-            @endif
-	    </div>
-	</div>
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Slug</label>
+                      <input type="text" class="form-control border-input" name="slug" id="slug" value="{{ $article->slug }}" placeholder="Slug">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Content</label>
+                      <textarea name="content" id="content" class="form-control border-input" cols="30" rows="10">{{ $article->content }}</textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Tags</label>
+                      <input type="text" class="form-control border-input" name="tags" value="{{ $article->tags }}" placeholder="Tags">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="category">Category</label>
+                      <select name="category_id" id="category" class="form-control border-input">
+                        @foreach ($categories as $category)
+                        <option value="{{ $category->id }}"
+                          {{ $article->category->id == $category->id ? 'selected=select' : '' }}>
+                          {{ ucfirst($category->name) }}
+                        </option>
+                        @endforeach
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="">Status</label>
+                      <select name="status" id="status" class="form-control border-input">
+                        @can('publish', $article)
+                        <option value="published" {{ $article->status == 'published' ? 'selected="select"' : '' }}>Published</option>
+                        @endcan
+                        <option value="draft" {{ $article->status == 'draft' ? 'selected="select"' : '' }}>Draft</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="">Show image?</label>
+                      <select name="show_image" id="" class="form-control border-input">
+                        <option value="0" {{ $article->show_image == false ? 'selected="select"' : '' }}>No</option>
+                        <option value="1" {{ $article->show_image == true ? 'selected="select"' : ''}}>Yes</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="">Image file</label>
+                      <input type="file" id="image" name="image form-control border-input">
+                    </div>
+                  </div>
+                </div>
+
+                @if (!$article->trashed())
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <button type="submit" class="btn btn-fill btn-primary"><i class="fa fa-dot-circle-o"></i> Apply changes</button>
+                    </div>
+                  </div>
+                </div>
+                @endif
+
+                <div class="clearfix"></div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      @if (Auth::user()->isEditor() or Auth::user()->isAdmin())
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="header">
+              <h4 class="title">Danger zone</h4>
+            </div>
+            <div class="content">
+              @if ($article->trashed())
+              <form method="POST" action="{{ route('dashboard.articles.restore', ['id' => $article->id]) }}">
+                {{ csrf_field() }}
+                <button class="btn btn-fill btn-primary"><i class="fa fa-ban"></i> Restore article</button>
+              </form>
+              @else
+              <form method="POST" action="{{ route('dashboard.articles.delete', ['id' => $article->id]) }}">
+                {{ csrf_field() }}
+                <input type="hidden" name="_method" value="DELETE">
+                <button class="btn btn-fill btn-danger"><i class="fa fa-ban"></i> Delete article</button>
+              </form>
+              @endif
+
+              <hr>
+
+              @can('destroy', $article)
+              <form method="POST" action="{{ route('dashboard.articles.destroy', ['id' => $article->id]) }}">
+                {{ csrf_field() }}
+                <input type="hidden" name="_method" value="DELETE">
+                <button class="btn btn-fill btn-danger"><i class="fa fa-ban"></i> Destroy article</button>
+              </form>
+              @endcan
+            </div>
+          </div>
+        </div>
+      </div>
+      @endif
+    </div>
+  </div>
+  @include('dashboard.footer')
+</div>
 @endsection

@@ -1,76 +1,56 @@
-<div class="sidebar">
-    <nav class="sidebar-nav">
-        <ul class="nav">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('dashboard.index') }}"><i class="icon-speedometer"></i> Dashboard </a>
-            </li>
+<div class="sidebar" data-background-color="white" data-active-color="danger">
+  <div class="sidebar-wrapper">
+    <div class="logo">
+      <a href="{{ route('dashboard.index') }}" class="simple-text">
+        Elwynn
+      </a>
+    </div>
 
-            <li class="nav-title">
-                Administration
-            </li>
-            <li class="nav-item nav-dropdown">
-                <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-puzzle"></i> Articles</a>
-                <ul class="nav-dropdown-items">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('dashboard.articles.index') }}"><i class="icon-puzzle"></i> List</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('dashboard.articles.create') }}"><i class="icon-puzzle"></i> Create</a>
-                    </li>
+    <ul class="nav">
+      <li class="{{ starts_with(Request::route()->getName(), 'dashboard.index') ? 'active' : '' }}">
+        <a href="{{ route('dashboard.index') }}">
+          <i class="ti-panel"></i>
+          <p>Dashboard</p>
+        </a>
+      </li>
+      <li class="{{ starts_with(Request::route()->getName(), 'dashboard.articles') ? 'active' : '' }}">
+        <a href="{{ route('dashboard.articles.index') }}">
+          <i class="ti-notepad"></i>
+          <p>Articles</p>
+        </a>
+      </li>
+      @can('view', \App\Category::class)
+      <li class="{{ starts_with(Request::route()->getName(), 'dashboard.categories') ? 'active' : '' }}">
+        <a href="{{ route('dashboard.categories.index') }}">
+          <i class="ti-view-list-alt"></i>
+          <p>Categories</p>
+        </a>
+      </li>
+      @endcan
+      <li class="{{ starts_with(Request::route()->getName(), 'dashboard.profiles') ? 'active' : '' }}">
+        <a href="profile.html">
+          <i class="ti-user"></i>
+          <p>My profile</p>
+        </a>
+      </li>
+      <li class="{{ starts_with(Request::route()->getName(), 'dashboard.account') ? 'active' : '' }}">
+        <a href="account.html">
+          <i class="ti-lock"></i>
+          <p>Account settings</p>
+        </a>
+      </li>
+      <li class="active-pro">
+        <a class="nav-link" href="{{ url('/logout') }}"
+        onclick="event.preventDefault();
+        document.getElementById('logout-form').submit();" target="_top">
+        <i class="ti-arrow-left"></i>
+        <p>Logout</p>
+      </a>
 
-                    @if (Request::route()->getName() == 'dashboard.articles.edit')
-                        <a class="nav-link" href="/{{ Request::path() }}"><i class="icon-puzzle"></i> Editing</a>
-                    @endif
-                </ul>
-            </li>
-
-            @can('view', \App\Category::class)
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('dashboard.categories.index') }}"><i class="icon-puzzle"></i> Categories</a>
-                </li>
-            @endcan
-
-            @if (Auth::user()->isAdmin())
-                <li class="divider"></li>
-                <li class="nav-title">
-                    System
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('dashboard.users.index') }}" target="_top"><i class="icon-star"></i> Users</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('dashboard.frontblocks.index') }}"><i class="icon-puzzle"></i> Frontblocks</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="pages-register.html" target="_top"><i class="icon-star"></i> Logs</a>
-                </li>
-            @endif
-
-            <li class="divider"></li>
-            <li class="nav-title">
-                Settings
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('dashboard.users.edit', ['id' => Auth::id()]) }}" target="_top"><i class="icon-star"></i> My profile</a>
-            </li>
-
-            <li class="nav-item">
-
-                <a class="nav-link" href="{{ url('/logout') }}"
-                    onclick="event.preventDefault();
-                             document.getElementById('logout-form').submit();" target="_top">
-                    <i class="icon-star"></i> Logout
-                </a>
-
-                <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                    {{ csrf_field() }}
-                </form>
-            </li>
-
-        </ul>
-    </nav>
+      <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+        {{ csrf_field() }}
+      </form>
+    </li>
+  </ul>
+</div>
 </div>
