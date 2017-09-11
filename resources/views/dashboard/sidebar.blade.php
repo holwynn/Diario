@@ -28,7 +28,7 @@
       </li>
       @endcan
       <li class="{{ starts_with(Request::route()->getName(), 'dashboard.profiles') ? 'active' : '' }}">
-        <a href="profile.html">
+        <a href="{{ route('dashboard.profiles.edit', ['id' => Auth::user()->id]) }}">
           <i class="ti-user"></i>
           <p>My profile</p>
         </a>

@@ -40,6 +40,12 @@ Route::group(config('routes.dashboard'), function() {
     Route::resource('/users', 'UsersController');
 
     /**
+     * Profile routes
+     */
+    Route::get('/profiles/{profile}/edit', 'ProfilesController@edit')->name('profiles.edit');
+    Route::put('/profiles/{profile}', 'ProfilesController@update')->name('profiles.update');
+
+    /**
      * Frontblock routes
      */
     Route::resource('/frontblocks', 'FrontblocksController');
