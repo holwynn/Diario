@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Faker\Generator as Faker;
 
 class UsersTableSeeder extends Seeder
 {
@@ -9,7 +10,7 @@ class UsersTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(Faker $faker)
     {
         /**
          * First, let's create an administrator user with a few articles.
@@ -22,7 +23,11 @@ class UsersTableSeeder extends Seeder
         ]);
 
         $adminUser->profile()->create([
-            'name' => 'Michael Scott',
+            'first_name' => 'Michael',
+            'last_name' => 'Scott',
+            'address' => $faker->address,
+            'city' => 'Scranton, PA',
+            'country' => 'United States',
             'description' => 'Michael Scott is the regional manager of this newspaper.'
         ]);
 
@@ -39,7 +44,11 @@ class UsersTableSeeder extends Seeder
         ]);
 
         $editorUser->profile()->create([
-            'name' => 'Dwight K. Schrute',
+            'first_name' => 'Dwight',
+            'last_name' => 'Schrute',
+            'address' => $faker->address,
+            'city' => 'Scranton, PA',
+            'country' => 'United States',
             'description' => 'Dwigth is the assistant to the regional manager of this newspaper. He is also a karate blue belt and owner of a Schrute Farms.'
         ]);
 
