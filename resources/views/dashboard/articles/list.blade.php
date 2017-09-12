@@ -140,9 +140,13 @@
                     <td>{{ $article->user->profile->name}}</td>
                     <td>
                       @if ($article->trashed())
-                      <span class="badge badge-deleted">Deleted</span>
+                      <span class="alert alert-danger">Deleted</span>
+                      @elseif ($article->status == 'published')
+                      <span class="alert alert-success">
+                        {{ ucfirst($article->status) }}
+                      </span>
                       @else
-                      <span class="badge badge-{{ $article->status }}">
+                      <span class="alert alert-info">
                         {{ ucfirst($article->status) }}
                       </span>
                       @endif
