@@ -4,19 +4,7 @@
 
 @section('content')
 <div class="main-panel">
-	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar bar1"></span>
-					<span class="icon-bar bar2"></span>
-					<span class="icon-bar bar3"></span>
-				</button>
-				<a class="navbar-brand" href="#">Dashboard</a>
-			</div>
-		</div>
-	</nav>
+	@include('dashboard.nav', ['section' => 'Dashboard'])
 
 	<div class="content">
 		<div class="container-fluid">
@@ -37,6 +25,7 @@
 									</div>
 								</div>
 							</div>
+							{{-- No need for these footers yet but they are pretty cool --}}
 							{{-- <div class="footer">
 								<hr />
 								<div class="stats">

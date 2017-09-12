@@ -4,13 +4,7 @@
 
 @section('content')
 <div class="main-panel">
-  <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="#">Users</a>
-      </div>
-    </div>
-  </nav>
+  @include('dashboard.nav', ['section' => 'Users'])
 
   <div class="content">
     <div class="container-fluid">
@@ -48,7 +42,7 @@
                 <input type="hidden" name="_method" value="PUT">
 
                 <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-md-12">
                     <div class="form-group">
                       <label>Username</label>
                       <input type="text" class="form-control border-input" value="{{ $user->name }}" disabled>
@@ -66,7 +60,7 @@
                 </div>
 
                 <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-md-12">
                     <div class="form-group">
                       <label>Current password</label>
                       <input type="password" class="form-control border-input" name="current_password" value="password" placeholder="Password">
@@ -75,7 +69,7 @@
                 </div>
 
                 <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-md-12">
                     <div class="form-group">
                       <label>New password</label>
                       <input type="password" class="form-control border-input" name="password" placeholder="Password">

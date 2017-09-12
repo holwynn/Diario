@@ -4,13 +4,7 @@
 
 @section('content')
 <div class="main-panel">
-  <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="#">Users</a>
-      </div>
-    </div>
-  </nav>
+  @include('dashboard.nav', ['section' => 'Users'])
 
   <div class="content">
     <div class="container-fluid">
