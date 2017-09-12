@@ -57,6 +57,8 @@
 <!-- Paper Dashboard Core javascript and methods for Demo purpose -->
 <script src="/assets/js/paper-dashboard.js"></script>
 
+  @yield('javascripts')
+
 <script type="text/javascript">
   $(document).ready(function(){
     demo.initChartist();

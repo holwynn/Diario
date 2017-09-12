@@ -3,8 +3,10 @@
 @section('title', 'Admin Dashboard - Editing Article')
 
 @section('javascripts')
-<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
-<script>tinymce.init({ selector:'textarea' });</script>
+{{-- <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+<script>tinymce.init({ selector:'textarea' });</script> --}}
+<script src="//cdn.ckeditor.com/4.7.2/full/ckeditor.js"></script>
+<script>CKEDITOR.replace('content');</script>
 @endsection
 
 @section('content')
@@ -51,7 +53,13 @@
         <div class="col-md-12">
           <div class="card">
             <div class="header">
-              <h4 class="title">Edit article</h4>
+              <div class="pull-left">
+                <h4 class="title">Edit article</h4>
+              </div>
+              <div class="pull-right">
+                <h4 class="title"><a href="{{ route('article', ['title' => $article->seoUrl(), 'article' => $article->id]) }}" target="_blank">View article</a></h4>
+              </div>
+              <div class="clearfix"></div>
             </div>
             <div class="content">
               <form method="POST" action="{{ route('dashboard.articles.update', ['id' => $article->id]) }}" enctype="multipart/form-data">
