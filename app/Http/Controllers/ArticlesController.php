@@ -10,7 +10,7 @@ class ArticlesController extends Controller
 {
     public function show($title = '', Article $article)
     {
-        if ($article->trashed()) {
+        if ($article->trashed() || $article->status === 'draft') {
             abort(404);
         }
 
