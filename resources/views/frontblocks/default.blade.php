@@ -1,3 +1,4 @@
+{{-- TOOD: Manually fix indenation here because the sublime plugin can't handle this mess --}}
 <div class="col-sm-3 col-xs-12">
     <div class="left-1">
         @if ($frontblock->articlesArray[0]->show_image)

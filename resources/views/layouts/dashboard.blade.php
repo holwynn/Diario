@@ -57,7 +57,7 @@
 <!-- Paper Dashboard Core javascript and methods for Demo purpose -->
 <script src="/assets/js/paper-dashboard.js"></script>
 
-  @yield('javascripts')
+@yield('javascripts')
 
 <script type="text/javascript">
   $(document).ready(function(){
