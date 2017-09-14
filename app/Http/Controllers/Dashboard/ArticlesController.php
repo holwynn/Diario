@@ -6,7 +6,6 @@ use Auth;
 use Storage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Search\ArticleSearch;
 use App\Article;
 use App\Category;
 
@@ -31,11 +30,34 @@ class ArticlesController extends Controller
             'category_id' => 'nullable|integer|exists:categories,id'
         ]);
 
+        $query = Article::with('user.profile');
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->input('status'));
+        }
+
         if ($request->filled('paginate')) {
             $paginate = $request->input('paginate');
         }
 
-        $articles = ArticleSearch::dashboardIndex($request, $paginate);
+        if ($request->filled('title')) {
+            $query->where('title', 'LIKE', '%'.$request->input('title').'%');
+        }
+
+        if ($request->filled('id')) {
+            $query->where('id', $request->input('id'));
+        }
+
+        if ($request->filled('category_id')) {
+            $query->where('category_id', $request->input('category_id'));
+        }
+
+        if ($request->input('trashed')) {
+            $query->withTrashed();
+        }
+
+        $query->orderBy('id', 'DESC');
+        $articles = $query->paginate($paginate);
 
         return view('dashboard.articles.list', [
             'categories' => $categories,
