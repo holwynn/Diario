@@ -40,9 +40,16 @@
     
     <div class="row article-writer-profile">
       <div class="col-md-2 text-center">
-        <i class="fa fa-user fa-5x"></i> <br>
-        <i class="fa fa-twitter-square"></i> | 
-        <i class="fa fa-facebook-square"></i>
+        <i class="fa fa-user fa-5x"></i> <br> <br>
+        <ul class="list-inline">
+          @if ($article->user->profile->twitter_username)
+          <li><a href="https://twitter.com/{{ $article->user->profile->twitter_username }}" target="_blank"><i class="fa fa-twitter article-profile-social"></i></a></li>
+          @endif
+          
+          @if ($article->user->profile->facebook_username)
+          <li><a href="https://facebook.com/{{ $article->user->profile->facebook_username }}" target="_blank"><i class="fa fa-facebook article-profile-social"></i></a></li>
+          @endif
+        </ul>
       </div>
       <div class="col-md-10">
         <p><a href="#">{{ $article->user->profile->name }}</a></p>

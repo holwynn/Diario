@@ -42,6 +42,8 @@ class ProfilesController extends Controller
             'city' => 'nullable|string',
             'country' => 'nullable|string',
             'description' => 'nullable|string',
+            'twitter_username' => 'nullable|string',
+            'facebook_username' => 'nullable|string',
         ]);
 
         $user = Auth::user();

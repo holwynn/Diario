@@ -186,6 +186,10 @@ body {
     color: #f55 !important;
 }
 
+.article-profile-social {
+    font-size: 1.5em;
+}
+
 /*** Bootstrap Overrides ***/
 
 .btn {

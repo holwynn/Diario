@@ -16,7 +16,9 @@ class Profile extends Model
         'address',
         'city',
         'country',
-        'description'
+        'description',
+        'twitter_username',
+        'facebook_username'
     ];
     
     public function user()

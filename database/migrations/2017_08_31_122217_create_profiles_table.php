@@ -21,6 +21,8 @@ class CreateProfilesTable extends Migration
             $table->string('city')->nullable();
             $table->string('country')->nullable();
             $table->text('description')->nullable();
+            $table->text('twitter_username')->nullable();
+            $table->text('facebook_username')->nullable();
 
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');

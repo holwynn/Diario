@@ -90,6 +90,19 @@
                 </div>
 
                 <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label><i class="fa fa-twitter"></i> Twitter username</label>
+                      <input type="text" class="form-control border-input" name="twitter_username" value="{{ $profile->twitter_username }}" placeholder="Twitter username">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label><i class="fa fa-facebook-official"></i> Facebook username</label>
+                    <input type="text" class="form-control border-input" name="facebook_username" value="{{ $profile->facebook_username }}" placeholder="Facebook username">
+                  </div>
+                </div>
+
+                <div class="row">
                   <div class="col-md-12">
                     <button type="submit" class="btn btn-primary btn-fill">Update Profile</button>
                   </div>
