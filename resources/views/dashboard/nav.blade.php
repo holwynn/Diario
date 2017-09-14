@@ -18,6 +18,8 @@
             <b class="caret"></b>
           </a>
           <ul class="dropdown-menu">
+            <li><a href="{{ route('dashboard.profiles.edit', ['id' => Auth::user()->id]) }}">My Profile</a></li>
+            <li><a href="{{ route('dashboard.users.edit', ['id' => Auth::user()->id]) }}">My Account</a></li>
             <li>
               <a href="{{ url('/logout') }}" onclick="event.preventDefault();
               document.getElementById('logout-form').submit();" target="_top">Logout</a>
