@@ -17,6 +17,7 @@
   <div class="col-sm-8 col-xs-12">
     <div class="article-author-date">
       <p>{{ $article->created_at->formatLocalized(__('newspaper.date')) }}</p>
+      <p>{{ ucfirst($article->category->name) }}</p>
     </div>
 
     @can('edit', $article)
@@ -29,14 +30,29 @@
     <img src="{{ asset('/storage/' . $article->image) }}" class="img-responsive article-image image-shadow" alt="">
     
     <hr>
-    <div class="article-author-date">
-      <p>{{ $article->category->name }} - {{ $article->user->profile->name }}</p>
-    </div>
     <div class="row article-content">
-      <div class="col-xs-12">
+      <div class="col-md-12">
         {!! $article->content !!}
       </div>
     </div>
+
+    <hr>
+    
+    <div class="row article-writer-profile">
+      <div class="col-md-2 text-center">
+        <i class="fa fa-user fa-5x"></i> <br>
+        <i class="fa fa-twitter-square"></i> | 
+        <i class="fa fa-facebook-square"></i>
+      </div>
+      <div class="col-md-10">
+        <p><a href="#">{{ $article->user->profile->name }}</a></p>
+        <div>
+          {{ $article->user->profile->description }}
+        </div>
+      </div>
+    </div>
+
+
   </div>
 
   @if (count($relatedArticles) > 0)
