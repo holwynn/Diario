@@ -28,7 +28,9 @@ class UsersTableSeeder extends Seeder
             'address' => $faker->address,
             'city' => 'Scranton, PA',
             'country' => 'United States',
-            'description' => 'Michael Scott is the regional manager of this newspaper.'
+            'description' => 'Michael Scott is the regional manager of this newspaper.',
+            'twitter_username' => 'mscott',
+            'facebook_username' => 'mscott'
         ]);
 
         $adminUser->articles()->saveMany(factory(App\Article::class, 10)->make());
