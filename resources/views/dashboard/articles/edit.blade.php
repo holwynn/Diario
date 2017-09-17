@@ -138,7 +138,7 @@
                   <div class="col-sm-6">
                     <div class="form-group">
                       <label for="">Image file</label>
-                      <input type="file" id="image" name="image form-control border-input">
+                      <input type="file" id="image" name="image">
                     </div>
                   </div>
                 </div>
