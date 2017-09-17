@@ -79,7 +79,7 @@
 
                 <div class="row">
                   <div class="col-md-12">
-                    
+                    {{ Request::route()->parameters['user']->id }}
                   </div>
                 </div>
 
