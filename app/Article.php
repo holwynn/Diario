@@ -36,6 +36,8 @@ class Article extends Model
 
     public function seoUrl()
     {
-        return 'wip';
+        $remove = ['.', '$', ';', ':', '"', '?', '<', '>', '-'];
+        $subject = str_replace($remove, '', strtolower($this->title));
+        return trim(str_replace([' ', '--'], '-', $subject), '-');
     }
 }
