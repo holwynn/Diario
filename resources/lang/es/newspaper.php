@@ -23,6 +23,7 @@ return [
      * Article strings
      */
     'related' => 'Te puede interesar',
+    'share' => 'Compartir',
 
     /**
      * Footer strings

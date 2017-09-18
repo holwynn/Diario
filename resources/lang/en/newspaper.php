@@ -22,6 +22,7 @@ return [
      * Article strings
      */
     'related' => 'You might also like',
+    'share' => 'Share',
 
     /**
      * Footer strings

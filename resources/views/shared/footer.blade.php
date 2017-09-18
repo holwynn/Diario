@@ -24,7 +24,7 @@
                         <li><a class="footer-link" href="{{ route('login') }}">{{ __('newspaper.login') }}</a></li>
                         <li><a class="footer-link" href="{{ route('register') }}">{{ __('newspaper.register') }}</a></li>
                     @else
-                        <li><a class="footer-link" href="#">Mi Perfil</a></li>
+                        <li><a class="footer-link" href="{{ route('dashboard.index') }}">{{ __('newspaper.myaccount') }}</a></li>
                         <li>
                             <a class="footer-link" href="{{ url('/logout') }}"
                                 onclick="event.preventDefault();

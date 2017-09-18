@@ -30,7 +30,7 @@
 
     <div class="row article-content">
       <div class="col-sm-4">
-        <h4>Share this article</h4>
+        <h4>{{ __('newspaper.share') }}</h4>
       </div>
       <div class="col-sm-8">
         {!! $article->content !!}
@@ -71,7 +71,8 @@
   <a href="{{ route('article', ['id' => $article->id, 'title' => $article->seoUrl()])}}" class="title">
     <div class="col-sm-2 hidden-sm hidden-xs article-related-box">
       <h4 class="title article-related-box-title">{{ $article->title }}</h4>
-      <img src="{{ asset('/storage/' . $article->image) }}" class="img-responsive article-image image-shadow" alt="">
+      <hr class="soft-hr">
+      {{-- <img src="{{ asset('/storage/' . $article->image) }}" class="img-responsive article-image image-shadow" alt=""> --}}
     </div>
   </a>
   @endforeach
