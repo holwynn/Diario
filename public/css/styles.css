@@ -11,7 +11,7 @@ body {
 }
 
 .container {
-    max-width: 1000px;
+    
 }
 
 .top-menu {
@@ -173,6 +173,18 @@ body {
     line-height: 27px;
     letter-spacing: 0.15px;
     font-size: 1.26em;
+}
+
+.article-content a {
+    color: #404040;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.article-content a:hover {
+    color: #222222;
+    font-weight: bolder;
+    text-decoration: underline;
 }
 
 .article-related-box {

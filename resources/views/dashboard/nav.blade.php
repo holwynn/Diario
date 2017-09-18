@@ -18,7 +18,7 @@
             <b class="caret"></b>
           </a>
           <ul class="dropdown-menu">
-            <li><a href="{{ route('index') }}">Homepage</a></li>
+            <li><a href="{{ route('index') }}" target="_blank">Homepage</a></li>
             <li><a href="{{ route('dashboard.profiles.edit', ['id' => Auth::user()->id]) }}">My Profile</a></li>
             <li><a href="{{ route('dashboard.users.edit', ['id' => Auth::user()->id]) }}">My Account</a></li>
             <li>
