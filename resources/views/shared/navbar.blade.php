@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row hidden-sm hidden-xs">
     <div class="col-sm-12">
         <hr class="black-hr">
 

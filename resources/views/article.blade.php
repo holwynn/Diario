@@ -29,10 +29,10 @@
     <hr class="soft-hr">
 
     <div class="row article-content">
-      <div class="col-md-4">
+      <div class="col-sm-4">
         <h4>Share this article</h4>
       </div>
-      <div class="col-md-8">
+      <div class="col-sm-8">
         {!! $article->content !!}
       </div>
     </div>
@@ -40,7 +40,7 @@
     <hr>
     
     <div class="row article-writer-profile">
-      <div class="col-md-2 text-center">
+      <div class="col-md-2 col-sm-4 text-center">
         <i class="fa fa-user fa-5x"></i> <br> <br>
         <ul class="list-inline">
           @if ($article->user->profile->twitter_username)
@@ -53,7 +53,7 @@
         </ul>
       </div>
 
-      <div class="col-md-10">
+      <div class="col-md-10 col-sm-8">
         <p><a href="#">{{ $article->user->profile->name }}</a></p>
         <div>
           {{ $article->user->profile->description }}
@@ -65,11 +65,11 @@
 
   {{-- TODO: redo this spaghetti because it's not even wrapped in a .col --}}
   @if (count($relatedArticles) > 0)
-  <h3 class="text-center hidden-xs">{{ __('newspaper.related') }}</h3>
+  <h3 class="text-center hidden-sm hidden-xs">{{ __('newspaper.related') }}</h3>
   <hr>
   @foreach ($relatedArticles as $article)
   <a href="{{ route('article', ['id' => $article->id, 'title' => $article->seoUrl()])}}" class="title">
-    <div class="col-sm-2 hidden-xs article-related-box">
+    <div class="col-sm-2 hidden-sm hidden-xs article-related-box">
       <h4 class="title article-related-box-title">{{ $article->title }}</h4>
       <img src="{{ asset('/storage/' . $article->image) }}" class="img-responsive article-image image-shadow" alt="">
     </div>
