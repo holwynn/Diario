@@ -17,6 +17,7 @@ class CategoriesController extends Controller
             ->get();
 
         return view('category', [
+            'category' => $categoryName,
             'categories' => Category::all(),
             'articles' => $articles,
         ]);

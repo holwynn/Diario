@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title')
+@section('header')
 @include('shared.header')
 @endsection
 

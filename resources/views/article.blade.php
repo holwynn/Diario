@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
-@section('title')
+@section('title', $article->title)
+
+@section('header')
 @include('shared.header')
 @endsection
 

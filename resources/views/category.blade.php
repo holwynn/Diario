@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
-@section('title')
+@section('title', config('newspaper.name') . ' - ' . ucfirst($category))
+
+@section('header')
 @include('shared.header')
 @endsection
 
