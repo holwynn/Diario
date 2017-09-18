@@ -1,5 +1,5 @@
 {{-- TOOD: Manually fix indenation here because the sublime plugin can't handle this mess --}}
-<div class="col-sm-3 col-xs-12">
+<div class="col-sm-4 col-xs-12">
     <div class="left-1">
         @if ($frontblock->articlesArray[0]->show_image)
             <img class="img-responsive image-shadow" src="{{ asset('storage/'.$frontblock->articlesArray[0]->image) }}" alt="">
@@ -42,7 +42,7 @@
 
 </div>
 
-<div class="col-sm-9 col-xs-12">
+<div class="col-sm-8 col-xs-12">
 
     <div class="middle-1">
         @if ($frontblock->articlesArray[3]->show_image)
