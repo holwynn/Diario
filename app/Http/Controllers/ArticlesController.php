@@ -14,6 +14,16 @@ class ArticlesController extends Controller
             abort(404);
         }
 
+        // don't allow users to modify the optional title segment
+        // if they do, redirect them to the correct URI
+        if ($article->seourl() !== $title) {
+            return redirect()
+                ->route('article', [
+                    'title' => $article->seoUrl(), 
+                    'article' => $article]
+                );
+        }
+
         $categories = Category::all();
         $article = $article->load('user');
 
