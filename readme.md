@@ -1,3 +1,3 @@
-## Elwynn
+# Elwynn
 
-A simple online newspaper powered by Laravel.
+An online newspaper powered by Laravel.
