@@ -64,7 +64,19 @@ class UsersTableSeeder extends Seeder
             });
 
         /**
-         * Finally, some random default users
+         * A testable guest user
+         */
+        $guestUser = App\User::create([
+            'name' => 'Guesty McGuest',
+            'email' => 'guest@news.com',
+            'password' => bcrypt('secret'),
+            'roles' => ['ROLE_USER']
+        ]);
+
+        $guestUser->profile()->save(factory(App\Profile::class)->make());
+
+        /**
+         * Finally, some random guest users
          */
         factory(App\User::class, 10)->create()
             ->each(function($u) {
