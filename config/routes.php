@@ -13,7 +13,7 @@ return [
     'dashboard' => [
         'as' => 'dashboard.',
         'prefix' => 'dashboard',
-        'middleware' => 'auth',
+        'middleware' => ['auth', 'dashboard'],
         'namespace' => 'Dashboard'
     ],
 ];
