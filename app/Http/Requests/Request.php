@@ -11,11 +11,4 @@ abstract class Request extends FormRequest
     {
         return true;
     }
-
-    protected function failedValidation(Validator $validator)
-    {
-        $this->error('errors.fields');
-
-        parent::failedValidation($validator);
-    }
 }
