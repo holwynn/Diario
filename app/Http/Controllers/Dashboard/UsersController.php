@@ -5,15 +5,12 @@ namespace App\Http\Controllers\Dashboard;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateUserRequest;
+use App\Services\UserService;
 use App\User;
 
 class UsersController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $this->authorize('list', User::class);
@@ -25,12 +22,6 @@ class UsersController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
     public function edit(User $user)
     {
         $this->authorize('view', $user);
@@ -40,46 +31,17 @@ class UsersController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
         $this->authorize('update', $user);
 
-        $data = $this->validate($request, [
-            'current_password' => 'required|string',
-            'password' => 'nullable|string',
-            'email' => 'required|email'
-        ]);
-
-        if (app('hash')->check($data['current_password'], Auth::user()->password)) {
-            if (!empty($data['password'])) {
-                $user->password = bcrypt($data['password']);
-            }
-            $user->email = $data['email'];
-            $user->save();
-
-            $message = 'Settings updated successfuly!';
-        } else {
-            $message = 'Incorrect password';
-        }
+        $data = UserService::update($request, $user);
 
         return redirect()
-                ->action('Dashboard\UsersController@edit', ['id' => $user->id])
-                ->with('message', $message);
+                ->action('Dashboard\UsersController@edit', ['id' => $data['user']->id])
+                ->with('message', $data['message']);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(User $user)
     {
         //

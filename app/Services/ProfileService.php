@@ -2,13 +2,12 @@
 
 namespace App\Services;
 
-use Auth;
-use App\Http\Requests\UpdateProfileRequest as UpdateRequest;
+use App\Http\Requests\UpdateProfileRequest;
 use App\Profile;
 
 class ProfileService
 {
-    public static function update(UpdateRequest $request, Profile $profile)
+    public static function update(UpdateProfileRequest $request, Profile $profile)
     {
         $profile->update([
             'first_name' => $request->first_name,
@@ -20,5 +19,7 @@ class ProfileService
             'twitter_username' => $request->twitter_username,
             'facebook_username' => $request->facebook_username,
         ]);
+
+        return $profile;
     }
 }

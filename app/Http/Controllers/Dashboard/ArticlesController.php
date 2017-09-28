@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Dashboard;
 
 use Auth;
-use Storage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Services\ArticleService;
+use App\Http\Requests\StoreArticleRequest;
+use App\Http\Requests\UpdateArticleRequest;
 use App\Article;
 use App\Category;
 
@@ -87,29 +89,11 @@ class ArticlesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreArticleRequest $request)
     {
         $this->authorize('create', Article::class);
-        $user = Auth::user();
-
-        $data = $this->validate($request, [
-            'title' => 'required|string|min:12|max:255',
-            'slug' => 'nullable|string|min:12|max:255',
-            'content' => 'nullable|string',
-            'category_id'=> 'required|integer|exists:categories,id',
-            'tags'=> 'nullable|string',
-            'status'=> 'required|string',
-            'show_image'=> 'required|boolean',
-            'image' => 'nullable|image'
-        ]);
-
-        $article = $user->articles()->create($data);
-
-        if ($request->file('image')) {
-            $path = Storage::putFile('images', $request->file('image'));
-            $article->image = $path;
-            $article->save();
-        }
+        
+        $article = ArticleService::store($request);
         
         return redirect()
             ->action('Dashboard\ArticlesController@edit', ['id' => $article->id])
@@ -139,28 +123,11 @@ class ArticlesController extends Controller
      * @param  \App\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Article $article)
+    public function update(UpdateArticleRequest $request, Article $article)
     {
         $this->authorize('update', $article);
 
-        $data = $this->validate($request, [
-            'title' => 'required|string|min:12|max:255',
-            'slug' => 'nullable|string|min:12|max:255',
-            'content' => 'nullable|string',
-            'category_id'=> 'required|integer|exists:categories,id',
-            'tags'=> 'nullable|string',
-            'status'=> 'required|string',
-            'show_image'=> 'required|boolean',
-            'image' => 'nullable|image'
-        ]);
-
-        $article->update($data);
-
-        if ($request->file('image')) {
-            $path = Storage::putFile('images', $request->file('image'));
-            $article->image = $path;
-            $article->save();
-        }
+        ArticleService::update($request, $article);
 
         return redirect()
             ->action('Dashboard\ArticlesController@edit', ['id' => $article->id])
@@ -176,6 +143,7 @@ class ArticlesController extends Controller
     public function delete(Article $article)
     {
         $this->authorize('delete', $article);
+
         $article->delete();
 
         return redirect()
@@ -192,6 +160,7 @@ class ArticlesController extends Controller
     public function destroy(Article $article)
     {
         $this->authorize('destroy', $article);
+
         $article->forceDelete();
 
         return redirect()
@@ -208,6 +177,7 @@ class ArticlesController extends Controller
     public function restore(Article $article)
     {
         $this->authorize('restore', $article);
+        
         $article->restore();
 
         return redirect()

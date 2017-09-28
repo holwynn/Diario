@@ -42,7 +42,7 @@ class UsersTableSeeder extends Seeder
         $editorUser = App\User::create([
             'name' => 'bstgalactica666',
             'email' => 'dwight@news.com',
-            'password' => bcrypt('secret'),
+            'password' => bcrypt('editor'),
             'roles' => ['ROLE_USER', 'ROLE_WRITER', 'ROLE_EDITOR']
         ]);
 
@@ -70,7 +70,7 @@ class UsersTableSeeder extends Seeder
         $guestUser = App\User::create([
             'name' => 'Guesty McGuest',
             'email' => 'guest@news.com',
-            'password' => bcrypt('secret'),
+            'password' => bcrypt('guest'),
             'roles' => ['ROLE_USER']
         ]);
 

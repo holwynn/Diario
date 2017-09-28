@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Services\EditorService;
+use App\Http\Requests\StoreEditorRequest;
 use App\Editor;
 
 class EditorsController extends Controller
@@ -14,17 +16,12 @@ class EditorsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreEditorRequest $request)
     {
-        $data = $this->validate($request, [
-            'user_id' => 'required|integer|exists:users,id',
-            'category_id' => 'required|integer|exists:categories,id'
-        ]);
-
-        Editor::create($data);
+        $editor = EditorService::store($request);
 
         return redirect()
-            ->action('Dashboard\CategoriesController@edit', ['category' => $data['category_id']])
+            ->action('Dashboard\CategoriesController@edit', ['category' => $editor['category_id']])
             ->with('message', 'Editor added successfully!');
     }
 
@@ -37,6 +34,7 @@ class EditorsController extends Controller
     public function destroy(Editor $editor)
     {
         $category_id = $editor->category_id;
+
         Editor::destroy($editor->id);
 
         return redirect()

@@ -79,12 +79,6 @@
 
                 <div class="row">
                   <div class="col-md-12">
-                    {{ Request::route()->parameters['user']->id }}
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-md-12">
                     <button type="submit" class="btn btn-primary btn-fill">Update settings</button>
                   </div>
                 </div>

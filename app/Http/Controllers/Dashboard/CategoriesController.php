@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
+use App\Services\CategoryService;
 use App\Category;
 use App\User;
 
@@ -31,15 +34,11 @@ class CategoriesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
         $this->authorize('create', Category::class);
 
-        $data = $this->validate($request, [
-            'name' => 'required|string|unique:categories,name'
-        ]);
-
-        $category = Category::create($data);
+        $category = CategoryService::store($request);
 
         return redirect()
             ->action('Dashboard\CategoriesController@edit', ['category' => $category->id])
@@ -72,16 +71,11 @@ class CategoriesController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(UpdateCategoryRequest $request, Category $category)
     {
         $this->authorize('update', Category::class);
 
-        $data = $this->validate($request, [
-            'name' => 'required|string|unique:categories,name'
-        ]);
-
-        $category->update($data);
-        $category->save();
+        CategoryService::update($request, $category);
 
         return redirect()
             ->action('Dashboard\CategoriesController@edit', ['category' => $category->id])
