@@ -10,14 +10,10 @@ use App\Editor;
 
 class EditorsController extends Controller
 {
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreEditorRequest $request)
     {
+        $this->authorize('create', Editor::class);
+
         $editor = EditorService::store($request);
 
         return redirect()
@@ -25,14 +21,10 @@ class EditorsController extends Controller
             ->with('message', 'Editor added successfully!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Editor  $editor
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Editor $editor)
     {
+        $this->authorize('destroy', Editor::class);
+
         $category_id = $editor->category_id;
 
         Editor::destroy($editor->id);

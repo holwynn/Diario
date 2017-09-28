@@ -12,11 +12,6 @@ use App\User;
 
 class CategoriesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $this->authorize('list', Category::class);
@@ -28,12 +23,6 @@ class CategoriesController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreCategoryRequest $request)
     {
         $this->authorize('create', Category::class);
@@ -45,15 +34,9 @@ class CategoriesController extends Controller
             ->with('message', 'Category created sucessfully!');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Category $category)
     {
-        $this->authorize('update', Category::class);
+        $this->authorize('view', $category);
 
         $editors = User::where('roles', 'LIKE', '%ROLE_EDITOR%')
             ->get();
@@ -64,13 +47,6 @@ class CategoriesController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
         $this->authorize('update', Category::class);
@@ -82,12 +58,6 @@ class CategoriesController extends Controller
             ->with('message', 'Category updated sucessfully!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
     public function delete(Category $category)
     {
         $this->authorize('delete', Category::class);
@@ -99,12 +69,6 @@ class CategoriesController extends Controller
             ->with('message', 'Category deleted sucessfully!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Category $category)
     {
         $this->authorize('destroy', Category::class);

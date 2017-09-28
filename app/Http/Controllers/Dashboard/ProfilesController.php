@@ -11,12 +11,6 @@ use App\Profile;
 
 class ProfilesController extends Controller
 {
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Profile  $profile
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Profile $profile)
     {
         $this->authorize('view', $profile);
@@ -26,13 +20,6 @@ class ProfilesController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Profile  $profile
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdateProfileRequest $request, Profile $profile)
     {
         $this->authorize('update', $profile);

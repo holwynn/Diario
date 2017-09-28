@@ -13,12 +13,6 @@ use App\Category;
 
 class ArticlesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request, $paginate = 10)
     {
         $categories = Category::all();
@@ -67,11 +61,6 @@ class ArticlesController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $this->authorize('create', Article::class);
@@ -83,12 +72,6 @@ class ArticlesController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreArticleRequest $request)
     {
         $this->authorize('create', Article::class);
@@ -100,14 +83,14 @@ class ArticlesController extends Controller
             ->with('message', 'Article created sucessfully!');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Article  $article
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Article $article)
     {
+        // Let's not restrict writers from viewing the edit form of
+        // articles not belonging to them. Even if they try to submit changes,
+        // an auth exception will trigger in update()
+
+        //$this->authorize('edit', $article);
+
         $categories = Category::all();
 
         return view('dashboard.articles.edit', [
@@ -116,13 +99,6 @@ class ArticlesController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Article  $article
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdateArticleRequest $request, Article $article)
     {
         $this->authorize('update', $article);
@@ -134,12 +110,6 @@ class ArticlesController extends Controller
             ->with('message', 'Article updated sucessfully!');
     }
 
-    /**
-     * Delete (soft) the specified resource from storage.
-     *
-     * @param  \App\Article  $article
-     * @return \Illuminate\Http\Response
-     */
     public function delete(Article $article)
     {
         $this->authorize('delete', $article);
@@ -151,12 +121,6 @@ class ArticlesController extends Controller
             ->with('message', 'Article deleted sucessfully!');
     }
 
-    /**
-     * Remove (hard) the specified resource from storage.
-     *
-     * @param  \App\Article  $article
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Article $article)
     {
         $this->authorize('destroy', $article);
@@ -168,12 +132,6 @@ class ArticlesController extends Controller
             ->with('message', 'Article destroyed sucessfully!');
     }
 
-    /**
-     * Restore the specified resource from storage.
-     *
-     * @param  \App\Article  $article
-     * @return \Illuminate\Http\Response
-     */
     public function restore(Article $article)
     {
         $this->authorize('restore', $article);

@@ -8,77 +8,36 @@ use App\Frontblock;
 
 class FrontblocksController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Frontblock  $frontblock
-     * @return \Illuminate\Http\Response
-     */
     public function show(Frontblock $frontblock)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Frontblock  $frontblock
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Frontblock $frontblock)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Frontblock  $frontblock
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Frontblock $frontblock)
     {
         //
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Frontblock  $frontblock
-     * @return \Illuminate\Http\Response
-     */
+    
     public function destroy(Frontblock $frontblock)
     {
         //
