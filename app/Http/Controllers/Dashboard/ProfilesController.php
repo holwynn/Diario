@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Dashboard;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateProfileRequest;
+use App\Services\ProfileService;
 use App\Profile;
 
 class ProfilesController extends Controller
@@ -31,23 +33,11 @@ class ProfilesController extends Controller
      * @param  \App\Profile  $profile
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Profile $profile)
+    public function update(UpdateProfileRequest $request, Profile $profile)
     {
         $this->authorize('update', $profile);
 
-        $data = $this->validate($request, [
-            'first_name' => 'required|string',
-            'last_name' => 'nullable|string',
-            'address' => 'nullable|string',
-            'city' => 'nullable|string',
-            'country' => 'nullable|string',
-            'description' => 'nullable|string',
-            'twitter_username' => 'nullable|string',
-            'facebook_username' => 'nullable|string',
-        ]);
-
-        $user = Auth::user();
-        $user->profile()->update($data);
+        ProfileService::update($request, $profile);
 
         return redirect()
             ->action('Dashboard\ProfilesController@edit', ['id' => $profile->id])
