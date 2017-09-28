@@ -6,6 +6,7 @@ use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\ArticleService;
+use App\Http\Requests\ListArticleRequest;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
 use App\Article;
@@ -13,19 +14,9 @@ use App\Category;
 
 class ArticlesController extends Controller
 {
-    public function index(Request $request, $paginate = 10)
+    public function index(ListArticleRequest $request, $paginate = 10)
     {
         $categories = Category::all();
-
-        $this->validate($request, [
-            'status' => 'nullable|string',
-            'title' => 'nullable|string',
-            'id' => 'nullable|numeric',
-            'paginate' => 'nullable|numeric',
-            'trashed' => 'nullable|bool',
-            'category_id' => 'nullable|integer|exists:categories,id'
-        ]);
-
         $query = Article::with('user.profile');
 
         if ($request->filled('status')) {
@@ -87,7 +78,7 @@ class ArticlesController extends Controller
     {
         // Let's not restrict writers from viewing the edit form of
         // articles not belonging to them. Even if they try to submit changes,
-        // an auth exception will trigger in update()
+        // an auth exception will trigger in update().
 
         //$this->authorize('edit', $article);
 
