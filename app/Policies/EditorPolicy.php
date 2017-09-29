@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
+use Illuminate\Auth\Access\HandlesAuthorization;
 use App\User;
 use App\Editor;
-use Illuminate\Auth\Access\HandlesAuthorization;
 
 class EditorPolicy
 {

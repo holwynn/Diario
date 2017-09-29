@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
+use Illuminate\Auth\Access\HandlesAuthorization;
 use App\User;
 use App\Article;
-use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ArticlePolicy
 {
@@ -17,19 +17,6 @@ class ArticlePolicy
         } else {
             return null;
         }
-    }
-
-    /**
-     * Determine whether the user can edit the article.
-     *
-     * @param  \App\User  $user
-     * @param  \App\Article  $article
-     * @return mixed
-     */
-    public function edit(User $user, Article $article)
-    {
-        return $user->id === $article->user->id ||
-            in_array($article->category->id, $user->editorOf);
     }
 
     /**

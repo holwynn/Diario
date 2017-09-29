@@ -62,7 +62,7 @@ class ArticlesController extends Controller
         // articles not belonging to them. Even if they try to submit changes,
         // an auth exception will trigger in update().
 
-        //$this->authorize('edit', $article);
+        //$this->authorize('update', $article);
 
         $categories = Category::all();
 
