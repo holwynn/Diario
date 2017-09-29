@@ -9,6 +9,7 @@ use App\Services\ArticleService;
 use App\Http\Requests\ListArticleRequest;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
+use App\Queries\ListArticles;
 use App\Article;
 use App\Category;
 
@@ -24,34 +25,8 @@ class ArticlesController extends Controller
     public function index(ListArticleRequest $request, $paginate = 10)
     {
         $categories = Category::all();
-        $query = Article::with('user.profile');
-
-        if ($request->filled('status')) {
-            $query->where('status', $request->input('status'));
-        }
-
-        if ($request->filled('paginate')) {
-            $paginate = $request->input('paginate');
-        }
-
-        if ($request->filled('title')) {
-            $query->where('title', 'LIKE', '%'.$request->input('title').'%');
-        }
-
-        if ($request->filled('id')) {
-            $query->where('id', $request->input('id'));
-        }
-
-        if ($request->filled('category_id')) {
-            $query->where('category_id', $request->input('category_id'));
-        }
-
-        if ($request->input('trashed')) {
-            $query->withTrashed();
-        }
-
-        $query->orderBy('id', 'DESC');
-        $articles = $query->paginate($paginate);
+        
+        $articles = ListArticles::dashboard($request, $paginate);
 
         return view('dashboard.articles.list', [
             'categories' => $categories,
