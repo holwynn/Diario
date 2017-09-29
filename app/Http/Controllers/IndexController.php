@@ -10,9 +10,7 @@ use App\Article;
 class IndexController extends Controller
 {
     public function index()
-    {
-        $categories = Category::all();
-        
+    {   
         $frontblock = Frontblock::where('name', config('newspaper.frontblock'))
             ->first();
 
@@ -24,7 +22,7 @@ class IndexController extends Controller
             ->get();
 
         return view('index', [
-            'categories' => $categories,
+            'categories' => Category::all(),
             'frontblock' => $frontblock,
             'latestArticles' => $latestArticles,
         ]);

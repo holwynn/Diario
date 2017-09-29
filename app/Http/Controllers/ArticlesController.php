@@ -24,7 +24,6 @@ class ArticlesController extends Controller
                 );
         }
 
-        $categories = Category::all();
         $article = $article->load('user');
 
         $relatedArticles = Article::where([
@@ -37,7 +36,7 @@ class ArticlesController extends Controller
             ->get();
 
         return view('article', [
-            'categories' => $categories,
+            'categories' => Category::all(),
             'article' => $article,
             'relatedArticles' => $relatedArticles
         ]);
