@@ -11,6 +11,13 @@ use App\Profile;
 
 class ProfilesController extends Controller
 {
+    private $profileService;
+
+    public function __construct(ProfileService $profileService)
+    {
+        $this->profileService = $profileService;
+    }
+
     public function edit(Profile $profile)
     {
         $this->authorize('view', $profile);

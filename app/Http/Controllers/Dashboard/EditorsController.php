@@ -10,11 +10,18 @@ use App\Editor;
 
 class EditorsController extends Controller
 {
+    private $editorService;
+
+    public function __construct(EditorService $editorService)
+    {
+        $this->editorService = $editorService;
+    }
+
     public function store(StoreEditorRequest $request)
     {
         $this->authorize('create', Editor::class);
 
-        $editor = EditorService::store($request);
+        $editor = $this->editorService->create($request);
 
         return redirect()
             ->action('Dashboard\CategoriesController@edit', ['category' => $editor['category_id']])

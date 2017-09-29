@@ -12,6 +12,13 @@ use App\User;
 
 class CategoriesController extends Controller
 {
+    private $categoryService;
+
+    public function __construct(CategoryService $categoryService)
+    {
+        $this->categoryService = $categoryService;
+    }
+
     public function index()
     {
         $this->authorize('list', Category::class);
@@ -27,7 +34,7 @@ class CategoriesController extends Controller
     {
         $this->authorize('create', Category::class);
 
-        $category = CategoryService::store($request);
+        $category = $this->categoryService->create($request);
 
         return redirect()
             ->action('Dashboard\CategoriesController@edit', ['category' => $category->id])
@@ -51,7 +58,7 @@ class CategoriesController extends Controller
     {
         $this->authorize('update', Category::class);
 
-        CategoryService::update($request, $category);
+        $this->categoryService->update($request, $category);
 
         return redirect()
             ->action('Dashboard\CategoriesController@edit', ['category' => $category->id])

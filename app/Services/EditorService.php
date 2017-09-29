@@ -7,7 +7,7 @@ use App\Editor;
 
 class EditorService
 {
-    public static function store(StoreEditorRequest $request)
+    public function create(StoreEditorRequest $request)
     {
         $editor = Editor::create([
             'user_id' => $request->user_id,

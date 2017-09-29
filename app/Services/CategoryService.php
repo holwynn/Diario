@@ -9,7 +9,8 @@ use App\Category;
 
 class CategoryService
 {
-    public static function store(StoreCategoryRequest $request)
+
+    public function create(StoreCategoryRequest $request)
     {
         $category = Category::create([
             'name' => $request->name
@@ -18,7 +19,7 @@ class CategoryService
         return $category;
     }
 
-    public static function update(UpdateCategoryRequest $request, Category $category)
+    public function update(UpdateCategoryRequest $request, Category $category)
     {
         $category->update([
             'name' => $request->name,

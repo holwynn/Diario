@@ -10,7 +10,7 @@ use App\Article;
 
 class ArticleService
 {
-    public static function store(StoreArticleRequest $request)
+    public function create(StoreArticleRequest $request)
     {
         $user = Auth::user();
 
@@ -34,7 +34,7 @@ class ArticleService
 
     }
 
-    public static function update(UpdateArticleRequest $request, Article $article)
+    public function update(UpdateArticleRequest $request, Article $article)
     {
         $article->update([
             'title' => $request->title,

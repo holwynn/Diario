@@ -7,7 +7,7 @@ use App\Profile;
 
 class ProfileService
 {
-    public static function update(UpdateProfileRequest $request, Profile $profile)
+    public function update(UpdateProfileRequest $request, Profile $profile)
     {
         $profile->update([
             'first_name' => $request->first_name,

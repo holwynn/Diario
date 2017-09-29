@@ -11,6 +11,13 @@ use App\User;
 
 class UsersController extends Controller
 {
+    private $userService;
+
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
     public function index()
     {
         $this->authorize('list', User::class);
@@ -35,7 +42,7 @@ class UsersController extends Controller
     {
         $this->authorize('update', $user);
 
-        $data = UserService::update($request, $user);
+        $data = $this->userService->update($request, $user);
 
         return redirect()
                 ->action('Dashboard\UsersController@edit', ['id' => $data['user']->id])

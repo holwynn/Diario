@@ -8,7 +8,7 @@ use App\User;
 
 class UserService
 {
-    public static function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
         $message = '';
 

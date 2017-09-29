@@ -14,6 +14,13 @@ use App\Category;
 
 class ArticlesController extends Controller
 {
+    private $articleService;
+
+    public function __construct(ArticleService $articleService)
+    {
+        $this->articleService = $articleService;
+    }
+
     public function index(ListArticleRequest $request, $paginate = 10)
     {
         $categories = Category::all();
@@ -67,7 +74,7 @@ class ArticlesController extends Controller
     {
         $this->authorize('create', Article::class);
         
-        $article = ArticleService::store($request);
+        $article = $this->articleService->create($request);
         
         return redirect()
             ->action('Dashboard\ArticlesController@edit', ['id' => $article->id])
@@ -94,7 +101,7 @@ class ArticlesController extends Controller
     {
         $this->authorize('update', $article);
 
-        ArticleService::update($request, $article);
+        $this->articleService->update($request, $article);
 
         return redirect()
             ->action('Dashboard\ArticlesController@edit', ['id' => $article->id])
