@@ -23,7 +23,6 @@ class CategoryPolicy
      * Determine whether the user can view the category list.
      *
      * @param  \App\User  $user
-     * @param  \App\Category  $category
      * @return mixed
      */
     public function list(User $user)

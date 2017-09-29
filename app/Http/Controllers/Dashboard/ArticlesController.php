@@ -24,12 +24,12 @@ class ArticlesController extends Controller
 
     public function index(ListArticleRequest $request, $paginate = 10)
     {
-        $categories = Category::all();
+        $this->authorize('list', Article::class);
         
         $articles = ListArticles::dashboard($request, $paginate);
 
         return view('dashboard.articles.list', [
-            'categories' => $categories,
+            'categories' => Category::all(),
             'articles' => $articles
         ]);
     }
@@ -38,10 +38,8 @@ class ArticlesController extends Controller
     {
         $this->authorize('create', Article::class);
 
-        $categories = Category::all();
-
         return view('dashboard.articles.create', [
-            'categories' => $categories
+            'categories' => Category::all()
         ]);
     }
 
@@ -64,11 +62,9 @@ class ArticlesController extends Controller
 
         //$this->authorize('update', $article);
 
-        $categories = Category::all();
-
         return view('dashboard.articles.edit', [
             'article' => $article,
-            'categories' => $categories
+            'categories' => Category::all()
         ]);
     }
 

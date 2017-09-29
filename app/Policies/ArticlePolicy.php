@@ -20,6 +20,17 @@ class ArticlePolicy
     }
 
     /**
+     * Determine whether the user can view the article list.
+     *
+     * @param  \App\User  $user
+     * @return mixed
+     */
+    public function list(User $user)
+    {
+        return $user->isWriter();
+    }
+
+    /**
      * Determine whether the user can publish the article.
      *
      * @param  \App\User  $user

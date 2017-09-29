@@ -23,10 +23,8 @@ class CategoriesController extends Controller
     {
         $this->authorize('list', Category::class);
 
-        $categories = Category::all();
-
         return view('dashboard.categories.list', [
-            'categories' => $categories
+            'categories' => Category::all()
         ]);
     }
 
