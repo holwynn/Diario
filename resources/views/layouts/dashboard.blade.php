@@ -21,16 +21,15 @@
   <!--  Paper Dashboard core CSS    -->
   <link href="/assets/css/paper-dashboard.css" rel="stylesheet"/>
 
-
-  <!--  CSS for Demo Purpose, don't include it in your project     -->
-  <link href="/assets/css/demo.css" rel="stylesheet" />
-
-
   <!--  Fonts and icons     -->
   <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
   <link href="/assets/css/themify-icons.css" rel="stylesheet">
 
+  <!--  Elwynn styles -->
+  <link href="/assets/css/elwynn.css" rel="stylesheet">
+
+  @yield('css')
 </head>
 <body>
 
@@ -39,6 +38,8 @@
 
     @yield('content')
   </div>
+
+  @yield('javascripts')
 
 </body>
 
@@ -60,9 +61,7 @@
 @yield('javascripts')
 
 <script type="text/javascript">
-  $(document).ready(function(){
-    demo.initChartist();
-  });
+
 </script>
 
 </html>

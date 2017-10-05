@@ -27,6 +27,14 @@
         </a>
       </li>
       @endcan
+      @can ('list', \App\Frontblock::class)
+      <li class="@activeRequest('dashboard.frontblocks')">
+        <a href="{{ route('dashboard.frontblocks.index') }}">
+          <i class="ti-view-list-alt"></i>
+          <p>Frontblock</p>
+        </a>
+      </li>
+      @endcan
       @can ('list', \App\User::class)
       {{-- 
         We want the Users sidebar link to be active if we are editing any user
