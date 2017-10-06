@@ -1,81 +1,71 @@
-<div class="sidebar" data-background-color="white" data-active-color="danger">
-  <div class="sidebar-wrapper">
-    <div class="logo">
-      <a href="{{ route('dashboard.index') }}" class="simple-text">
-        {{ config('app.name') }}
-      </a>
-    </div>
+<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+  <div class="menu_section">
+    <h3>General</h3>
+    <ul class="nav side-menu">
+      <li>
+        <a href="{{ route('dashboard.index') }}"><i class="fa fa-home"></i> Dashboard</a>
+      </li>
 
-    <ul class="nav">
-      <li class="@activeRequest('dashboard.index')">
-        <a href="{{ route('dashboard.index') }}">
-          <i class="ti-panel"></i>
-          <p>Dashboard</p>
+      <li>
+        <a>
+          <i class="fa fa-edit"></i> Articles <span class="fa fa-chevron-down"></span>
         </a>
+        <ul class="nav child_menu">
+          <li><a href="{{ route('dashboard.articles.index') }}">Article List</a></li>
+          <li><a href="{{ route('dashboard.articles.create') }}">New Article</a></li>
+        </ul>
       </li>
-      <li class="@activeRequest('dashboard.articles')">
-        <a href="{{ route('dashboard.articles.index') }}">
-          <i class="ti-notepad"></i>
-          <p>Articles</p>
-        </a>
-      </li>
-      @can ('list', \App\Category::class)
-      <li class="@activeRequest('dashboard.categories')">
-        <a href="{{ route('dashboard.categories.index') }}">
-          <i class="ti-view-list-alt"></i>
-          <p>Categories</p>
-        </a>
-      </li>
-      @endcan
-      @can ('list', \App\Frontblock::class)
-      <li class="@activeRequest('dashboard.frontblocks')">
-        <a href="{{ route('dashboard.frontblocks.index') }}">
-          <i class="ti-view-list-alt"></i>
-          <p>Frontblock</p>
-        </a>
-      </li>
-      @endcan
-      @can ('list', \App\User::class)
-      {{-- 
-        We want the Users sidebar link to be active if we are editing any user
-        profile or user account EXCEPT the currently logged in user, for
-        which case we have 2 special links below (MY profile and MY account)
-       --}}
+
+      @can('list', \App\User::class)
       <li class="{{ ((Request::segment(2) == 'users' 
                   || Request::segment(2) == 'profiles')
                   && !Request::is('dashboard/profiles/'.Auth::user()->id.'/edit') 
                   && !Request::is('dashboard/users/'.Auth::user()->id.'/edit')) 
                   ? 'active' : '' }}">
-        <a href="{{ route('dashboard.users.index') }}">
-          <i class="ti-user"></i>
-          <p>Users</p>
-        </a>
+        <a href="{{ route('dashboard.users.index') }}"><i class="fa fa-users"></i> Users</a>
       </li>
       @endcan
+
+      @can('list', \App\Category::class)
+      <li>
+        <a href="{{ route('dashboard.categories.index') }}"><i class="fa fa-tags"></i> Categories</a>
+      </li>
+      @endcan
+
+      @can('list', \App\Frontblock::class)
+      <li>
+        <a href="{{ route('dashboard.frontblocks.index') }}"><i class="fa fa-table"></i> Frontblocks</a>
+      </li>
+      @endcan
+    </ul>
+  </div>
+
+  <div class="menu_section">
+    <h3>User</h3>
+    <ul class="nav side-menu">
       <li class="@activeRequestUri('dashboard/profiles/'.Auth::user()->id.'/edit')">
         <a href="{{ route('dashboard.profiles.edit', ['id' => Auth::user()->id]) }}">
-          <i class="ti-file"></i>
-          <p>My profile</p>
+          <i class="fa fa-user"></i> My Profile
         </a>
       </li>
+
       <li class="@activeRequestUri('dashboard/users/'.Auth::user()->id.'/edit')">
         <a href="{{ route('dashboard.users.edit', ['id' => Auth::user()->id]) }}">
-          <i class="ti-lock"></i>
-          <p>My account</p>
+          <i class="fa fa-lock"></i> My Account
         </a>
       </li>
-      <li class="active-pro">
-        <a class="nav-link" href="{{ url('/logout') }}"
+
+      <li>
+        <a href="{{ url('/logout') }}"
         onclick="event.preventDefault();
         document.getElementById('logout-form').submit();" target="_top">
-        <i class="ti-arrow-left"></i>
-        <p>Logout</p>
-      </a>
+          <i class="fa fa-sign-out"></i> Log out
+        </a>
+      </li>
 
       <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
         {{ csrf_field() }}
       </form>
-    </li>
-  </ul>
-</div>
+    </ul>
+  </div>
 </div>

@@ -1,67 +1,131 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicon.png">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- Meta, title, CSS, favicons, etc. -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Elwynn - Dashboard</title>
+  <title>@yield('title', 'Admin Dashboard')</title>
 
-  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
-  <meta name="viewport" content="width=device-width" />
+  <!-- Bootstrap -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <!-- NProgress -->
+  <link href="/dashboard-assets/vendors/nprogress/nprogress.css" rel="stylesheet">
+  <!-- iCheck -->
+  <link href="/dashboard-assets/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
 
+  <!-- bootstrap-progressbar -->
+  <link href="/dashboard-assets/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+  <!-- JQVMap -->
+  <link href="/dashboard-assets/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
+  <!-- bootstrap-daterangepicker -->
+  <link href="/dashboard-assets/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 
-  <!-- Bootstrap core CSS     -->
-  <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
-
-  <!-- Animation library for notifications   -->
-  <link href="/assets/css/animate.min.css" rel="stylesheet"/>
-
-  <!--  Paper Dashboard core CSS    -->
-  <link href="/assets/css/paper-dashboard.css" rel="stylesheet"/>
-
-  <!--  Fonts and icons     -->
-  <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-  <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
-  <link href="/assets/css/themify-icons.css" rel="stylesheet">
-
-  <!--  Elwynn styles -->
-  <link href="/assets/css/elwynn.css" rel="stylesheet">
+  <!-- Custom Theme Style -->
+  <link href="/dashboard-assets/build/css/custom.min.css" rel="stylesheet">
 
   @yield('css')
+
+  <link rel="icon" href="/favicon.png">
+
 </head>
-<body>
 
-  <div class="wrapper">
-    @include('dashboard.sidebar')
+<body class="nav-md">
+  <div class="container body">
+    <div class="main_container">
+      <div class="col-md-3 left_col">
+        <div class="left_col scroll-view">
+          <div class="navbar nav_title" style="border: 0;">
+            <a href="{{ route('index') }}" class="site_title"><span>{{ config('app.name') }}</span></a>
+          </div>
 
-    @yield('content')
+          <div class="clearfix"></div>
+
+          <!-- menu profile quick info -->
+          <div class="profile clearfix">
+            <div class="profile_pic text-center">
+              <img src="/dashboard-assets/build/images/user.png" alt="..." class="img-circle profile_img">
+            </div>
+            <div class="profile_info">
+              <span>Welcome,</span>
+              <h2>{{ Auth::user()->profile->first_name }}</h2>
+            </div>
+          </div>
+          <!-- /menu profile quick info -->
+
+          <br>
+
+          <!-- sidebar menu -->
+          @include('dashboard.sidebar')
+          <!-- /sidebar menu -->
+
+        </div>
+      </div>
+
+      <!-- top navigation -->
+      @include('dashboard.nav')
+      <!-- top navigation -->
+
+      <!-- page content -->
+      <div class="right_col" role="main">
+        @yield('content')
+      </div>
+      <!-- /page content -->
+
+      <!-- footer content -->
+      <footer>
+        <div class="pull-right">
+          Stormwind Herald Dashboard
+        </div>
+        <div class="clearfix"></div>
+      </footer>
+      <!-- /footer content -->
+    </div>
   </div>
 
+  <!-- jQuery -->
+  <script src="/dashboard-assets/vendors/jquery/dist/jquery.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="/dashboard-assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+  <!-- FastClick -->
+  <script src="/dashboard-assets/vendors/fastclick/lib/fastclick.js"></script>
+  <!-- NProgress -->
+  <script src="/dashboard-assets/vendors/nprogress/nprogress.js"></script>
+  <!-- Chart.js -->
+  <script src="/dashboard-assets/vendors/Chart.js/dist/Chart.min.js"></script>
+  <!-- gauge.js -->
+  <script src="/dashboard-assets/vendors/gauge.js/dist/gauge.min.js"></script>
+  <!-- bootstrap-progressbar -->
+  <script src="/dashboard-assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+  <!-- iCheck -->
+  <script src="/dashboard-assets/vendors/iCheck/icheck.min.js"></script>
+  <!-- Flot -->
+  <script src="/dashboard-assets/vendors/Flot/jquery.flot.js"></script>
+  <script src="/dashboard-assets/vendors/Flot/jquery.flot.pie.js"></script>
+  <script src="/dashboard-assets/vendors/Flot/jquery.flot.time.js"></script>
+  <script src="/dashboard-assets/vendors/Flot/jquery.flot.stack.js"></script>
+  <script src="/dashboard-assets/vendors/Flot/jquery.flot.resize.js"></script>
+  <!-- Flot plugins -->
+  <script src="/dashboard-assets/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+  <script src="/dashboard-assets/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+  <script src="/dashboard-assets/vendors/flot.curvedlines/curvedLines.js"></script>
+  <!-- DateJS -->
+  <script src="/dashboard-assets/vendors/DateJS/build/date.js"></script>
+  <!-- JQVMap -->
+  <script src="/dashboard-assets/vendors/jqvmap/dist/jquery.vmap.js"></script>
+  <script src="/dashboard-assets/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+  <script src="/dashboard-assets/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+  <!-- bootstrap-daterangepicker -->
+  <script src="/dashboard-assets/vendors/moment/min/moment.min.js"></script>
+  <script src="/dashboard-assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+  <!-- Custom Theme Scripts -->
+  <script src="/dashboard-assets/build/js/custom.min.js"></script>
   @yield('javascripts')
 
 </body>
-
-<!--   Core JS Files   -->
-<script src="/assets/js/jquery-1.10.2.js" type="text/javascript"></script>
-<script src="/assets/js/bootstrap.min.js" type="text/javascript"></script>
-
-<!--  Checkbox, Radio & Switch Plugins -->
-<script src="/assets/js/bootstrap-checkbox-radio.js"></script>
-<!--  Charts Plugin -->
-<script src="/assets/js/chartist.min.js"></script>
-<!--  Notifications Plugin    -->
-<script src="/assets/js/bootstrap-notify.js"></script>
-<!--  Google Maps Plugin    -->
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
-<!-- Paper Dashboard Core javascript and methods for Demo purpose -->
-<script src="/assets/js/paper-dashboard.js"></script>
-
-@yield('javascripts')
-
-<script type="text/javascript">
-
-</script>
-
 </html>

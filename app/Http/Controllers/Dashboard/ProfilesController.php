@@ -31,7 +31,7 @@ class ProfilesController extends Controller
     {
         $this->authorize('update', $profile);
 
-        ProfileService::update($request, $profile);
+        $this->profileService->update($request, $profile);
 
         return redirect()
             ->action('Dashboard\ProfilesController@edit', ['id' => $profile->id])
