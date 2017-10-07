@@ -13,13 +13,13 @@
         </a>
         <ul class="nav child_menu">
           @can('list', \App\Article::class)
-          <li><a href="{{ route('dashboard.articles.index') }}">Article List</a></li>
+          <li><a href="{{ route('dashboard.articles.index') }}">List</a></li>
           @endcan
           @can('create', \App\Article::class)
-          <li><a href="{{ route('dashboard.articles.create') }}">New Article</a></li>
+          <li><a href="{{ route('dashboard.articles.create') }}">Create</a></li>
           @endcan
           @if(Request::route()->getName() == 'dashboard.articles.edit')
-          <li><a href="/{{ Request::path() }}">Editing article</a></li>
+          <li><a href="/{{ Request::path() }}">Update</a></li>
           @endif
          </ul>
       </li>

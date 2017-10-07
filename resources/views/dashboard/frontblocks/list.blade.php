@@ -33,7 +33,7 @@
   <div class="col-md-12">
     <div class="x_panel">
       <div class="x_title">
-        <h4 class="title">User list</h4>
+        <h4 class="title">Frontblock list</h4>
       </div>
       <div class="clearfix"></div>
 
