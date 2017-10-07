@@ -14,7 +14,10 @@ class Frontblock extends Model
 
     public function getArticlesArrayAttribute()
     {
-        return Article::whereIn('id', explode(',', $this->articles))
+        $ids = explode(',', $this->articles);
+
+        return Article::whereIn('id', $ids)
+            ->orderByRaw("field(id,{$this->articles})", $ids)
             ->get();
     }
 }

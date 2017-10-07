@@ -14,7 +14,8 @@ class UpdateFrontblockRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'required|string|unique:frontblocks,name'
+            'name' => 'required|string',
+            'articles' => 'required|string'
         ];
     }
 }

@@ -44,7 +44,7 @@
             <div class="col-md-12">
               <div class="form-group">
                 <label>Name</label>
-                <input type="text" class="form-control border-input" name="name" id="name" value="{{ $frontblock->name }}" placeholder="Name">
+                <input type="text" class="form-control border-input" name="name" value="{{ $frontblock->name }}" placeholder="Name">
               </div>
             </div>
           </div>
@@ -53,7 +53,7 @@
             <div class="col-md-12">
               <div class="form-group">
                 <label>Articles</label>
-                <input type="text" class="form-control border-input" name="name" id="name" value="{{ $frontblock->articles }}" placeholder="Name" disabled>
+                <input id="articlesInput" type="text" class="form-control border-input" name="articles" value="{{ $frontblock->articles }}" placeholder="Articles">
               </div>
             </div>
           </div>
@@ -83,23 +83,23 @@
         <div class="row">
           {{-- Start of column 1 --}}
           <div id="drag-left" class="col-md-4">
-            <div class="row draggableBox">
+            <div id="news-{{ $frontblock->articlesArray[0]->id }}" class="row draggableBox">
               <div class="col-md-12">
-                <h3>{{ $frontblock->articlesArray[0]->title }}</h3>
+                <h3>{{ $frontblock->articlesArray[0]->title }} (# {{ $frontblock->articlesArray[0]->id }})</h3>
                 <h3><small>{{ $frontblock->articlesArray[0]->slug }}</small></h3>
               </div>
             </div>
 
-            <div class="row draggableBox">
+            <div id="news-{{ $frontblock->articlesArray[1]->id }}" class="row draggableBox">
               <div class="col-md-12">
-                <h3>{{ $frontblock->articlesArray[1]->title }}</h3>
+                <h3>{{ $frontblock->articlesArray[1]->title }} (# {{ $frontblock->articlesArray[1]->id }})</h3>
                 <h3><small>{{ $frontblock->articlesArray[1]->slug }}</small></h3>
               </div>
             </div>
 
-            <div class="row draggableBox">
+            <div id="news-{{ $frontblock->articlesArray[2]->id }}" class="row draggableBox">
               <div class="col-md-12">
-                <h3>{{ $frontblock->articlesArray[2]->title }}</h3>
+                <h3>{{ $frontblock->articlesArray[2]->title }} (# {{ $frontblock->articlesArray[2]->id }})</h3>
                 <h3><small>{{ $frontblock->articlesArray[2]->slug }}</small></h3>
               </div>
             </div>
@@ -112,16 +112,16 @@
           
           {{-- Start of column 2 --}}
           <div id="drag-right" class="col-md-7">
-            <div class="row draggableBox">
+            <div id="news-{{ $frontblock->articlesArray[3]->id }}" class="row draggableBox">
               <div class="col-md-12">
-                <h3>{{ $frontblock->articlesArray[3]->title }}</h3>
+                <h3>{{ $frontblock->articlesArray[3]->title }} (# {{ $frontblock->articlesArray[3]->id }})</h3>
                 <h3><small>{{ $frontblock->articlesArray[3]->slug }}</small></h3>
               </div>
             </div>
 
-            <div class="row draggableBox">
+            <div id="news-{{ $frontblock->articlesArray[4]->id }}" class="row draggableBox">
               <div class="col-md-12">
-                <h3>{{ $frontblock->articlesArray[4]->title }}</h3>
+                <h3>{{ $frontblock->articlesArray[4]->title }} (# {{ $frontblock->articlesArray[4]->id }})</h3>
                 <h3><small>{{ $frontblock->articlesArray[4]->slug }}</small></h3>
               </div>
             </div>
@@ -144,6 +144,21 @@
     document.querySelector('#drag-right')
   ]
 
-  var draggable = dragula(containers)
+  var draggable = dragula(containers, {
+    revertOnSpill: true
+  })
+
+  draggable.on('drop', function(el, target, source, sibling) {
+      t_id = []
+
+      for (var i = 0; i <= containers.length - 1; i++) {
+          for (var j = 0; j <= containers[i].children.length - 1; j++) {
+              t_id.push(containers[i].children.item(j).attributes.id.value.replace('news-', ''))
+          }
+      }
+
+      console.log(t_id)
+      document.querySelector('#articlesInput').value = t_id.join(',')
+  })
 </script>
 @endsection

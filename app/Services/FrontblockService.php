@@ -12,6 +12,7 @@ class FrontblockService
     {
         $frontblock->update([
             'name' => $request->name,
+            'articles' => $request->articles
         ]);
 
         return $frontblock;
