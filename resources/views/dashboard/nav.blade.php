@@ -8,7 +8,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li class="">
           <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-            <img src="images/img.jpg" alt="">{{ Auth::user()->profile->first_name }} {{ Auth::user()->profile->last_name }}
+            <img src="images/img.jpg" alt="">Settings
             <span class=" fa fa-angle-down"></span>
           </a>
           <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -30,6 +30,11 @@
             </a>
           </li>
         </ul>
+      </li>
+      <li class="">
+        <a href="javascript:;" class="user-profile dropdown-toggle">
+          {{ Auth::user()->profile->name }}
+        </a>
       </li>
     </ul>
   </nav>

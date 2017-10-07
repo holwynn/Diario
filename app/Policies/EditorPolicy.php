@@ -39,7 +39,7 @@ class EditorPolicy
      */
     public function create(User $user)
     {
-        //
+        
     }
 
     /**

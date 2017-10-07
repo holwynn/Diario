@@ -30,7 +30,7 @@ class EditorsController extends Controller
 
     public function destroy(Editor $editor)
     {
-        $this->authorize('destroy', Editor::class);
+        $this->authorize('delete', Editor::class);
 
         $category_id = $editor->category_id;
 

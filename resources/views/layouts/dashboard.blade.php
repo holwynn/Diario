@@ -45,7 +45,7 @@
 
           <div class="clearfix"></div>
 
-          <!-- menu profile quick info -->
+          {{-- <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic text-center">
               <img src="/dashboard-assets/build/images/user.png" alt="..." class="img-circle profile_img">
@@ -55,7 +55,7 @@
               <h2>{{ Auth::user()->profile->first_name }}</h2>
             </div>
           </div>
-          <!-- /menu profile quick info -->
+          <!-- /menu profile quick info --> --}}
 
           <br>
 
@@ -125,6 +125,7 @@
 
   <!-- Custom Theme Scripts -->
   <script src="/dashboard-assets/build/js/custom.min.js"></script>
+  
   @yield('javascripts')
 
 </body>

@@ -3,8 +3,16 @@
 @section('title', 'Admin Dashboard - Editing Profile')
 
 @section('content')
+<div class="page-title">
+  <div class="title_left">
+    <h3>Profiles </h3>
+  </div>
+</div>
+
+<div class="clearfix"></div>
+
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-xs-12">
     @if (session('message'))
     <div class="alert alert-success">
       <span>{{ session('message') }}</span>
@@ -31,7 +39,7 @@
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <h2>Edit profile</h2>
+        <h2>{{ $profile->name }} Profile</h2>
         <div class="clearfix"></div>
       </div>
       <div class="x_content">
