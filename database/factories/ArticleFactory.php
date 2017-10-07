@@ -10,7 +10,7 @@ $factory->define(App\Article::class, function (Faker $faker) {
         'content' => $faker->paragraph(30),
         'status' => 'published',
         'show_image' => true,
-        'image' => 'pepe.jpg',
+        'image' => 'images/artdefault.jpg',
         'category_id' => rand(1, 8)
     ];
 });

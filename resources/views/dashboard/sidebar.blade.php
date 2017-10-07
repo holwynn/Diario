@@ -12,7 +12,9 @@
           <i class="fa fa-edit"></i> Articles <span class="fa fa-chevron-down"></span>
         </a>
         <ul class="nav child_menu">
+          @can('list', \App\Article::class)
           <li><a href="{{ route('dashboard.articles.index') }}">Article List</a></li>
+          @endcan
           @can('create', \App\Article::class)
           <li><a href="{{ route('dashboard.articles.create') }}">New Article</a></li>
           @endcan
