@@ -22,7 +22,6 @@
     @endcan
 
     <p>{{ $article->created_at->formatLocalized(__('newspaper.date')) }}</p>
-    <p>{{ asset('/storage/' . $article->image) }}</p>
     
     <h1 class="article-title">{{ $article->title }}</h1>
     <h3 class="article-slug">{{ $article->slug }}</h3>
