@@ -1,3 +1,4 @@
+{{-- Active <li> class is "current-page" --}}
 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
   <div class="menu_section">
     <h3>General</h3>
@@ -12,8 +13,13 @@
         </a>
         <ul class="nav child_menu">
           <li><a href="{{ route('dashboard.articles.index') }}">Article List</a></li>
+          @can('create', \App\Article::class)
           <li><a href="{{ route('dashboard.articles.create') }}">New Article</a></li>
-        </ul>
+          @endcan
+          @if(Request::route()->getName() == 'dashboard.articles.edit')
+          <li><a href="/{{ Request::path() }}">Editing article</a></li>
+          @endif
+         </ul>
       </li>
 
       @can('list', \App\User::class)
@@ -43,13 +49,13 @@
   <div class="menu_section">
     <h3>User</h3>
     <ul class="nav side-menu">
-      <li class="@activeRequestUri('dashboard/profiles/'.Auth::user()->id.'/edit')">
+      <li>
         <a href="{{ route('dashboard.profiles.edit', ['id' => Auth::user()->id]) }}">
           <i class="fa fa-user"></i> My Profile
         </a>
       </li>
 
-      <li class="@activeRequestUri('dashboard/users/'.Auth::user()->id.'/edit')">
+      <li>
         <a href="{{ route('dashboard.users.edit', ['id' => Auth::user()->id]) }}">
           <i class="fa fa-lock"></i> My Account
         </a>

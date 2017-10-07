@@ -127,9 +127,9 @@
         <table class="table table-striped">
           <thead>
             <th>Title</th>
-            <th>Last modified</th>
-            <th>Category</th>
             <th>Writer</th>
+            <th>Category</th>
+            <th>Last modified</th>
             <th>Status</th>
           </thead>
           <tbody>
@@ -140,9 +140,9 @@
                   {{ $article->title }}
                 </a>
               </td>
-              <td>{{ $article->updated_at->format('F jS, Y') }}</td>
-              <td>{{ ucfirst($article->category->name) }}</td>
               <td>{{ $article->user->profile->name}}</td>
+              <td>{{ ucfirst($article->category->name) }}</td>
+              <td>{{ $article->updated_at->format('F jS, Y') }}</td>
               <td class="text-center">
                 @if ($article->trashed())
                 <span class="label label-danger">Deleted</span>

@@ -17,8 +17,8 @@
 @section('content')
 <div class="row article-page">
   <div class="col-sm-10 col-xs-12">
-    @can('edit', $article)
-    <a href="{{ route('dashboard.articles.edit', ['id' => $article->id]) }}">Edit this article</a>
+    @can('update', $article)
+    <a href="{{ route('dashboard.articles.edit', ['id' => $article->id]) }}" target="_blank">Edit this article</a>
     @endcan
 
     <p>{{ $article->created_at->formatLocalized(__('newspaper.date')) }}</p>

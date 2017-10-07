@@ -19,13 +19,15 @@ class AppServiceProvider extends ServiceProvider
         // http://i.imgur.com/bXahP6S.jpg
         Schema::defaultStringLength(191);
 
-        Blade::directive('activeRequest', function($route) {
+        // Leftover active <li> logic from paper dashboard
+        // Might be useful in the future so let's not get rid of it just yet
+        /*Blade::directive('activeRequest', function($route) {
             return "<?php echo strpos(request()->route()->getName(), {$route}) === 0 ? 'active' : ''; ?>";
         });
 
         Blade::directive('activeRequestUri', function($route) {
             return "<?php echo request()->is({$route}) ? 'active' : ''; ?>";
-        });
+        });*/
     }
 
     /**
