@@ -7,11 +7,17 @@
       {{ csrf_field() }}
       <h1>Come on in !</h1>
       
+      @if ($errors->has('name'))
       <div>
-        @if ($errors->has('name'))
         <strong>{{ $errors->first('name') }}</strong>
-        @endif
       </div>
+
+      <div>
+        <strong>{{ $errors->first('password') }}</strong>
+      </div>
+
+      <br>
+      @endif
 
       <div>
         <input type="text" class="form-control" name="name" value="{{ old('name') }}" placeholder="Username" required>
@@ -22,7 +28,7 @@
       </div>
 
       <div>
-        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember?
+        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember me
       </div>
 
       <div>
@@ -36,19 +42,20 @@
 
     <div class="clearfix"></div>
 
-      {{-- <div class="separator">
-        <p class="change_link">New to site?
-          <a href="#signup" class="to_register"> Create Account </a>
+      <div class="separator">
+        <p class="change_link">Not registered?
+          <a href="{{ route('register') }}" class="to_register"> Create an account! </a>
         </p>
 
         <div class="clearfix"></div>
         <br />
 
         <div>
-          <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
-          <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
+
+          <h1> {{ config('app.name') }}</h1>
+          <p>©2017 All Rights Reserved.</p>
         </div>
-      </div> --}}
+      </div>
     </form>
   </section>
 </div>

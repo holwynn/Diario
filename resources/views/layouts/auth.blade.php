@@ -20,6 +20,8 @@
 
   <!-- Custom Theme Style -->
   <link href="/dashboard-assets/build/css/custom.min.css" rel="stylesheet">
+
+  <link rel="icon" href="/favicon.png">
 </head>
 
 <body class="login">
