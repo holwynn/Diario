@@ -1,11 +1,15 @@
 @extends('layouts.app')
 
+@section('top-navbar')
+@include('shared.top-navbar')
+@endsection
+
 @section('header')
 @include('shared.header')
 @endsection
 
-@section('navbar')
-@include('shared.navbar')
+@section('categories-navbar')
+@include('shared.categories-navbar')
 @endsection
 
 @section('footer')
@@ -13,23 +17,24 @@
 @endsection
 
 @section('content')
-<div class="row head-news">
+<div class="row">
   @include('frontblocks.' . $frontblock->name)
 </div>
 
 <hr>
 
-<div class="row middle-news">
-  @foreach ($latestArticles as $article)
-  <div class="col-md-4 col-sm-6 middle-news-box">
-    <a href="{{ route('article', ['id' => $article->id, 'title' => $article->seoUrl()])}}" class="title">
-      @if ($article->image)
-      <img src="{{ asset('storage/'.$article->image) }}" class="img-responsive image-shadow" alt="">
-      @endif
-      
-      <h4 class="title">{{ $article->title }}</h4>
-    </a>
-    <h4><small>{{ $article->slug }}</small></h4>
+<div class="row">
+  @foreach($latestArticles as $article)
+  <div class="col-md-4 col-sm-6">
+    <div class="middle-news-container">
+      <a href="{{ route('article', ['id' => $article->id, 'title' => $article->seoUrl()]) }}">
+        @if($article->image)
+        <img src="{{ asset('storage/'.$article->image) }}" alt="Test" class="img-fluid img-shadow">
+        @endif
+        <h5 class="regular-font">{{ $article->title }}</h5>
+      </a>
+      <p class="middle-news-slug">{{ $article->slug }}</p>
+    </div>
   </div>
   @endforeach
 </div>

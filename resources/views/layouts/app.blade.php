@@ -6,32 +6,44 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>@yield('title', config('newspaper.name'))</title>
 
-  <link href="https://fonts.googleapis.com/css?family=Playfair+Display|Raleway:300,400" rel="stylesheet">
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
 
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-  <link href="/assets/dashboard/css/simple-line-icons.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <!-- Elwynn CSS -->
   <link rel="stylesheet" href="/css/styles.css">
 
+  <link href="/assets/dashboard/css/simple-line-icons.css" rel="stylesheet">
+
+  <!-- Favicon -->
   <link rel="icon" href="/favicon.png">
+
 </head>
 <body>
+  <!-- Main -->
   <div class="container">
+    <!-- Top navbar -->
+    @yield('top-navbar')
+    <!-- / Top navbar -->
+
+    <!-- Header -->
     @yield('header')
+    <!-- / Header -->
 
-    @yield('navbar')
-  </div>
+    <!-- Categories navbar -->
+    @yield('categories-navbar')
+    <!-- / Categories navbar -->
 
-  <div class="container">
+    <!-- Content -->  
     @yield('content')
+    <!-- / Content -->  
   </div>
+  <!-- / Main -->
 
-  <hr>
-
-  <div class="container-fluid footer">
-    @yield('footer')
-  </div>
-
-  @yield('javascripts')
+  <!-- Footer -->
+  @yield('footer')
+  <!-- / Footer -->
 </body>
 </html>
