@@ -9,7 +9,9 @@ class Frontblock extends Model
 {
     protected $fillable = [
         'name',
-        'articles'
+        'articles',
+        'rows',
+        'columns'
     ];
 
     public function getArticlesArrayAttribute()
@@ -19,5 +21,15 @@ class Frontblock extends Model
         return Article::whereIn('id', $ids)
             ->orderByRaw("field(id,{$this->articles})", $ids)
             ->get();
+    }
+
+    public function setColumnsAttribute($value)
+    {
+        $this->attributes['columns'] = serialize($value);
+    }
+
+    public function getColumnsAttribute($value)
+    {
+        return unserialize($value);
     }
 }

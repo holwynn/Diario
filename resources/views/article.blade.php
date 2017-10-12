@@ -106,7 +106,6 @@
 @endsection
 
 
-
 {{-- Related articles logic --}}
 {{-- @if (count($relatedArticles) > 0)
 <h3 class="text-center hidden-sm hidden-xs">{{ __('newspaper.related') }}</h3>

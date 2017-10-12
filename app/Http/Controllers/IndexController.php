@@ -22,6 +22,7 @@ class IndexController extends Controller
             ->get();
 
         return view('index', [
+            'counter' => 0,
             'categories' => Category::all(),
             'frontblock' => $frontblock,
             'latestArticles' => $latestArticles,

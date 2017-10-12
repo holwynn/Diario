@@ -17,6 +17,8 @@ class CreateFrontblocksTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('articles');
+            $table->integer('rows')->required();
+            $table->string('columns')->required();
             $table->timestamps();
         });
     }
