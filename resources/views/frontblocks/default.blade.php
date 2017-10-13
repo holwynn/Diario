@@ -6,6 +6,7 @@
         @component('frontblocks.article', ['article' => $frontblock->articlesArray[$counter]])
         
         @endcomponent
+        <hr>
       @endif
       @php
         $counter++

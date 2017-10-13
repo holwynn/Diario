@@ -61,7 +61,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                <label>Rows <small>(how many articles should each column contain?)</small></label>
+                <label>Articles per column</label>
                 <input type="integer" class="form-control border-input" name="rows" value="{{ $frontblock->rows }}" placeholder="Rows">
               </div>
             </div>
@@ -99,48 +99,26 @@
       </div>
       <div class="x_content">
         <div class="row">
-          {{-- Start of column 1 --}}
-          <div id="drag-left" class="col-md-4">
-            <div id="news-{{ $frontblock->articlesArray[0]->id }}" class="row draggableBox">
-              <div class="col-md-12">
-                <h3>{{ $frontblock->articlesArray[0]->title }} (# {{ $frontblock->articlesArray[0]->id }})</h3>
-                <h3><small>{{ $frontblock->articlesArray[0]->slug }}</small></h3>
-              </div>
-            </div>
-
-            <div id="news-{{ $frontblock->articlesArray[1]->id }}" class="row draggableBox">
-              <div class="col-md-12">
-                <h3>{{ $frontblock->articlesArray[1]->title }} (# {{ $frontblock->articlesArray[1]->id }})</h3>
-                <h3><small>{{ $frontblock->articlesArray[1]->slug }}</small></h3>
-              </div>
-            </div>
-
-            <div id="news-{{ $frontblock->articlesArray[2]->id }}" class="row draggableBox">
-              <div class="col-md-12">
-                <h3>{{ $frontblock->articlesArray[2]->title }} (# {{ $frontblock->articlesArray[2]->id }})</h3>
-                <h3><small>{{ $frontblock->articlesArray[2]->slug }}</small></h3>
-              </div>
-            </div>
-          </div> 
-          {{-- End of column 1 --}}
-          
-          {{-- Start of column 2 --}}
-          <div id="drag-right" class="col-md-8">
-            <div id="news-{{ $frontblock->articlesArray[3]->id }}" class="row draggableBox">
-              <div class="col-md-12">
-                <h3>{{ $frontblock->articlesArray[3]->title }} (# {{ $frontblock->articlesArray[3]->id }})</h3>
-                <h3><small>{{ $frontblock->articlesArray[3]->slug }}</small></h3>
-              </div>
-            </div>
-
-            <div id="news-{{ $frontblock->articlesArray[4]->id }}" class="row draggableBox">
-              <div class="col-md-12">
-                <h3>{{ $frontblock->articlesArray[4]->title }} (# {{ $frontblock->articlesArray[4]->id }})</h3>
-                <h3><small>{{ $frontblock->articlesArray[4]->slug }}</small></h3>
-              </div>
-            </div>
+          @for ($i = 0; $i < count($frontblock->columns); $i++)
+          <div id="drag-{{ $colcounter }}" class="draggableContainer clearfix col-md-{{ $frontblock->columns[$i] }}">
+            @for($j = 0; $j < $frontblock->rows; $j++)
+              @if(isset($frontblock->articlesArray[$counter]))
+                <div id="news-{{ $frontblock->articlesArray[$counter]->id }}" class="row">
+                  <div class="col-md-12 draggableBox">
+                    <h3>{{ $frontblock->articlesArray[$counter]->title }} (# {{ $frontblock->articlesArray[$counter]->id }})</h3>
+                    <h3><small>{{ $frontblock->articlesArray[$counter]->slug }}</small></h3>
+                  </div>
+                </div>
+              @endif
+              @php
+                $counter++
+              @endphp
+            @endfor
           </div>
-          {{-- End of column 1 --}}
+          @php
+            $colcounter++
+          @endphp
+          @endfor
         </div>
       </div>
     </div>
@@ -153,10 +131,11 @@
 <script src='https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js'></script>
 
 <script>
-  containers = [
-    document.querySelector('#drag-left'), 
-    document.querySelector('#drag-right')
-  ]
+  containers = []
+
+  @for ($i = 0; $i < $colcounter; $i++)
+  containers.push(document.querySelector('#drag-{{ $i }}'))
+  @endfor
 
   var draggable = dragula(containers, {
     revertOnSpill: true

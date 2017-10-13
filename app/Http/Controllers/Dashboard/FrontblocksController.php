@@ -44,6 +44,8 @@ class FrontblocksController extends Controller
         $this->authorize('update', $frontblock);
 
         return view('dashboard.frontblocks.edit', [
+            'colcounter' => 0,
+            'counter' => 0,
             'frontblock' => $frontblock
         ]);
     }
