@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row hidden-xs-down">
   <div class="col-md-12 clearfix">
     <div class="top-navbar">
       <ul class="nav float-left">

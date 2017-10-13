@@ -1,7 +1,7 @@
 <div class="footer-container">
   <div class="container">
     <div class="row">
-      <div class="col-md-3 col-sm-4 col-xs-6">
+      <div class="col-md-4 col-sm-4 col-xs-6">
         <h5 class="regular-font">{{ __('newspaper.categories') }}</h5>
         <ul class="list-unstyled">
           @foreach($categories as $category)
@@ -10,7 +10,7 @@
         </ul>
       </div>
 
-      <div class="col-md-3 col-sm-4 col-xs-6">
+      <div class="col-md-4 col-sm-4 col-xs-6">
         <h5 class="regular-font">{{ __('newspaper.myaccount') }}</h5>
         <ul class="list-unstyled">
           @if(Auth::guest())
@@ -32,7 +32,7 @@
       </ul>
     </div>
 
-    <div class="col-md-3 col-sm-4 col-xs-6">
+    <div class="col-md-4 col-sm-4 col-xs-6">
       <h5 class="regular-font">Get more</h5>
       <ul class="nav footer-social-media">
         <li><img src="/img/logos/facebook.png" alt=""></li>

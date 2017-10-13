@@ -17,9 +17,7 @@
 @endsection
 
 @section('content')
-<div class="row">
-  @include('frontblocks.' . $frontblock->name)
-</div>
+@include('frontblocks.' . $frontblock->name)
 
 <hr>
 
