@@ -25,11 +25,23 @@ class Frontblock extends Model
 
     public function setColumnsAttribute($value)
     {
-        $this->attributes['columns'] = serialize($value);
+        if (is_array($value)) {
+            $this->attributes['columns'] = serialize($value);
+        } else {
+            $this->attributes['columns'] = serialize(explode(',', $value));    
+        }
+
+        return $this->attributes['columns'];
+        
     }
 
     public function getColumnsAttribute($value)
     {
         return unserialize($value);
+    }
+
+    public function getColumnsIntegerAttribute()
+    {
+        return implode(',', $this->columns);
     }
 }

@@ -12,7 +12,9 @@ class FrontblockService
     {
         $frontblock->update([
             'name' => $request->name,
-            'articles' => $request->articles
+            'articles' => $request->articles,
+            'rows' => $request->rows,
+            'columns' => $request->columns
         ]);
 
         return $frontblock;

@@ -52,6 +52,24 @@
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
+                <label>Columns</label>
+                <input type="text" class="form-control border-input" name="columns" value="{{ $frontblock->columnsInteger }}" placeholder="Columns">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Rows <small>(how many articles should each column contain?)</small></label>
+                <input type="integer" class="form-control border-input" name="rows" value="{{ $frontblock->rows }}" placeholder="Rows">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
                 <label>Articles</label>
                 <input id="articlesInput" type="text" class="form-control border-input" name="articles" value="{{ $frontblock->articles }}" placeholder="Articles">
               </div>
@@ -105,13 +123,9 @@
             </div>
           </div> 
           {{-- End of column 1 --}}
-
-          <div class="col-md-1">
-            
-          </div>
           
           {{-- Start of column 2 --}}
-          <div id="drag-right" class="col-md-7">
+          <div id="drag-right" class="col-md-8">
             <div id="news-{{ $frontblock->articlesArray[3]->id }}" class="row draggableBox">
               <div class="col-md-12">
                 <h3>{{ $frontblock->articlesArray[3]->title }} (# {{ $frontblock->articlesArray[3]->id }})</h3>

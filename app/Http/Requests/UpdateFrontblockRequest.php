@@ -15,7 +15,9 @@ class UpdateFrontblockRequest extends Request
     {
         return [
             'name' => 'required|string',
-            'articles' => 'required|string'
+            'articles' => 'required|string',
+            'rows' => 'required|integer',
+            'columns' => 'required|string'
         ];
     }
 }
