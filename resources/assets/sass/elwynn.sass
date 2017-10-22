@@ -1,0 +1,35 @@
+@charset 'utf-8';
+
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Ubuntu:300,400')
+
+// Imports
+@import "variables"
+@import "top-navbar"
+@import "header"
+@import "categories-navbar"
+@import "frontblock"
+@import "middle-news"
+@import "article"
+@import "footer"
+
+body
+  color: $black
+  margin-top: 15px
+  font-family: $font-light
+a
+  color: #2e2e2e
+
+a:hover
+  color: #222222
+  text-decoration: none
+
+.container
+  max-width: 1000px
+
+.regular-font
+  font-family: $font-light
+
+.img-shadow
+  -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.80)
+  box-shadow: 0 1px 3px rgba(0,0,0,0.80)
