@@ -17,23 +17,27 @@
 @endsection
 
 @section('content')
-@include('frontblocks.' . $frontblock->name)
+@if($frontblock)
+  @include('frontblocks.' . $frontblock->name)
+@endif
 
 <hr>
 
 <div class="row">
-  @foreach($latestArticles as $article)
-  <div class="col-md-4 col-sm-6">
-    <div class="middle-news-container">
-      <a href="{{ route('article', ['id' => $article->id, 'title' => $article->seoUrl()]) }}">
-        @if($article->image)
-        <img src="{{ asset('storage/'.$article->image) }}" alt="Test" class="img-fluid img-shadow">
-        @endif
-        <h5 class="regular-font">{{ $article->title }}</h5>
-      </a>
-      <p class="middle-news-slug">{{ $article->slug }}</p>
+  @if(count($latestArticles) > 0)
+    @foreach($latestArticles as $article)
+    <div class="col-md-4 col-sm-6">
+      <div class="middle-news-container">
+        <a href="{{ route('article', ['id' => $article->id, 'title' => $article->seoUrl()]) }}">
+          @if($article->image)
+          <img src="{{ asset('storage/'.$article->image) }}" alt="Test" class="img-fluid img-shadow">
+          @endif
+          <h5 class="regular-font">{{ $article->title }}</h5>
+        </a>
+        <p class="middle-news-slug">{{ $article->slug }}</p>
+      </div>
     </div>
-  </div>
-  @endforeach
+    @endforeach
+  @endif
 </div>
 @endsection

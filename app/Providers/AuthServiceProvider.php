@@ -30,6 +30,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('view-dashboard', function ($user) {
+            return $user->isWriter() || $user->isEditor() || $user->isAdmin();
+        });
     }
 }

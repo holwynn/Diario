@@ -16,10 +16,10 @@ class UsersTableSeeder extends Seeder
          * First, let's create an administrator user with a few articles.
          */
         $adminUser = App\User::create([
-            'name' => 'mscott',
+            'name' => 'admin',
             'email' => 'mscott@news.com',
             'password' => bcrypt('secret'),
-            'roles' => ['ROLE_USER', 'ROLE_WRITER', 'ROLE_EDITOR', 'ROLE_ADMIN']
+            'roles' => ['ROLE_ADMIN']
         ]);
 
         $adminUser->profile()->create([
@@ -40,9 +40,9 @@ class UsersTableSeeder extends Seeder
          * (the editor relationship is done in EditorsTableSeeder.php)
          */
         $editorUser = App\User::create([
-            'name' => 'bstgalactica666',
+            'name' => 'editor',
             'email' => 'dwight@news.com',
-            'password' => bcrypt('editor'),
+            'password' => bcrypt('secret'),
             'roles' => ['ROLE_USER', 'ROLE_WRITER', 'ROLE_EDITOR']
         ]);
 
@@ -58,7 +58,7 @@ class UsersTableSeeder extends Seeder
         /**
          * Three random writers with articles
          */
-        factory(App\User::class, 3)->create(['roles' => ['ROLE_USER', 'ROLE_WRTIER']])
+        factory(App\User::class, 3)->create(['roles' => ['ROLE_USER', 'ROLE_WRITER']])
             ->each(function($u) {
                 $u->profile()->save(factory(App\Profile::class)->make());
                 $u->articles()->saveMany(factory(App\Article::class, 10)->make());
@@ -68,20 +68,24 @@ class UsersTableSeeder extends Seeder
          * A testable guest user
          */
         $guestUser = App\User::create([
-            'name' => 'Guesty McGuest',
+            'name' => 'guest',
             'email' => 'guest@news.com',
-            'password' => bcrypt('guest'),
+            'password' => bcrypt('secret'),
             'roles' => ['ROLE_USER']
         ]);
 
         $guestUser->profile()->save(factory(App\Profile::class)->make());
 
+        // factory admin
+
+        factory(App\User::class)->create(['roles' => ['ROLE_ADMIN']]);
+
         /**
          * Finally, some random guest users
          */
-        factory(App\User::class, 10)->create()
-            ->each(function($u) {
-                $u->profile()->save(factory(App\Profile::class)->make());
-            });
+        // factory(App\User::class, 10)->create()
+        //     ->each(function($u) {
+        //         $u->profile()->save(factory(App\Profile::class)->make());
+        //     });
     }
 }

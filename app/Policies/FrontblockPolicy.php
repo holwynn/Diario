@@ -26,7 +26,7 @@ class FrontblockPolicy
      * @param  \App\Frontblock  $frontblock
      * @return mixed
      */
-    public function list(User $user, Frontblock $frontblock)
+    public function list(User $user)
     {
         return $user->isAdmin();
     }

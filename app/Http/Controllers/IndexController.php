@@ -14,12 +14,16 @@ class IndexController extends Controller
         $frontblock = Frontblock::where('name', config('newspaper.frontblock'))
             ->first();
 
-        $latestArticles = Article::with('user')
-            ->where('status', 'published')
-            ->whereNotIn('id', explode(',', $frontblock->articles))
-            ->orderBy('id', 'DESC')
-            ->take(9)
-            ->get();
+        if ($frontblock) {
+            $latestArticles = Article::with('user')
+                ->where('status', 'published')
+                ->whereNotIn('id', explode(',', $frontblock->articles))
+                ->orderBy('id', 'DESC')
+                ->take(9)
+                ->get();
+        } else {
+            $latestArticles = [];
+        }
 
         return view('index', [
             'counter' => 0,

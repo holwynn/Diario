@@ -16,7 +16,7 @@ class Dashboard
      */
     public function handle($request, Closure $next)
     {
-        if (! Auth::user()->isWriter()) {
+        if (Auth::user()->cant('view-dashboard')) {
             return redirect('/');
         }
 
