@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Dashboard;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Services\ArticleService;
+use App\Jobs\CreateArticle;
+use App\Jobs\UpdateArticle;
 use App\Http\Requests\ListArticleRequest;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
@@ -15,13 +16,6 @@ use App\Category;
 
 class ArticlesController extends Controller
 {
-    private $articleService;
-
-    public function __construct(ArticleService $articleService)
-    {
-        $this->articleService = $articleService;
-    }
-
     public function index(ListArticleRequest $request, $paginate = 10)
     {
         $this->authorize('list', Article::class);
@@ -47,7 +41,7 @@ class ArticlesController extends Controller
     {
         $this->authorize('create', Article::class);
         
-        $article = $this->articleService->create($request);
+        $article = $this->dispatchNow(new CreateArticle($request));
         
         return redirect()
             ->action('Dashboard\ArticlesController@edit', ['id' => $article->id])
@@ -72,7 +66,7 @@ class ArticlesController extends Controller
     {
         $this->authorize('update', $article);
 
-        $this->articleService->update($request, $article);
+        $this->dispatchNow(new UpdateArticle($article, $request));
 
         return redirect()
             ->action('Dashboard\ArticlesController@edit', ['id' => $article->id])

@@ -6,18 +6,11 @@ use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateProfileRequest;
-use App\Services\ProfileService;
+use App\Jobs\UpdateProfile;
 use App\Profile;
 
 class ProfilesController extends Controller
 {
-    private $profileService;
-
-    public function __construct(ProfileService $profileService)
-    {
-        $this->profileService = $profileService;
-    }
-
     public function edit(Profile $profile)
     {
         $this->authorize('view', $profile);
@@ -31,7 +24,7 @@ class ProfilesController extends Controller
     {
         $this->authorize('update', $profile);
 
-        $this->profileService->update($request, $profile);
+        $this->dispatchNow(new UpdateProfile($profile, $request));
 
         return redirect()
             ->action('Dashboard\ProfilesController@edit', ['id' => $profile->id])

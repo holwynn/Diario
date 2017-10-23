@@ -6,18 +6,11 @@ use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateUserRequest;
-use App\Services\UserService;
+use App\Jobs\UpdateUser;
 use App\User;
 
 class UsersController extends Controller
 {
-    private $userService;
-
-    public function __construct(UserService $userService)
-    {
-        $this->userService = $userService;
-    }
-
     public function index()
     {
         $this->authorize('list', User::class);
@@ -42,7 +35,7 @@ class UsersController extends Controller
     {
         $this->authorize('update', $user);
 
-        $data = $this->userService->update($request, $user);
+        $data = $this->dispatchNow(new UpdateUser($user, $request));
 
         return redirect()
                 ->action('Dashboard\UsersController@edit', ['id' => $data['user']->id])

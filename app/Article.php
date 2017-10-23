@@ -19,7 +19,8 @@ class Article extends Model
         'status',
         'image',
         'show_image',
-        'category_id'
+        'category_id',
+        'user_id'
     ];
 
     protected $dates = ['deleted_at'];

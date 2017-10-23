@@ -6,19 +6,13 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
-use App\Services\CategoryService;
+use App\Jobs\CreateCategory;
+use App\Jobs\UpdateCategory;
 use App\Category;
 use App\User;
 
 class CategoriesController extends Controller
 {
-    private $categoryService;
-
-    public function __construct(CategoryService $categoryService)
-    {
-        $this->categoryService = $categoryService;
-    }
-
     public function index()
     {
         $this->authorize('list', Category::class);
@@ -32,7 +26,7 @@ class CategoriesController extends Controller
     {
         $this->authorize('create', Category::class);
 
-        $category = $this->categoryService->create($request);
+        $category = $this->dispatchNow(new CreateCategory($request));
 
         return redirect()
             ->action('Dashboard\CategoriesController@edit', ['category' => $category->id])
@@ -56,7 +50,7 @@ class CategoriesController extends Controller
     {
         $this->authorize('update', Category::class);
 
-        $this->categoryService->update($request, $category);
+        $this->dispatchNow(new UpdateCategory($category, $request));
 
         return redirect()
             ->action('Dashboard\CategoriesController@edit', ['category' => $category->id])
