@@ -35,7 +35,7 @@ class UsersController extends Controller
     {
         $this->authorize('update', $user);
 
-        $data = $this->dispatchNow(new UpdateUser($user, $request));
+        $data = $this->dispatchNow(UpdateUser::fromRequest($request, $user));
 
         return redirect()
                 ->action('Dashboard\UsersController@edit', ['id' => $data['user']->id])

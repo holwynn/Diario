@@ -24,7 +24,7 @@ class ProfilesController extends Controller
     {
         $this->authorize('update', $profile);
 
-        $this->dispatchNow(new UpdateProfile($profile, $request));
+        $this->dispatchNow(UpdateProfile::fromRequest($request, $profile));
 
         return redirect()
             ->action('Dashboard\ProfilesController@edit', ['id' => $profile->id])

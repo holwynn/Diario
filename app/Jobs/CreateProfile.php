@@ -2,12 +2,13 @@
 
 namespace App\Jobs;
 
-use App\Http\Requests\UpdateProfileRequest;
-use App\Profile;
+use Auth;
+use App\Http\Requests\StoreProfileRequest;
+use App\User;
 
-class UpdateProfile
+class CreateProfile
 {
-    private $profile;
+    private $user;
     private $attributes;
 
     /**
@@ -15,18 +16,22 @@ class UpdateProfile
      *
      * @return void
      */
-    public function __construct(Profile $profile, $attributes = [])
+    public function __construct($user = null, $attributes = [])
     {
-        $this->profile = $profile;
+        if ($user === null) {
+            $this->user = Auth::user();
+        } else {
+            $this->user = $user;
+        }
         
         foreach ($attributes as $key => $value) {
             $this->set($key, $value);
         }
     }
 
-    public static function fromRequest(UpdateProfileRequest $request, Profile $profile)
+    public static function fromRequest(StoreProfileRequest $request, $user = null)
     {
-        return new static($profile, [
+        return new static($user, [
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'address' => $request->address,
@@ -45,7 +50,7 @@ class UpdateProfile
      */
     public function handle()
     {
-        $this->profile->update([
+        $this->user->profile()->create([
             'first_name' => $this->get('first_name'),
             'last_name' => $this->get('last_name'),
             'address' => $this->get('address'),
@@ -56,7 +61,7 @@ class UpdateProfile
             'facebook_username' => $this->get('facebook_username'),
         ]);
 
-        return $this->profile;
+        return $this->user->profile;
     }
 
     private function set($key, $value)

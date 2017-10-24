@@ -14,4 +14,9 @@ trait CreatesUsers
 
         return $user;
     }
+
+    protected function createUserWithoutProfile($userAttributes = [])
+    {
+        return factory(User::class)->create($userAttributes);
+    }
 }
