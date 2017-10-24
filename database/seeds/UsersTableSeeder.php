@@ -78,8 +78,6 @@ class UsersTableSeeder extends Seeder
 
         // factory admin
 
-        factory(App\User::class)->create(['roles' => ['ROLE_ADMIN']]);
-
         /**
          * Finally, some random guest users
          */

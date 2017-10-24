@@ -14,7 +14,7 @@ class EditorsController extends Controller
     {
         $this->authorize('create', Editor::class);
 
-        $editor = $this->dispatchNow(new CreateEditor($request));
+        $editor = $this->dispatchNow(CreateEditor::fromRequest($request));
 
         return redirect()
             ->action('Dashboard\CategoriesController@edit', ['category' => $editor['category_id']])
