@@ -8,17 +8,22 @@ use App\Category;
 class UpdateCategory
 {
     private $category;
-    private $request;
+    private $name;
     
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Category $category, UpdateCategoryRequest $request)
+    public function __construct(Category $category, $name)
     {
         $this->category = $category;
-        $this->request = $request;
+        $this->name = $name;
+    }
+
+    public static function fromRequest(UpdateCategoryRequest $request, Category $category)
+    {
+        return new static($category, $request->name);
     }
 
     /**
@@ -29,7 +34,7 @@ class UpdateCategory
     public function handle()
     {
         $this->category->update([
-            'name' => $this->request->name,
+            'name' => $this->name,
         ]);
 
         return $this->category;

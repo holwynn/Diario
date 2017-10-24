@@ -17,10 +17,10 @@ class UpdateArticleRequest extends Request
             'title' => 'required|string|min:12|max:255',
             'slug' => 'nullable|string|min:12|max:255',
             'content' => 'nullable|string',
-            'category_id'=> 'required|integer|exists:categories,id',
+            'category_id'=> 'nullable|integer|exists:categories,id',
             'tags'=> 'nullable|string',
-            'status'=> 'required|string',
-            'show_image'=> 'required|boolean',
+            'status'=> 'nullable|string',
+            'show_image'=> 'nullable|boolean',
             'image' => 'nullable|image',
         ];
     }

@@ -41,7 +41,7 @@ class ArticlesController extends Controller
     {
         $this->authorize('create', Article::class);
         
-        $article = $this->dispatchNow(new CreateArticle($request));
+        $article = $this->dispatchNow(CreateArticle::fromRequest($request));
         
         return redirect()
             ->action('Dashboard\ArticlesController@edit', ['id' => $article->id])
@@ -66,7 +66,7 @@ class ArticlesController extends Controller
     {
         $this->authorize('update', $article);
 
-        $this->dispatchNow(new UpdateArticle($article, $request));
+        $this->dispatchNow(UpdateArticle::fromRequest($request, $article));
 
         return redirect()
             ->action('Dashboard\ArticlesController@edit', ['id' => $article->id])

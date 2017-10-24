@@ -9,15 +9,38 @@ use App\Article;
 
 class CreateArticle
 {
-    private $request;
+    private $user;
+    private $attributes = [];
+
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(StoreArticleRequest $request)
+    public function __construct($user = null, $attributes = [])
     {
-        $this->request = $request;
+        if ($user === null) {
+            $this->user = Auth::user();
+        } else {
+            $this->user = $user;
+        }
+
+        foreach ($attributes as $key => $value) {
+            $this->set($key, $value);
+        }
+    }
+
+    public static function fromRequest(StoreArticleRequest $request, $user = null)
+    {
+        return new static($user, [
+            'title' => $request->title,
+            'slug' => $request->slug,
+            'content' => $request->content,
+            'tags' => $request->tags,
+            'status' => $request->status,
+            'show_image' => $request->show_image,
+            'category_id' => $request->category_id
+        ]);
     }
 
     /**
@@ -27,25 +50,40 @@ class CreateArticle
      */
     public function handle()
     {
-        $user = Auth::user();
-
-        $article = Article::create([
-            'title' => $this->request->title,
-            'slug' => $this->request->slug,
-            'content' => $this->request->content,
-            'tags'=> $this->request->tags,
-            'status'=> $this->request->status,
-            'show_image'=> $this->request->show_image,
-            'category_id'=> $this->request->category_id,
-            'user_id'=> $user->id,
+        $article = new Article([
+            'title' => $this->get('title'),
+            'slug' => $this->get('slug'),
+            'content' => $this->get('content'),
+            'tags'=> $this->get('tags'),
+            'status'=> $this->get('status'),
+            'show_image'=> $this->get('show_image'),
+            'category_id'=> $this->get('category_id'),
+            'user_id'=> $this->user->id,
         ]);
 
-        if ($this->request->file('image')) {
-            $path = Storage::putFile('images', $this->request->file('image'));
-            $article->image = $path;
-            $article->save();
-        }
+        $article->save();
+
+        // TODO: This really should be in some sort of Media model
+        // if ($this->request->file('image')) {
+        //     $path = Storage::putFile('images', $this->request->file('image'));
+        //     $article->image = $path;
+        //     $article->save();
+        // }
 
         return $article;
+    }
+
+    private function set($key, $value)
+    {
+        $this->attributes[$key] = $value;
+    }
+
+    private function get($key)
+    {
+        if (isset($this->attributes[$key])) {
+            return $this->attributes[$key];
+        } else {
+            return null;
+        }
     }
 }

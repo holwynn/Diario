@@ -21,11 +21,11 @@ class CreateArticlesTable extends Migration
             $table->string('slug')->nullable();
             $table->string('tags')->nullable();
             $table->text('content')->nullable();
-            $table->string('status')->default('draft');
+            $table->string('status')->nullable()->default('draft');
             $table->string('image')->nullable();
-            $table->boolean('show_image')->default(false);
+            $table->boolean('show_image')->nullable()->default(false);
 
-            $table->integer('category_id')->unsigned();
+            $table->integer('category_id')->unsigned()->nullable();
             $table->foreign('category_id')->references('id')->on('categories');
 
             $table->integer('user_id')->unsigned();

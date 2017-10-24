@@ -11,21 +11,21 @@ class UserTest extends TestCase
     
     public function testAssertsAdmin()
     {
-        $user = factory(\App\User::class)->create(['roles' => ['ROLE_ADMIN']]);
+        $user = $this->createUser(['roles' => ['ROLE_ADMIN']]);
 
         $this->assertTrue($user->isAdmin());
     }
 
     public function testAssertsEditor()
     {
-        $user = factory(\App\User::class)->create(['roles' => ['ROLE_EDITOR']]);
+        $user = $this->createUser(['roles' => ['ROLE_EDITOR']]);
 
         $this->assertTrue($user->isEditor());
     }
 
     public function testAssertsWriter()
     {
-        $user = factory(\App\User::class)->create(['roles' => ['ROLE_WRITER']]);
+        $user = $this->createUser(['roles' => ['ROLE_WRITER']]);
 
         $this->assertTrue($user->isWriter());
     }

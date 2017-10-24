@@ -18,7 +18,7 @@ class DashboardTest extends TestCase
 
     public function testRedirectsToHomeIfUnauthorized()
     {
-        $user = factory(\App\User::class)->create();
+        $user = $this->createUser();
 
         $response = $this->actingAs($user)
             ->get('/dashboard');
@@ -28,8 +28,7 @@ class DashboardTest extends TestCase
 
     public function testAllowsAccessToAdmins()
     {
-        $user = factory(\App\User::class)->create(['roles' => ['ROLE_ADMIN']]);
-        $user->profile()->save(factory(\App\Profile::class)->make());
+        $user = $this->createUser(['roles' => ['ROLE_ADMIN']]);
  
         $response = $this->actingAs($user)
             ->get('/dashboard');
@@ -39,8 +38,7 @@ class DashboardTest extends TestCase
 
     public function testAllowsAccessToEditors()
     {
-        $user = factory(\App\User::class)->create(['roles' => ['ROLE_EDITOR']]);
-        $user->profile()->save(factory(\App\Profile::class)->make());
+        $user = $this->createUser(['roles' => ['ROLE_EDITOR']]);
 
         $response = $this->actingAs($user)
             ->get('/dashboard');
@@ -50,8 +48,7 @@ class DashboardTest extends TestCase
 
     public function testAllowsAccessToWriters()
     {
-        $user = factory(\App\User::class)->create(['roles' => ['ROLE_WRITER']]);
-        $user->profile()->save(factory(\App\Profile::class)->make());
+        $user = $this->createUser(['roles' => ['ROLE_WRITER']]);
 
         $response = $this->actingAs($user)
             ->get('/dashboard');

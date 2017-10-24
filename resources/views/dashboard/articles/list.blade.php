@@ -141,7 +141,13 @@
                 </a>
               </td>
               <td>{{ $article->user->profile->name}}</td>
-              <td>{{ ucfirst($article->category->name) }}</td>
+              <td>
+                @if($article->category_id)
+                {{ ucfirst($article->category->name) }}
+                @else
+                Uncategorized
+                @endif
+              </td>
               <td>{{ $article->updated_at->format('F jS, Y') }}</td>
               <td class="text-center">
                 @if ($article->trashed())
@@ -149,6 +155,10 @@
                 @elseif ($article->status == 'published')
                 <span class="label label-success">
                   {{ ucfirst($article->status) }}
+                </span>
+                @elseif ($article->status == null)
+                <span class="label label-info">
+                  Unset
                 </span>
                 @else
                 <span class="label label-info">

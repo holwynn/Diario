@@ -26,7 +26,7 @@ class CategoriesController extends Controller
     {
         $this->authorize('create', Category::class);
 
-        $category = $this->dispatchNow(new CreateCategory($request));
+        $category = $this->dispatchNow(CreateCategory::fromRequest($request));
 
         return redirect()
             ->action('Dashboard\CategoriesController@edit', ['category' => $category->id])
@@ -50,7 +50,7 @@ class CategoriesController extends Controller
     {
         $this->authorize('update', Category::class);
 
-        $this->dispatchNow(new UpdateCategory($category, $request));
+        $this->dispatchNow(UpdateCategory::fromRequest($request, $category));
 
         return redirect()
             ->action('Dashboard\CategoriesController@edit', ['category' => $category->id])

@@ -7,16 +7,21 @@ use App\Category;
 
 class CreateCategory
 {
-    private $request;
+    private $name;
     
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(StoreCategoryRequest $request)
+    public function __construct($name)
     {
-        $this->request = $request;
+        $this->name = $name;
+    }
+
+    public static function fromRequest(StoreCategoryRequest $request)
+    {
+        return new static($request->name);
     }
 
     /**
@@ -26,9 +31,10 @@ class CreateCategory
      */
     public function handle()
     {
-        $category = Category::create([
-            'name' => $this->request->name,
+        $category = new Category([
+            'name' => $this->name,
         ]);
+        $category->save();
 
         return $category;
     }

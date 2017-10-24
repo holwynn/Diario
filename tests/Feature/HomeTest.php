@@ -7,14 +7,14 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class HomeTest extends TestCase
 {
-    // use RefreshDatabase;
+    use RefreshDatabase;
 
     /**
      * A basic test example.
      *
      * @return void
      */
-    public function testHeader()
+    public function testHomepageWorks()
     {
         $response = $this->get('/');
 
