@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreCategoryRequest;
-use App\Http\Requests\UpdateCategoryRequest;
 use App\Jobs\CreateCategory;
 use App\Jobs\UpdateCategory;
 use App\Category;
