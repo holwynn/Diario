@@ -2,14 +2,14 @@
 
 namespace App\Jobs;
 
-use App\Http\Requests\UpdateProfileRequest;
+use Validator;
 use App\Profile;
 
 class UpdateProfile
 {
     private $profile;
     private $attributes;
-
+    
     /**
      * Create a new job instance.
      *
@@ -18,24 +18,28 @@ class UpdateProfile
     public function __construct(Profile $profile, $attributes = [])
     {
         $this->profile = $profile;
-        
-        foreach ($attributes as $key => $value) {
-            $this->set($key, $value);
-        }
+        $this->attributes = $attributes;
+
+        Validator::make($this->attributes, $this->rules())->validate();
     }
 
-    public static function fromRequest(UpdateProfileRequest $request, Profile $profile)
+    /**
+     * Define job validation rules.
+     *
+     * @return array
+     */
+    public function rules()
     {
-        return new static($profile, [
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'address' => $request->address,
-            'city' => $request->city,
-            'country' => $request->country,
-            'description' => $request->description,
-            'twitter_username' => $request->twitter_username,
-            'facebook_username' => $request->facebook_username,
-        ]);
+        return [
+            'first_name' => 'required|string',
+            'last_name' => 'nullable|string',
+            'address' => 'nullable|string',
+            'city' => 'nullable|string',
+            'country' => 'nullable|string',
+            'description' => 'nullable|string',
+            'twitter_username' => 'nullable|string',
+            'facebook_username' => 'nullable|string',
+        ];
     }
 
     /**
@@ -45,31 +49,8 @@ class UpdateProfile
      */
     public function handle()
     {
-        $this->profile->update([
-            'first_name' => $this->get('first_name'),
-            'last_name' => $this->get('last_name'),
-            'address' => $this->get('address'),
-            'city' => $this->get('city'),
-            'country' => $this->get('country'),
-            'description' => $this->get('description'),
-            'twitter_username' => $this->get('twitter_username'),
-            'facebook_username' => $this->get('facebook_username'),
-        ]);
+        $this->profile->update($this->attributes);
 
         return $this->profile;
-    }
-
-    private function set($key, $value)
-    {
-        $this->attributes[$key] = $value;
-    }
-
-    private function get($key)
-    {
-        if (isset($this->attributes[$key])) {
-            return $this->attributes[$key];
-        } else {
-            return null;
-        }
     }
 }

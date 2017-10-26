@@ -2,13 +2,22 @@
 
 namespace App\Queries;
 
-use App\Http\Requests\ListArticleRequest;
+use Illuminate\Http\Request;
 use App\Article;
 
 class ListArticles
 {
-    public static function dashboard(ListArticleRequest $request, $paginate = 10)
+    public static function dashboard(Request $request, $paginate = 10)
     {
+        $request->validate([
+            'status' => 'nullable|string',
+            'title' => 'nullable|string',
+            'id' => 'nullable|numeric',
+            'paginate' => 'nullable|numeric',
+            'trashed' => 'nullable|bool',
+            'category_id' => 'nullable|integer|exists:categories,id',
+        ]);
+
         $query = Article::with('user.profile');
 
         if ($request->filled('status')) {

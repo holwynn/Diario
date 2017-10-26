@@ -2,15 +2,14 @@
 
 namespace App\Jobs;
 
-use Auth;
 use Storage;
-use App\Http\Requests\UpdateArticleRequest;
+use Validator;
 use App\Article;
 
 class UpdateArticle
 {
     private $article;
-    private $attributes = [];
+    private $attributes;
 
     /**
      * Create a new job instance.
@@ -20,23 +19,28 @@ class UpdateArticle
     public function __construct(Article $article, $attributes = [])
     {
         $this->article = $article;
-        
-        foreach ($attributes as $key => $value) {
-            $this->set($key, $value);
-        }
+        $this->attributes = $attributes;
+
+        Validator::make($this->attributes, $this->rules())->validate();
     }
 
-    public static function fromRequest(UpdateArticleRequest $request, Article $article)
+    /**
+     * Define job validation rules.
+     *
+     * @return array
+     */
+    public function rules()
     {
-        return new static($article, [
-            'title' => $request->title,
-            'slug' => $request->slug,
-            'content' => $request->content,
-            'tags' => $request->tags,
-            'status' => $request->status,
-            'show_image' => $request->show_image,
-            'category_id' => $request->category_id
-        ]);
+        return [
+            'title' => 'required|string|min:12|max:255',
+            'slug' => 'nullable|string|min:12|max:255',
+            'content' => 'nullable|string',
+            'category_id'=> 'nullable|integer|exists:categories,id',
+            'tags'=> 'nullable|string',
+            'status'=> 'nullable|string',
+            'show_image'=> 'nullable|boolean',
+            'image' => 'nullable|image',
+        ];
     }
 
     /**
@@ -46,15 +50,7 @@ class UpdateArticle
      */
     public function handle()
     {
-        $this->article->update([
-            'title' => $this->get('title'),
-            'slug' => $this->get('slug'),
-            'content' => $this->get('content'),
-            'tags'=> $this->get('tags'),
-            'status'=> $this->get('status'),
-            'show_image'=> $this->get('show_image'),
-            'category_id'=> $this->get('category_id'),
-        ]);
+        $this->article->update($this->attributes);
 
         // TODO: This really should be in some sort of Media model
         // if ($this->request->file('image')) {
@@ -64,19 +60,5 @@ class UpdateArticle
         // }
 
         return $this->article;
-    }
-
-    private function set($key, $value)
-    {
-        $this->attributes[$key] = $value;
-    }
-
-    private function get($key)
-    {
-        if (isset($this->attributes[$key])) {
-            return $this->attributes[$key];
-        } else {
-            return null;
-        }
     }
 }

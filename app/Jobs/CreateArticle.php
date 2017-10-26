@@ -4,43 +4,45 @@ namespace App\Jobs;
 
 use Auth;
 use Storage;
-use App\Http\Requests\StoreArticleRequest;
+use Validator;
+use App\User;
 use App\Article;
 
 class CreateArticle
 {
     private $user;
-    private $attributes = [];
+    private $attributes;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($user = null, $attributes = [])
+    public function __construct(User $user, $attributes = [])
     {
-        if ($user === null) {
-            $this->user = Auth::user();
-        } else {
-            $this->user = $user;
-        }
+        $this->user = $user;
+        $this->attributes = $attributes;
 
-        foreach ($attributes as $key => $value) {
-            $this->set($key, $value);
-        }
+        Validator::make($this->attributes, $this->rules())->validate();
     }
 
-    public static function fromRequest(StoreArticleRequest $request, $user = null)
+    /**
+     * Define job validation rules.
+     *
+     * @return array
+     */
+    public function rules()
     {
-        return new static($user, [
-            'title' => $request->title,
-            'slug' => $request->slug,
-            'content' => $request->content,
-            'tags' => $request->tags,
-            'status' => $request->status,
-            'show_image' => $request->show_image,
-            'category_id' => $request->category_id
-        ]);
+        return [
+            'title' => 'required|string|min:12|max:255',
+            'slug' => 'nullable|string|min:12|max:255',
+            'content' => 'nullable|string',
+            'category_id'=> 'nullable|integer|exists:categories,id',
+            'tags'=> 'nullable|string',
+            'status'=> 'nullable|string',
+            'show_image'=> 'nullable|boolean',
+            'image' => 'nullable|image',
+        ];
     }
 
     /**
@@ -50,17 +52,7 @@ class CreateArticle
      */
     public function handle()
     {
-        $article = new Article([
-            'title' => $this->get('title'),
-            'slug' => $this->get('slug'),
-            'content' => $this->get('content'),
-            'tags'=> $this->get('tags'),
-            'status'=> $this->get('status'),
-            'show_image'=> $this->get('show_image'),
-            'category_id'=> $this->get('category_id'),
-            'user_id'=> $this->user->id,
-        ]);
-
+        $article = $this->user->articles()->create($this->attributes);
         $article->save();
 
         // TODO: This really should be in some sort of Media model
@@ -71,19 +63,5 @@ class CreateArticle
         // }
 
         return $article;
-    }
-
-    private function set($key, $value)
-    {
-        $this->attributes[$key] = $value;
-    }
-
-    private function get($key)
-    {
-        if (isset($this->attributes[$key])) {
-            return $this->attributes[$key];
-        } else {
-            return null;
-        }
     }
 }

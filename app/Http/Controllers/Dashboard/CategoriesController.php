@@ -22,11 +22,11 @@ class CategoriesController extends Controller
         ]);
     }
 
-    public function store(StoreCategoryRequest $request)
+    public function store(Request $request)
     {
         $this->authorize('create', Category::class);
 
-        $category = $this->dispatchNow(CreateCategory::fromRequest($request));
+        $category = $this->dispatchNow(new CreateCategory($request->all()));
 
         return redirect()
             ->action('Dashboard\CategoriesController@edit', ['category' => $category->id])
@@ -46,11 +46,11 @@ class CategoriesController extends Controller
         ]);
     }
 
-    public function update(UpdateCategoryRequest $request, Category $category)
+    public function update(Request $request, Category $category)
     {
         $this->authorize('update', Category::class);
 
-        $this->dispatchNow(UpdateCategory::fromRequest($request, $category));
+        $this->dispatchNow(new UpdateCategory($category, $request->all()));
 
         return redirect()
             ->action('Dashboard\CategoriesController@edit', ['category' => $category->id])

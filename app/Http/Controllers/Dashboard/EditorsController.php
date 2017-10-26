@@ -5,16 +5,15 @@ namespace App\Http\Controllers\Dashboard;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Jobs\CreateEditor;
-use App\Http\Requests\StoreEditorRequest;
 use App\Editor;
 
 class EditorsController extends Controller
 {
-    public function store(StoreEditorRequest $request)
+    public function store(Request $request)
     {
         $this->authorize('create', Editor::class);
 
-        $editor = $this->dispatchNow(CreateEditor::fromRequest($request));
+        $editor = $this->dispatchNow(new CreateEditor($request->all()));
 
         return redirect()
             ->action('Dashboard\CategoriesController@edit', ['category' => $editor['category_id']])

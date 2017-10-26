@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Dashboard;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UpdateProfileRequest;
 use App\Jobs\UpdateProfile;
 use App\Profile;
 
@@ -20,11 +19,11 @@ class ProfilesController extends Controller
         ]);
     }
 
-    public function update(UpdateProfileRequest $request, Profile $profile)
+    public function update(Request $request, Profile $profile)
     {
         $this->authorize('update', $profile);
 
-        $this->dispatchNow(UpdateProfile::fromRequest($request, $profile));
+        $this->dispatchNow(new UpdateProfile($profile, $request->all()));
 
         return redirect()
             ->action('Dashboard\ProfilesController@edit', ['id' => $profile->id])

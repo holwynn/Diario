@@ -2,26 +2,35 @@
 
 namespace App\Jobs;
 
-use App\Http\Requests\StoreCategoryRequest;
+use Validator;
 use App\Category;
 
 class CreateCategory
 {
-    private $name;
+    private $attributes;
     
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($name)
+    public function __construct($attributes = [])
     {
-        $this->name = $name;
+        $this->attributes = $attributes;
+
+        Validator::make($this->attributes, $this->rules())->validate();
     }
 
-    public static function fromRequest(StoreCategoryRequest $request)
+    /**
+     * Define job validation rules.
+     *
+     * @return array
+     */
+    public function rules()
     {
-        return new static($request->name);
+        return [
+            'name' => 'required|string|unique:categories,name'
+        ];
     }
 
     /**
@@ -31,9 +40,7 @@ class CreateCategory
      */
     public function handle()
     {
-        $category = new Category([
-            'name' => $this->name,
-        ]);
+        $category = new Category($this->attributes);
         $category->save();
 
         return $category;

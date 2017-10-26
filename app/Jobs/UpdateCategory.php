@@ -2,28 +2,37 @@
 
 namespace App\Jobs;
 
-use App\Http\Requests\UpdateCategoryRequest;
+use Validator;
 use App\Category;
 
 class UpdateCategory
 {
     private $category;
-    private $name;
+    private $attributes;
     
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Category $category, $name)
+    public function __construct(Category $category, $attributes = [])
     {
         $this->category = $category;
-        $this->name = $name;
+        $this->attributes = $attributes;
+
+        Validator::make($this->attributes, $this->rules())->validate();
     }
 
-    public static function fromRequest(UpdateCategoryRequest $request, Category $category)
+    /**
+     * Define job validation rules.
+     *
+     * @return array
+     */
+    public function rules()
     {
-        return new static($category, $request->name);
+        return [
+            'name' => 'required|string|unique:categories,name'
+        ];
     }
 
     /**
@@ -33,9 +42,7 @@ class UpdateCategory
      */
     public function handle()
     {
-        $this->category->update([
-            'name' => $this->name,
-        ]);
+        $this->category->update($this->attributes);
 
         return $this->category;
     }

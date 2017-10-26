@@ -18,26 +18,15 @@ class EditorTest extends TestCase
         $category = factory(Category::class)->create();
         $user = $this->createUser();
 
-        $job = new CreateEditor($user->id, $category->id);
+        $job = new CreateEditor([
+            'user_id' => $user->id, 
+            'category_id' => $category->id
+        ]);
+
         $editor = $job->handle();
 
         $this->assertInstanceOf(Editor::class, $editor);
-        $this->assertEquals($category->id, $editor->category_id);
-    }
-    
-    public function testCreateEditorFromRequest()
-    {
-        $category = factory(Category::class)->create();
-        $user = $this->createUser();
-
-        $request = StoreEditorRequest::createFromGlobals();
-        $request->user_id = $user->id;
-        $request->category_id = $category->id;
-
-        $job = CreateEditor::fromRequest($request);
-        $editor = $job->handle();
-
-        $this->assertInstanceOf(Editor::class, $editor);
+        $this->assertEquals($user->id, $editor->user_id);
         $this->assertEquals($category->id, $editor->category_id);
     }
 }

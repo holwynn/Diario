@@ -2,28 +2,36 @@
 
 namespace App\Jobs;
 
+use Validator;
 use App\Editor;
-use App\Http\Requests\StoreEditorRequest;
 
 class CreateEditor
 {
-    private $user_id;
-    private $category_id;
-
+    private $attributes;
+    
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($user_id, $category_id)
+    public function __construct($attributes = [])
     {
-        $this->user_id = $user_id;
-        $this->category_id = $category_id;
+        $this->attributes = $attributes;
+
+        Validator::make($this->attributes, $this->rules())->validate();
     }
 
-    public static function fromRequest(StoreEditorRequest $request)
+    /**
+     * Define job validation rules.
+     *
+     * @return array
+     */
+    public function rules()
     {
-        return new static($request->user_id, $request->category_id);
+        return [
+            'user_id' => 'required|integer|exists:users,id',
+            'category_id' => 'required|integer|exists:categories,id',
+        ];
     }
 
     /**
@@ -33,10 +41,7 @@ class CreateEditor
      */
     public function handle()
     {
-        $editor = new Editor([
-            'user_id' => $this->user_id,
-            'category_id' => $this->category_id,
-        ]);
+        $editor = new Editor($this->attributes);
         $editor->save();
 
         return $editor;

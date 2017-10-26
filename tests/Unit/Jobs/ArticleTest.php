@@ -4,8 +4,6 @@ namespace Tests\Unit\Jobs;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Http\Requests\StoreArticleRequest;
-use App\Http\Requests\UpdateArticleRequest;
 use App\Jobs\CreateArticle;
 use App\Jobs\UpdateArticle;
 use App\Article;
@@ -24,21 +22,8 @@ class ArticleTest extends TestCase
         $this->assertInstanceOf(Article::class, $article);
         $this->assertEquals('Article title', $article->title);
 
-        return $article;
-    }
-    
-    public function testCreateArticleFromRequest()
-    {
-        $user = $this->createUser();
-
-        $request = StoreArticleRequest::createFromGlobals();
-        $request->title = 'Article title';
-
-        $job = CreateArticle::fromRequest($request, $user);
-        $article = $job->handle();
-
-        $this->assertInstanceOf(Article::class, $article);
-        $this->assertEquals('Article title', $article->title);
+        // Dont forget to ->save()!
+        $this->assertInternalType('int', $article->id);
 
         return $article;
     }
@@ -48,25 +33,10 @@ class ArticleTest extends TestCase
      */
     public function testUpdateArticle($article)
     {
-        $job = new UpdateArticle($article, ['title' => 'New title']);
+        $job = new UpdateArticle($article, ['title' => 'New article title']);
         $article = $job->handle();
 
         $this->assertInstanceOf(Article::class, $article);
-        $this->assertEquals('New title', $article->title);
-    }
-
-    /**
-     * @depends testCreateArticleFromRequest
-     */
-    public function testUpdateArticleFromRequest($article)
-    {
-        $request = UpdateArticleRequest::createFromGlobals();
-        $request->title = 'New title';
-
-        $job = UpdateArticle::fromRequest($request, $article);
-        $article = $job->handle();
-
-        $this->assertInstanceOf(Article::class, $article);
-        $this->assertEquals('New title', $article->title);
+        $this->assertEquals('New article title', $article->title);
     }
 }

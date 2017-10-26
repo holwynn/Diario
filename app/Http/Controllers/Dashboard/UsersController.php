@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Dashboard;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UpdateUserRequest;
 use App\Jobs\UpdateUser;
 use App\User;
 
@@ -31,11 +30,11 @@ class UsersController extends Controller
         ]);
     }
 
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(Request $request, User $user)
     {
         $this->authorize('update', $user);
 
-        $data = $this->dispatchNow(UpdateUser::fromRequest($request, $user));
+        $data = $this->dispatchNow(new UpdateUser($user, $request->all()));
 
         return redirect()
                 ->action('Dashboard\UsersController@edit', ['id' => $data['user']->id])
