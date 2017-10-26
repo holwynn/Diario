@@ -7,7 +7,7 @@ use App\User;
 
 class UpdateUser
 {
-    private $profile;
+    private $user;
     private $attributes;
     
     /**
@@ -54,6 +54,7 @@ class UpdateUser
         } else {
             $message = 'Incorrect password';
         }
+        
         return [
             'user' => $this->user, 
             'message' => $message

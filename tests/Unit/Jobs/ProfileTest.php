@@ -6,7 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Jobs\CreateProfile;
 use App\Jobs\UpdateProfile;
-use App\profile;
+use App\Profile;
 
 class ProfileTest extends TestCase
 {
