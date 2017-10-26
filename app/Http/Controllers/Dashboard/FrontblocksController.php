@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UpdateFrontblockRequest;
 use App\Jobs\UpdateFrontblock;
 use App\Frontblock;
 
@@ -43,11 +42,11 @@ class FrontblocksController extends Controller
         ]);
     }
 
-    public function update(UpdateFrontblockRequest $request, Frontblock $frontblock)
+    public function update(Request $request, Frontblock $frontblock)
     {
         $this->authorize('update', $frontblock);
 
-        $this->dispatchNow(new UpdateFrontblock($frontblock, $request));
+        $this->dispatchNow(new UpdateFrontblock($frontblock, $request->all()));
 
         return redirect()
             ->action('Dashboard\FrontblocksController@edit', ['frontblock' => $frontblock->id])

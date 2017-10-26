@@ -5,9 +5,8 @@ namespace App\Jobs;
 use Validator;
 use App\Frontblock;
 
-class UpdateFrontblock
+class CreateFrontblock
 {
-    private $frontblock;
     private $attributes;
     
     /**
@@ -15,9 +14,8 @@ class UpdateFrontblock
      *
      * @return void
      */
-    public function __construct(Frontblock $frontblock, $attributes = [])
+    public function __construct($attributes = [])
     {
-        $this->frontblock = $frontblock;
         $this->attributes = $attributes;
 
         Validator::make($this->attributes, $this->rules())->validate();
@@ -45,8 +43,9 @@ class UpdateFrontblock
      */
     public function handle()
     {
-        $this->frontblock->update($this->attributes);
+        $frontblock = new Frontblock($this->attributes);
+        $frontblock->save();
 
-        return $this->frontblock;
+        return $frontblock;
     }
 }
