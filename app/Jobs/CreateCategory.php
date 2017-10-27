@@ -17,8 +17,6 @@ class CreateCategory
     public function __construct($attributes = [])
     {
         $this->attributes = $attributes;
-
-        Validator::make($this->attributes, $this->rules())->validate();
     }
 
     /**
@@ -40,6 +38,8 @@ class CreateCategory
      */
     public function handle()
     {
+        Validator::make($this->attributes, $this->rules())->validate();
+        
         $category = new Category($this->attributes);
         $category->save();
 

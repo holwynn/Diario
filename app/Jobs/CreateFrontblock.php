@@ -17,8 +17,6 @@ class CreateFrontblock
     public function __construct($attributes = [])
     {
         $this->attributes = $attributes;
-
-        Validator::make($this->attributes, $this->rules())->validate();
     }
 
     /**
@@ -43,6 +41,8 @@ class CreateFrontblock
      */
     public function handle()
     {
+        Validator::make($this->attributes, $this->rules())->validate();
+        
         $frontblock = new Frontblock($this->attributes);
         $frontblock->save();
 

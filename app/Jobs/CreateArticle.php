@@ -22,8 +22,6 @@ class CreateArticle
     {
         $this->user = $user;
         $this->attributes = $attributes;
-
-        Validator::make($this->attributes, $this->rules())->validate();
     }
 
     /**
@@ -52,6 +50,8 @@ class CreateArticle
      */
     public function handle()
     {
+        Validator::make($this->attributes, $this->rules())->validate();
+        
         $article = $this->user->articles()->create($this->attributes);
         $article->save();
 

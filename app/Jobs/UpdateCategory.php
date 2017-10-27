@@ -19,8 +19,6 @@ class UpdateCategory
     {
         $this->category = $category;
         $this->attributes = $attributes;
-
-        Validator::make($this->attributes, $this->rules())->validate();
     }
 
     /**
@@ -42,6 +40,8 @@ class UpdateCategory
      */
     public function handle()
     {
+        Validator::make($this->attributes, $this->rules())->validate();
+        
         $this->category->update($this->attributes);
 
         return $this->category;

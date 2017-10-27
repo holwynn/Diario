@@ -17,8 +17,6 @@ class CreateEditor
     public function __construct($attributes = [])
     {
         $this->attributes = $attributes;
-
-        Validator::make($this->attributes, $this->rules())->validate();
     }
 
     /**
@@ -41,6 +39,8 @@ class CreateEditor
      */
     public function handle()
     {
+        Validator::make($this->attributes, $this->rules())->validate();
+        
         $editor = new Editor($this->attributes);
         $editor->save();
 

@@ -19,8 +19,6 @@ class UpdateProfile
     {
         $this->profile = $profile;
         $this->attributes = $attributes;
-
-        Validator::make($this->attributes, $this->rules())->validate();
     }
 
     /**
@@ -49,6 +47,8 @@ class UpdateProfile
      */
     public function handle()
     {
+        Validator::make($this->attributes, $this->rules())->validate();
+        
         $this->profile->update($this->attributes);
 
         return $this->profile;

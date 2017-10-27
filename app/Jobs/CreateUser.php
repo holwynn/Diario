@@ -17,8 +17,6 @@ class CreateUser
     public function __construct($attributes = [])
     {
         $this->attributes = $attributes;
-
-        Validator::make($this->attributes, $this->rules())->validate();
     }
 
     /**
@@ -42,6 +40,8 @@ class CreateUser
      */
     public function handle()
     {
+        Validator::make($this->attributes, $this->rules())->validate();
+        
         $user = new User($this->attributes);
         $user->password = bcrypt($this->attributes['password']);
         $user->save();

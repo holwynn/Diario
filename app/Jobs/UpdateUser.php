@@ -19,8 +19,6 @@ class UpdateUser
     {
         $this->user = $user;
         $this->attributes = $attributes;
-
-        Validator::make($this->attributes, $this->rules())->validate();
     }
 
     /**
@@ -44,6 +42,8 @@ class UpdateUser
      */
     public function handle()
     {
+        Validator::make($this->attributes, $this->rules())->validate();
+        
         if (app('hash')->check($this->attributes['current_password'], $this->user->password)) {
             if (!empty($this->attributes['password'])) {
                 $this->user->password = bcrypt($this->attributes['password']);

@@ -20,8 +20,6 @@ class CreateProfile
     {
         $this->user = $user;
         $this->attributes = $attributes;
-
-        Validator::make($this->attributes, $this->rules())->validate();
     }
 
     /**
@@ -50,6 +48,8 @@ class CreateProfile
      */
     public function handle()
     {
+        Validator::make($this->attributes, $this->rules())->validate();
+        
         $profile = $this->user->profile()->create($this->attributes);
         $profile->save();
 

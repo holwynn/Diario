@@ -19,8 +19,6 @@ class UpdateFrontblock
     {
         $this->frontblock = $frontblock;
         $this->attributes = $attributes;
-
-        Validator::make($this->attributes, $this->rules())->validate();
     }
 
     /**
@@ -45,6 +43,8 @@ class UpdateFrontblock
      */
     public function handle()
     {
+        Validator::make($this->attributes, $this->rules())->validate();
+        
         $this->frontblock->update($this->attributes);
 
         return $this->frontblock;

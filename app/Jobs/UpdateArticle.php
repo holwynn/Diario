@@ -20,8 +20,6 @@ class UpdateArticle
     {
         $this->article = $article;
         $this->attributes = $attributes;
-
-        Validator::make($this->attributes, $this->rules())->validate();
     }
 
     /**
@@ -50,6 +48,8 @@ class UpdateArticle
      */
     public function handle()
     {
+        Validator::make($this->attributes, $this->rules())->validate();
+        
         $this->article->update($this->attributes);
 
         // TODO: This really should be in some sort of Media model
