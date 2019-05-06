@@ -29,7 +29,7 @@
 
     @if ($user->id != Auth::id())
     <div class="alert alert-info">
-      <span>This is not your user! Be careful!</span>
+      <span>This is not you! Be careful!</span>
     </div>
     @endif
   </div>

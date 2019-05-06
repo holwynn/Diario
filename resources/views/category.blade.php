@@ -2,12 +2,17 @@
 
 @section('title', config('newspaper.name') . ' - ' . ucfirst($category))
 
+@section('top-navbar')
+@include('shared.top-navbar')
+@endsection
+
+
 @section('header')
 @include('shared.header')
 @endsection
 
-@section('navbar')
-@include('shared.navbar')
+@section('categories-navbar')
+@include('shared.categories-navbar')
 @endsection
 
 @section('footer')
@@ -20,7 +25,7 @@
   <div class="col-md-4 col-sm-6 middle-news-box">
     <a href="{{ route('article', ['id' => $article->id, 'title' => $article->seoUrl()])}}" class="title">
       @if ($article->image)
-      <img src="{{ asset('storage/'.$article->image) }}" class="img-responsive image-shadow frontpage-article-image" alt="">
+      <img src="{{ asset('storage/'.$article->image) }}" class="img-fluid image-shadow frontpage-article-image" alt="">
       @endif
       
       <h4 class="title">{{ $article->title }}</h4>

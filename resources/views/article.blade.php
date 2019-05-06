@@ -93,30 +93,23 @@
     </div>
   </div>
 
+  @if(count($relatedArticles) > 0)
   <div class="col-lg-3 col-md-12">
     <div class="related-articles-container">
       <h4 class="text-center">You might also like</h4>
       <hr>
-      <ul class="list-unstyled">
-        <!-- TODO: figure out how to put related articles here -->
+      <ul class="list-unstyled related-articles-list">
+      @foreach ($relatedArticles as $article)
+      <li>
+        <a href="{{ route('article', ['id' => $article->id, 'title' => $article->seoUrl()])}}" class="title">
+          {{ $article->title }}
+        </a>
+      </li>
+      @endforeach
       </ul>
     </div>
   </div>
+  @endif
 </div>
 @endsection
 
-
-{{-- Related articles logic --}}
-{{-- @if (count($relatedArticles) > 0)
-<h3 class="text-center hidden-sm hidden-xs">{{ __('newspaper.related') }}</h3>
-<hr>
-@foreach ($relatedArticles as $article)
-<a href="{{ route('article', ['id' => $article->id, 'title' => $article->seoUrl()])}}" class="title">
-  <div class="col-sm-2 hidden-sm hidden-xs article-related-box">
-    <h4 class="title article-related-box-title">{{ $article->title }}</h4>
-    <hr class="soft-hr">
-    <img src="{{ asset('/storage/' . $article->image) }}" class="img-responsive article-image image-shadow" alt="">
-  </div>
-</a>
-@endforeach
-@endif --}}
