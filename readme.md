@@ -1,3 +1,3 @@
-# Elwynn
+# Diario
 
-An online newspaper powered by Laravel.
+Portal de noticias online
